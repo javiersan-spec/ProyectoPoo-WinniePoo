@@ -1,8 +1,3 @@
-/*
-* Clase que le da identidad a la persona
-* @author Javier San Martin <javier.san1901@alumnos.ubiobio.cl>
-*/
-
 public class Persona {
     private IdPersona idPersona;
     private Nombre nombre;
