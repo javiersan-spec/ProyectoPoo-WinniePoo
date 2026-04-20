@@ -13,19 +13,23 @@ public Pasaje(long numero, Pasajero pasajero, int asiento) {
 }
 
     public int getNumero() {
-        return numero;
+
+    return numero;
     }
 
     public int getAsiento() {
-        return asiento;
+
+    return asiento;
     }
 
     public Viaje getViaje() {
-        return viaje;
+
+    return viaje;
     }
 
     public Pasajero getPasajero() {
-        return pasajero;
+
+    return pasajero;
     }
 
     public Venta getVenta() {
