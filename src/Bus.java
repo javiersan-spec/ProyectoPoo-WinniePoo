@@ -7,7 +7,7 @@ import java.util.List;
 */
 
 public class Bus {
-    private String patente; // deben ser 5 letras y 1 numero
+    private String patente;
     private String modelo;
     private int nroAsientos;
     private List<Viaje> viajes; // a terminal de bus 🚌
