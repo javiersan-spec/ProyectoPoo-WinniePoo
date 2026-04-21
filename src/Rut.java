@@ -17,7 +17,7 @@ public class Rut implements IdPersona {
 
     public static Rut of(String rutConDv) {
         try {
-            // Ejemplo de formato esperado: "11.111.111-1" o "9.999.999-K"
+
             if (rutConDv == null || !rutConDv.contains("-")) return null;
 
             String[] partes = rutConDv.split("-");
@@ -36,7 +36,6 @@ public class Rut implements IdPersona {
 
     @Override
     public String toString() {
-        // Formato: 99.999.999-X o 9.999.999-X
         String numeroStr = String.valueOf(numero);
         StringBuilder sb = new StringBuilder();
         int inicio = numeroStr.length() % 3;

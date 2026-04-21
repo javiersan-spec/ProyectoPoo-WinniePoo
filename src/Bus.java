@@ -1,11 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-* Clase agrega el bus en el código.
-* @author Javier San Martin 🧑‍💻 <javier.san1901@alumnos.ubiobio.cl>
-*/
-
 public class Bus {
     private String patente;
     private String modelo;
