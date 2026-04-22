@@ -23,7 +23,7 @@ public class SistemaVentaPasajes {
         return true;
     }
 
-    public boolean createViaje(LocalDate fecha, LocalTime hora, LocalTime precio, Bus patBus) {
+    public boolean createViaje(LocalDate fecha, LocalTime hora,int precio, Bus patBus) {
         return true;
     }
 

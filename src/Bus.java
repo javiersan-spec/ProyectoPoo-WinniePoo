@@ -24,13 +24,13 @@ public class Bus {
         return modelo;
     }
     public void setMarca(String marca) {
-        this.modelo = marca; //revisar 🔍
+        this.modelo = marca;
     }
     public String getModelo() {
         return modelo;
     }
     public void setModelo(String modelo) {
-        this.modelo = modelo; //🔍
+        this.modelo = modelo;
     }
     public int getNroAsientos() {
         return nroAsientos;
