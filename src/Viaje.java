@@ -74,8 +74,8 @@ public class Viaje {
             Pasaje p = pasajes.get(i);
             Pasajero pas = p.getPasajero();
 
-            lista[i][0] = pas.getIdPasajero();
-            lista[i][1] = pas.getNombre();
+            lista[i][0] = pas.getIdPersona().toString();
+            lista[i][1] = pas.getNombreCompleto().toString();
             lista[i][2] = "-";
             lista[i][3] = "-";
         }

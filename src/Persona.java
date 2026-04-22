@@ -1,3 +1,7 @@
+/**
+ * Clase encargada de definir a la persona y sus datos
+ *  @author Javier San Martin
+ */
 public class Persona {
     private IdPersona idPersona;
     private Nombre nombre;
@@ -30,7 +34,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Pasajero:(" + "id=" + idPersona + ", nombre=" + nombre + ", telefono=" + telefono + ")";
+        return "Pasajero:(" + "id= " + idPersona + ", nombre= " + nombre + ", telefono= " + telefono + ")";
     }
 
     public boolean equals(Object o) {

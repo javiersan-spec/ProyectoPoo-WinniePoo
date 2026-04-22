@@ -1,3 +1,7 @@
+/**
+ * Clase que se encarga de los datos del bus
+ * @author Javier San Martin
+ */
 import java.util.ArrayList;
 import java.util.List;
 
