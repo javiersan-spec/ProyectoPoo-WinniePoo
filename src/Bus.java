@@ -5,7 +5,7 @@ public class Bus {
     private String patente;
     private String modelo;
     private int nroAsientos;
-    private List<Viaje> viajes; // a terminal de bus 🚌
+    private List<Viaje> viajes;
 
     public Bus(String patente, String modelo, int nroAsientos) {
         this.patente = patente;
@@ -17,13 +17,13 @@ public class Bus {
         return patente;
     }
     public String getMarca() {
-        return modelo; //revisar 🔍
+        return modelo;
     }
     public void setMarca(String marca) {
         this.modelo = marca; //revisar 🔍
     }
     public String getModelo() {
-        return modelo; //🔍
+        return modelo;
     }
     public void setModelo(String modelo) {
         this.modelo = modelo; //🔍

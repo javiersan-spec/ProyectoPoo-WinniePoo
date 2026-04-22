@@ -1,35 +1,30 @@
 public class Pasaje {
-    private long numero;
     private int asiento;
     private Viaje viaje;
-    private Venta venta;
     private Pasajero pasajero;
-public Pasaje(long numero, Pasajero pasajero, int asiento) {
-    this.numero = numero;
-    this.asiento = asiento;
-    this.pasajero = pasajero;
-    this.viaje = viaje;
-    this.venta = venta;
-}
+    private Venta venta;
 
-    public int getNumero() {
+    public Pasaje(int asiento, Viaje viaje, Pasajero pasajero, Venta venta) {
+        this.asiento = asiento;
+        this.viaje = viaje;
+        this.pasajero = pasajero;
+        this.venta = venta;
 
-    return numero;
+        if (this.viaje != null) {
+            this.viaje.addPasaje(this);
+        }
     }
 
     public int getAsiento() {
-
-    return asiento;
+        return asiento;
     }
 
     public Viaje getViaje() {
-
-    return viaje;
+        return viaje;
     }
 
     public Pasajero getPasajero() {
-
-    return pasajero;
+        return pasajero;
     }
 
     public Venta getVenta() {

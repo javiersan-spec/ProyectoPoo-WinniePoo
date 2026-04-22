@@ -52,8 +52,8 @@ public class SistemaVentaPasajes {
         return true;
     }
 
-    public String[] listVentas() {
-        return new String[0];
+    public String[] listVentas(){
+            return new String[0];
     }
 
     public String[] listViajes() {

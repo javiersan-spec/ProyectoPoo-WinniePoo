@@ -20,10 +20,14 @@ public class Venta {
         this.cliente.addVenta(this);
     }
 
-    public String getIdDocumento() { return idDocumento; }
-    public TipoDocumento getTipo() { return tipo; }
-    public LocalDate getFecha() { return fecha; }
-    public Cliente getCliente() { return cliente; }
+    public String getIdDocumento() {
+        return idDocumento; }
+    public TipoDocumento getTipo() {
+        return tipo; }
+    public LocalDate getFecha() {
+        return fecha; }
+    public Cliente getCliente() {
+        return cliente; }
 
     public void createPasaje(int asiento, Viaje viaje, Pasajero pasajero) {
         Pasaje nuevoPasaje = new Pasaje(asiento, viaje, pasajero, this);
