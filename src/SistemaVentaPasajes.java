@@ -11,11 +11,11 @@ public class SistemaVentaPasajes {
     private List<Viaje> viajes = new ArrayList<>();
     private List<Venta> ventas = new ArrayList<>();
 
-    public boolean createCliente(IdPersona id, String nom, String fono, String email) {
+    public boolean createCliente(IdPersona id, Nombre nom, String fono, String email) {
         return true;
     }
 
-    public boolean createPasajero(IdPersona id, String nom, String fono, String nomContacto, String fonoContacto) {
+    public boolean createPasajero(IdPersona id, Nombre nom, String fono, Nombre nomContacto, String fonoContacto) {
         return true;
     }
 
@@ -23,23 +23,23 @@ public class SistemaVentaPasajes {
         return true;
     }
 
-    public boolean createViaje(LocalDate fecha, LocalTime hora,int precio, Bus patBus) {
+    public boolean createViaje(LocalDate fecha, LocalTime hora,int precio, String patBus) {
         return true;
     }
 
-    public boolean iniciaVenta(String idDoc, String tipo, LocalDate fechaVenta, IdPersona idCliente) {
+    public boolean iniciaVenta(String idDoc, TipoDocumento tipo, LocalDate fechaVenta, IdPersona idCliente) {
         return true;
     }
 
-    public String[] getHorariosDisponibles(LocalDate fechaViaje) {
-        return new String[0];
+    public String[][] getHorariosDisponibles(LocalDate fechaViaje) {
+        return new String[0][0];
     }
 
     public String[][] listAsientosDeViaje(LocalDate fecha, LocalTime hora, String patBus) {
         return new String[0][0];
     }
 
-    public int getMontoVenta(String idDocumento, String tipo) {
+    public int getMontoVenta(String idDocumento, TipoDocumento tipo) {
         return 0;
     }
 
@@ -47,17 +47,16 @@ public class SistemaVentaPasajes {
         return "";
     }
 
-    public boolean vendePasaje(String idDoc, String tipo, LocalDate fecha, LocalTime hora,
-                               String patBus, int asiento, IdPersona idPasajero) {
+    public boolean vendePasaje(String idDoc, LocalDate fecha, LocalTime hora, String patBus, int asiento, IdPersona idPasajero) {
         return true;
     }
 
-    public String[] listVentas(){
-            return new String[0];
+    public String[][] listVentas(){
+            return new String[0][0];
     }
 
-    public String[] listViajes() {
-        return new String[0];
+    public String[][] listViajes() {
+        return new String[0][0];
     }
 
     public String[][] listPasajeros(LocalDate fecha, LocalTime hora, String patBus) {
@@ -68,7 +67,7 @@ public class SistemaVentaPasajes {
         return null;
     }
 
-    public Venta findVenta(String idDocumento, String tipoDocumento) {
+    public Venta findVenta(String idDocumento, TipoDocumento tipoDocumento) {
         return null;
     }
 
