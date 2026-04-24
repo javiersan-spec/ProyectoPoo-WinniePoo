@@ -1,4 +1,6 @@
-//Autor Benjamin Carrasco
+/**
+ * @author Benjamin Carrasco
+ */
 
 public enum Tratamiento {
     SRA,

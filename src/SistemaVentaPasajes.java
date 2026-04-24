@@ -1,4 +1,9 @@
-//Autores, Genesis Castro y Benjamin Carrasco
+/**
+ * Clase encargada de trabajar con los metodos del menu
+ * @author Genesis Castro
+ * @author Benjamin Carrasco
+ */
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

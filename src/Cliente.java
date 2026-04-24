@@ -1,4 +1,8 @@
-// autora Beatriz Aguilera
+/**
+ * Clase encargada de generar una clase hijo de persona
+ * @author Beatriz Aguilera
+ */
+
 public class Cliente extends Persona {
     private String email;
 

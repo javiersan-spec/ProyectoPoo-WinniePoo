@@ -1,4 +1,7 @@
-//autora Beatriz Aguilera
+/**
+ * Clase encargada de construir el rut recibido
+ * @author Beatriz Aguilera
+ */
 public class Rut implements IdPersona {
     private int numero;
     private char dv;

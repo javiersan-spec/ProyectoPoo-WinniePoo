@@ -1,4 +1,8 @@
-//Autora Genesis Castro
+/**
+ * Clase encargada del crear un viaje para el usuario
+ * @author Genesis Castro
+ */
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

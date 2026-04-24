@@ -1,9 +1,10 @@
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 /**
  * @author Benjamin Jara
  */
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class Venta {
     private String idDocumento;
     private TipoDocumento tipo;

@@ -31,7 +31,7 @@ public class Main {
     private void menu() {
         int opcion = -1;
         while (opcion != 0) {
-            System.out.println("=========================================");
+            System.out.println("===========================================");
             System.out.println("\n   ...::: Menú principal :::...");
             System.out.println("1) Crear cliente");
             System.out.println("2) Crear Bus");
@@ -188,7 +188,7 @@ public class Main {
         }
 
         if (sistema.createBus(patente, marca, modelo, asientos)) {
-            System.out.println("El bus ha sido creado con éxito.");
+            System.out.println("...::: El bus ha sido creado con éxito :::...");
         } else {
             System.out.println("Error: No se pudo crear el bus. Ya existe un bus registrado con la patente " + patente + ".");
         }
@@ -501,7 +501,6 @@ public class Main {
 
         for (int i = 0; i < listaDeViajes.length; i++) {
 
-            // Imprimimos la fila uniendo las columnas
             System.out.println("| " + String.join(" | ", listaDeViajes[i]) + " |");
 
             if (i < listaDeViajes.length - 1) {
@@ -513,7 +512,6 @@ public class Main {
     }
 
     // Opción 8
-    // Metodo privado extra para mayor conveniencia lo implementamos.
     private void consultaViajesPorFecha() {
         System.out.println("\n...:::: Consulta de Viajes Disponibles :::...");
         System.out.print("Ingrese la fecha a consultar [dd/mm/yyyy] : ");

@@ -1,4 +1,7 @@
-// Autor Benjamin Carrasco
+/**
+ * Clase encargada de facilitar la creacion del pasaje del cliente
+ * @author Benjamin Carrasco+
+ */
 public class Pasaje {
     private int asiento;
     private Viaje viaje;
