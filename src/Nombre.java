@@ -1,3 +1,5 @@
+//Autora Beatriz Aguilera
+
 public class Nombre {
     private Tratamiento tratamiento;
     private String nombres;

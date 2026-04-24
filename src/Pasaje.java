@@ -1,3 +1,4 @@
+// Autor Benjamin Carrasco
 public class Pasaje {
     private int asiento;
     private Viaje viaje;

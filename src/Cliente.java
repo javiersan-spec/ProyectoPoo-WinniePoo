@@ -1,3 +1,4 @@
+// autora Beatriz Aguilera
 public class Cliente extends Persona {
     private String email;
 
