@@ -9,18 +9,17 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Main {
     private static SistemaVentaPasajes sistema;
-    private static Scanner leerTeclado;
+    private static Scanner sc;
     private static DateTimeFormatter dateFormatter;
     private static DateTimeFormatter timeFormatter;
 
     public Main () {
         sistema = new SistemaVentaPasajes();
-        leerTeclado = new Scanner(System.in);
+        sc = new Scanner(System.in);
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     }
@@ -45,9 +44,9 @@ public class Main {
             System.out.println("\n------------------------------------------");
             System.out.println("\n   ..:: Ingrese una opción (1-9) ::..");
 
-            if (leerTeclado.hasNextInt()) {
-                opcion = leerTeclado.nextInt();
-                leerTeclado.nextLine();
+            if (sc.hasNextInt()) {
+                opcion = sc.nextInt();
+                sc.nextLine();
 
                 switch (opcion) {
                     case 1:
@@ -82,7 +81,7 @@ public class Main {
                 }
             } else {
                 System.out.println("Error: Debe ingresar un número.");
-                leerTeclado.nextLine();
+                sc.nextLine();
             }
         }
     }
@@ -93,24 +92,24 @@ public class Main {
 
         System.out.print("rut[1] o Pasaporte[2] : ");
         int tipoId = 1; // Por defecto
-        if (leerTeclado.hasNextInt()) {
-            tipoId = leerTeclado.nextInt();
-            leerTeclado.nextLine();
+        if (sc.hasNextInt()) {
+            tipoId = sc.nextInt();
+            sc.nextLine();
         } else {
-            leerTeclado.nextLine();
+            sc.nextLine();
         }
 
         IdPersona idCli = null;
 
         if (tipoId == 1) {
             System.out.print("R.U.T : ");
-            String rutStr = leerTeclado.nextLine();
+            String rutStr = sc.nextLine();
             idCli = Rut.of(rutStr);
         } else if (tipoId == 2) {
             System.out.print("Pasaporte : ");
-            String pasStr = leerTeclado.nextLine();
+            String pasStr = sc.nextLine();
             System.out.print("Nacionalidad : ");
-            String nacStr = leerTeclado.nextLine();
+            String nacStr = sc.nextLine();
             idCli = Pasaporte.of(pasStr, nacStr);
         } else {
             System.out.println("Error: Opción de documento no válida.");
@@ -125,24 +124,24 @@ public class Main {
 
         System.out.print("Sr. [1] o Sra. [2] : ");
         int tipoTratamiento = 1;
-        if (leerTeclado.hasNextInt()) {
-            tipoTratamiento = leerTeclado.nextInt();
-            leerTeclado.nextLine(); // Limpiar el buffer
+        if (sc.hasNextInt()) {
+            tipoTratamiento = sc.nextInt();
+            sc.nextLine(); // Limpiar el buffer
         } else {
-            leerTeclado.nextLine();
+            sc.nextLine();
         }
 
         // Asignamos el enum
         Tratamiento tratamiento = (tipoTratamiento == 2) ? Tratamiento.SRA : Tratamiento.SR;
 
         System.out.print("Nombre: ");
-        String nombres = leerTeclado.nextLine();
+        String nombres = sc.nextLine();
 
         System.out.print("Apellido Paterno: ");
-        String apPaterno = leerTeclado.nextLine();
+        String apPaterno = sc.nextLine();
 
         System.out.print("Apellido Materno: ");
-        String apMaterno = leerTeclado.nextLine();
+        String apMaterno = sc.nextLine();
 
         Nombre nom = new Nombre();
         nom.setTratamiento(tratamiento);
@@ -151,10 +150,10 @@ public class Main {
         nom.setApellidoMaterno(apMaterno);
 
         System.out.print("Telefono movil: ");
-        String fono = leerTeclado.nextLine();
+        String fono = sc.nextLine();
 
         System.out.print("Email: ");
-        String email = leerTeclado.nextLine();
+        String email = sc.nextLine();
 
         if (sistema.createCliente(idCli, nom, fono, email)) {
             System.out.println("...::: Cliente guardado exitosamente :::...");
@@ -168,22 +167,22 @@ public class Main {
         System.out.println("\n...::: Creación de un nuevo BUS :::...");
 
         System.out.print("Patente : ");
-        String patente = leerTeclado.nextLine();
+        String patente = sc.nextLine();
 
         System.out.print("Marca : ");
-        String marca = leerTeclado.nextLine();
+        String marca = sc.nextLine();
 
         System.out.print("Modelo : ");
-        String modelo = leerTeclado.nextLine();
+        String modelo = sc.nextLine();
 
         System.out.print("Número de asientos : ");
         int asientos = 0;
-        if (leerTeclado.hasNextInt()) {
-            asientos = leerTeclado.nextInt();
-            leerTeclado.nextLine();
+        if (sc.hasNextInt()) {
+            asientos = sc.nextInt();
+            sc.nextLine();
         } else {
             System.out.println("Error: El número de asientos debe ser un valor numérico.");
-            leerTeclado.nextLine();
+            sc.nextLine();
             return;
         }
 
@@ -199,26 +198,26 @@ public class Main {
         System.out.println("\n....::: Creación de un nuevo viaje :::...");
 
         System.out.print("Fecha[dd/mm/yyyy] : ");
-        String fechaStr = leerTeclado.nextLine();
+        String fechaStr = sc.nextLine();
         LocalDate fecha = LocalDate.parse(fechaStr, dateFormatter);
 
         System.out.print("Hora[hh:mm] : ");
-        String horaStr = leerTeclado.nextLine();
+        String horaStr = sc.nextLine();
         LocalTime hora = LocalTime.parse(horaStr, timeFormatter);
 
         System.out.print("Precio : ");
         int precio = 0;
-        if (leerTeclado.hasNextInt()) {
-            precio = leerTeclado.nextInt();
-            leerTeclado.nextLine();
+        if (sc.hasNextInt()) {
+            precio = sc.nextInt();
+            sc.nextLine();
         } else {
             System.out.println("Error: El precio debe ser un número.");
-            leerTeclado.nextLine();
+            sc.nextLine();
             return;
         }
 
         System.out.print("Patente Bus : ");
-        String patente = leerTeclado.nextLine();
+        String patente = sc.nextLine();
 
         Bus bus = sistema.findBus(patente);
         if (bus == null) {
@@ -239,36 +238,36 @@ public class Main {
         System.out.println(" ::::: Datos de la Venta ");
 
         System.out.print("ID Documento : ");
-        String idDoc = leerTeclado.nextLine();
+        String idDoc = sc.nextLine();
 
         System.out.print("Tipo documento: [1] Boleta [2] Factura: ");
-        int opcTipo = leerTeclado.nextInt();
-        leerTeclado.nextLine(); // Limpiar buffer
+        int opcTipo = sc.nextInt();
+        sc.nextLine(); // Limpiar buffer
         TipoDocumento tipoDoc = (opcTipo == 2) ? TipoDocumento.FACTURA : TipoDocumento.BOLETA;
 
         // el PDF pide la fecha de venta
         System.out.print("Fecha de venta [dd/mm/yyyy] : ");
-        String fechaVentaStr = leerTeclado.nextLine();
+        String fechaVentaStr = sc.nextLine();
         LocalDate fechaVenta = LocalDate.parse(fechaVentaStr, dateFormatter);
 
         System.out.println(" :::: Datos del cliente ");
         System.out.print("Rut [1] o Pasaporte [2] : ");
-        int tipoId = leerTeclado.nextInt();
-        leerTeclado.nextLine();
+        int tipoId = sc.nextInt();
+        sc.nextLine();
 
         IdPersona idCli = null;
         if (tipoId == 1) {
             System.out.print("R.U.T : ");
-            idCli = Rut.of(leerTeclado.nextLine());
+            idCli = Rut.of(sc.nextLine());
         } else {
             System.out.print("Pasaporte : ");
-            String pas = leerTeclado.nextLine();
+            String pas = sc.nextLine();
             System.out.print("Nacionalidad : ");
-            idCli = Pasaporte.of(pas, leerTeclado.nextLine());
+            idCli = Pasaporte.of(pas, sc.nextLine());
         }
 
         System.out.print("Nombre Cliente : ");
-        String nombreClienteInput = leerTeclado.nextLine();
+        String nombreClienteInput = sc.nextLine();
 
         Cliente cliente = sistema.findCliente(idCli);
         if (cliente == null) {
@@ -284,11 +283,11 @@ public class Main {
 
         System.out.println("\n::: Pasajes a vender ");
         System.out.print("Cantidad de Pasajes : ");
-        int cantidadPasajes = leerTeclado.nextInt();
-        leerTeclado.nextLine();
+        int cantidadPasajes = sc.nextInt();
+        sc.nextLine();
 
         System.out.print("Fecha de viaje[dd/mm/yyyy] : ");
-        String fechaViajeStr = leerTeclado.nextLine();
+        String fechaViajeStr = sc.nextLine();
         LocalDate fechaViaje = LocalDate.parse(fechaViajeStr, dateFormatter);
 
         // Mostrar tabla de viajes
@@ -311,13 +310,13 @@ public class Main {
         System.out.println("  *---------*---------*---------*-----------*");
 
         System.out.print("Seleccione un viaje [1.." + viajesDisponibles.length + "] : ");
-        int seleccionViaje = leerTeclado.nextInt();
-        leerTeclado.nextLine();
+        int seleccionViaje = sc.nextInt();
+        sc.nextLine();
 
         System.out.print("Confirme la Patente del bus seleccionado: ");
-        String patenteBus = leerTeclado.nextLine();
+        String patenteBus = sc.nextLine();
         System.out.print("Confirme la Hora del viaje seleccionado (HH:mm): ");
-        String horaViajeStr = leerTeclado.nextLine();
+        String horaViajeStr = sc.nextLine();
         LocalTime horaViaje = LocalTime.parse(horaViajeStr, timeFormatter);
 
         // seleccion de asientos
@@ -338,7 +337,7 @@ public class Main {
         System.out.println("*---*---*---*---*---*");
 
         System.out.print("Seleccione sus asientos [separe por \",\"] : ");
-        String asientosInput = leerTeclado.nextLine();
+        String asientosInput = sc.nextLine();
         String[] asientosSeleccionados = asientosInput.split(",");
 
         // 1. CREAMOS EL ARREGLO PARA GUARDAR LOS BOLETOS ANTES DEL FOR
@@ -348,21 +347,21 @@ public class Main {
             int numAsiento = Integer.parseInt(asientosSeleccionados[i].trim());
             System.out.println("\n:::: Datos Pasajero " + (i + 1));
             System.out.print("Rut[1] o Pasaporte[2] : ");
-            int tIdP = leerTeclado.nextInt();
-            leerTeclado.nextLine();
+            int tIdP = sc.nextInt();
+            sc.nextLine();
 
             IdPersona idPas = null;
             String idParaBoleto = ""; // Guardaremos el rut o pasaporte para imprimirlo luego
 
             if (tIdP == 1) {
                 System.out.print("R.U.T : ");
-                idParaBoleto = leerTeclado.nextLine();
+                idParaBoleto = sc.nextLine();
                 idPas = Rut.of(idParaBoleto);
             } else {
                 System.out.print("Pasaporte : ");
-                idParaBoleto = leerTeclado.nextLine();
+                idParaBoleto = sc.nextLine();
                 System.out.print("Nacionalidad : ");
-                idPas = Pasaporte.of(idParaBoleto, leerTeclado.nextLine());
+                idPas = Pasaporte.of(idParaBoleto, sc.nextLine());
             }
 
             // Recuperar o pedir el nombre del pasajero (necesario para el boleto)
@@ -374,15 +373,15 @@ public class Main {
 
                 Nombre nomP = new Nombre();
                 System.out.print("Nombre Pasajero: ");
-                nombreParaBoleto = leerTeclado.nextLine(); // Lo guardamos para el boleto
+                nombreParaBoleto = sc.nextLine(); // Lo guardamos para el boleto
                 nomP.setNombres(nombreParaBoleto);
 
-                System.out.print("Teléfono: "); String fonP = leerTeclado.nextLine();
+                System.out.print("Teléfono: "); String fonP = sc.nextLine();
 
                 Nombre nomC = new Nombre();
-                System.out.print("Nombre de Contacto: "); nomC.setNombres(leerTeclado.nextLine());
+                System.out.print("Nombre de Contacto: "); nomC.setNombres(sc.nextLine());
 
-                System.out.print("Teléfono de Contacto: "); String fonC = leerTeclado.nextLine();
+                System.out.print("Teléfono de Contacto: "); String fonC = sc.nextLine();
 
                 sistema.createPasajero(idPas, nomP, fonP, nomC, fonC);
             }
@@ -406,15 +405,15 @@ public class Main {
         System.out.println("\n...:::: Listado de pasajeros de un viaje :::....");
 
         System.out.print("Fecha del viaje[dd/mm/yyyy] : ");
-        String fechaStr = leerTeclado.nextLine();
+        String fechaStr = sc.nextLine();
         LocalDate fecha = LocalDate.parse(fechaStr, dateFormatter);
 
         System.out.print("Hora del viaje[hh:mm] : ");
-        String horaStr = leerTeclado.nextLine();
+        String horaStr = sc.nextLine();
         LocalTime hora = LocalTime.parse(horaStr, timeFormatter);
 
         System.out.print("Patente bus: ");
-        String patenteBus = leerTeclado.nextLine();
+        String patenteBus = sc.nextLine();
 
         String[][] listaPasajeros = sistema.listPasajeros(fecha, hora, patenteBus);
 
@@ -445,7 +444,7 @@ public class Main {
 
         // El PDF nos pide ingresar la fecha
         System.out.print("Fecha de las ventas [dd/mm/yyyy] : ");
-        String fechaStr = leerTeclado.nextLine();
+        String fechaStr = sc.nextLine();
         LocalDate fecha = LocalDate.parse(fechaStr, dateFormatter); // Solo para validar que sea fecha real
 
         String[][] todasLasVentas = sistema.listVentas();
@@ -515,7 +514,7 @@ public class Main {
     private void consultaViajesPorFecha() {
         System.out.println("\n...:::: Consulta de Viajes Disponibles :::...");
         System.out.print("Ingrese la fecha a consultar [dd/mm/yyyy] : ");
-        String fechaStr = leerTeclado.nextLine();
+        String fechaStr = sc.nextLine();
 
         LocalDate fechaCons = LocalDate.parse(fechaStr, dateFormatter);
 
