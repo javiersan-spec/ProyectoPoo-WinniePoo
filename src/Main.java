@@ -86,6 +86,7 @@ public class Main {
             }
         }
     }
+
     // Opción 1
     private void createCliente() {
         System.out.println("\n ...::: Crear un nuevo cliente :::...");
@@ -161,6 +162,7 @@ public class Main {
             System.out.println("Error al crear el cliente.");
         }
     }
+
     // Opción 2
     private void createBus() {
         System.out.println("\n...::: Creación de un nuevo BUS :::...");
@@ -191,6 +193,7 @@ public class Main {
             System.out.println("Error: No se pudo crear el bus. Ya existe un bus registrado con la patente " + patente + ".");
         }
     }
+
     // Opción 3
     private void createViaje() {
         System.out.println("\n....::: Creación de un nuevo viaje :::...");
@@ -229,6 +232,7 @@ public class Main {
             System.out.println("Error: Ya existe un viaje para la fecha, hora y bus ingresados.");
         }
     }
+
     // Opción 4
     private void vendePasajes() {
         System.out.println("\n....:::: Venta de pasajes :::....");
@@ -396,35 +400,149 @@ public class Main {
             System.out.println(boletosGenerados[i]);
         }
     }
+
     // Opción 5
-    private void listPasajerosViaje(){}
+    private void listPasajerosViaje() {
+        System.out.println("\n...:::: Listado de pasajeros de un viaje :::....");
+
+        System.out.print("Fecha del viaje[dd/mm/yyyy] : ");
+        String fechaStr = leerTeclado.nextLine();
+        LocalDate fecha = LocalDate.parse(fechaStr, dateFormatter);
+
+        System.out.print("Hora del viaje[hh:mm] : ");
+        String horaStr = leerTeclado.nextLine();
+        LocalTime hora = LocalTime.parse(horaStr, timeFormatter);
+
+        System.out.print("Patente bus: ");
+        String patenteBus = leerTeclado.nextLine();
+
+        String[][] listaPasajeros = sistema.listPasajeros(fecha, hora, patenteBus);
+
+        if (listaPasajeros == null || listaPasajeros.length == 0) {
+            System.out.println("Error: No existe el bus o no hay un viaje programado con los datos indicados.");
+            return;
+        }
+
+        System.out.println("*---------*--------------*---------------------------------------*----------------------------*-------------------*");
+        System.out.println("| ASIENTO | RUT/PASS     | PASAJERO                              | CONTACTO                   | TELÉFONO CONTACTO |");
+        System.out.println("|---------+--------------+---------------------------------------+----------------------------+-------------------|");
+
+        // Recorremos la matriz
+        for (int i = 0; i < listaPasajeros.length; i++) {
+
+            System.out.println("| " + String.join(" | ", listaPasajeros[i]) + " |");
+
+            if (i < listaPasajeros.length - 1) {
+                System.out.println("|---------+--------------+---------------------------------------+----------------------------+-------------------|");
+            }
+        }
+        System.out.println("*---------*--------------*---------------------------------------*----------------------------*-------------------*");
+    }
+
     // Opción 6
-    private void listVentas(){}
+    private void listVentas() {
+        System.out.println("\n...:::: Listado de ventas :::...");
+
+        // El PDF nos pide ingresar la fecha
+        System.out.print("Fecha de las ventas [dd/mm/yyyy] : ");
+        String fechaStr = leerTeclado.nextLine();
+        LocalDate fecha = LocalDate.parse(fechaStr, dateFormatter); // Solo para validar que sea fecha real
+
+        String[][] todasLasVentas = sistema.listVentas();
+
+        if (todasLasVentas == null || todasLasVentas.length == 0) {
+            System.out.println("Mensaje: No existen ventas registradas en el sistema.");
+            return;
+        }
+
+        boolean hayVentasEnFecha = false;
+        for (int i = 0; i < todasLasVentas.length; i++) {
+            if (todasLasVentas[i][2].equals(fechaStr)) {
+                hayVentasEnFecha = true;
+                break;
+            }
+        }
+
+        if (!hayVentasEnFecha) {
+            System.out.println("Mensaje: No existen ventas registradas para la fecha " + fechaStr + ".");
+            return;
+        }
+
+        System.out.println("*---------------+-----------+------------+----------------+---------------------------+--------------+-------------*");
+        System.out.println("| ID DOCUMENT   | TIPO DOCU | FECHA      | RUT/PASAPORTE  | CLIENTE                   | CANT BOLETOS | TOTAL VENTA |");
+        System.out.println("|---------------+-----------+------------+----------------+---------------------------+--------------+-------------|");
+
+        for (int i = 0; i < todasLasVentas.length; i++) {
+            // Solo imprimimos las filas que coincidan con la fecha ingresada
+            if (todasLasVentas[i][2].equals(fechaStr)) {
+                System.out.println("| " + String.join(" | ", todasLasVentas[i]) + " |");
+            }
+        }
+
+        System.out.println("*---------------+-----------+------------+----------------+---------------------------+--------------+-------------*");
+    }
+
     // Opción 7
-    private void listViajes(){}
+    private void listViajes() {
+        System.out.println("\n...:::: Listado de viajes registrados :::...");
+
+        String[][] listaDeViajes = sistema.listViajes();
+
+        // Validamos la matriz
+        if (listaDeViajes == null || listaDeViajes.length == 0) {
+            System.out.println("Mensaje: No existen viajes registrados en el sistema.");
+            return;
+        }
+
+        // Dibujamos la tabla
+        System.out.println("*------------*--------*---------*-------------*----------*");
+        System.out.println("| FECHA      | HORA   | PRECIO  | DISPONIBLES | PATENTE  |");
+        System.out.println("|------------+--------+---------+-------------+----------|");
+
+        for (int i = 0; i < listaDeViajes.length; i++) {
+
+            // Imprimimos la fila uniendo las columnas
+            System.out.println("| " + String.join(" | ", listaDeViajes[i]) + " |");
+
+            if (i < listaDeViajes.length - 1) {
+                System.out.println("|------------+--------+---------+-------------+----------|");
+            }
+        }
+
+        System.out.println("*------------*--------*---------*-------------*----------*");
+    }
+
     // Opción 8
     // Metodo privado extra para mayor conveniencia lo implementamos.
     private void consultaViajesPorFecha() {
-        System.out.println("\n...::: Viajes Disponibles por fecha :::...");
-        System.out.print("Ingrese fecha (dd/MM/yyyy): ");
+        System.out.println("\n...:::: Consulta de Viajes Disponibles :::...");
+        System.out.print("Ingrese la fecha a consultar [dd/mm/yyyy] : ");
         String fechaStr = leerTeclado.nextLine();
 
         LocalDate fechaCons = LocalDate.parse(fechaStr, dateFormatter);
 
-        // Obtenemos la matriz del sistema
-        String[][] horarios = sistema.getHorariosDisponibles(fechaCons);
+        String[][] viajesDisponibles = sistema.getHorariosDisponibles(fechaCons);
 
-        if (horarios.length == 0) {
-            System.out.println("No hay viajes disponibles para esa fecha.");
-        } else {
-            System.out.println("\nHorarios disponibles para " + fechaStr + ":");
-            System.out.println("BUS | SALIDA | VALOR | ASIENTOS");
-            for (int i = 0; i < horarios.length; i++) {
-
-                System.out.println(String.join(" | ", horarios[i]));
-            }
+        if (viajesDisponibles == null || viajesDisponibles.length == 0) {
+            System.out.println("\n>> RESULTADO: No se encontraron viajes disponibles para la fecha " + fechaStr + ".");
+            return;
         }
+
+        System.out.println("\n>> BÚSQUEDA EXITOSA: Se han encontrado " + viajesDisponibles.length + " viajes disponibles para el " + fechaStr + ".");
+
+        System.out.println("\n....:::: Detalle de los viajes ::::....");
+        System.out.println("*----------*--------*---------*-------------*");
+        System.out.println("| BUS      | SALIDA | PRECIO  | DISPONIBLES |");
+        System.out.println("|----------+--------+---------+-------------|");
+
+        for (int i = 0; i < viajesDisponibles.length; i++) {
+
+            System.out.println("| " + String.join(" | ", viajesDisponibles[i]) + " |");
+        }
+
+        System.out.println("*----------*--------*---------*-------------*");
     }
+
     // Metodo privado extra para mayor conveniencia lo implementamos.
     private String imprimirBoleto(String fecha, String hora, String patente, int asiento, String idPasajero, String nombrePasajero) {
         // Generamos un número de pasaje único basado en el milisegundo actual
