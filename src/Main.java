@@ -4,6 +4,7 @@
  * @author Benjamin Carrasco
  * @author Genesis Castro
  * @author Beatriz Aguilera
+ * @author Benjamin Jara
  * @version 1.0
  */
 import java.time.LocalDate;
@@ -340,9 +341,7 @@ public class Main {
         String asientosInput = sc.nextLine();
         String[] asientosSeleccionados = asientosInput.split(",");
 
-        // 1. CREAMOS EL ARREGLO PARA GUARDAR LOS BOLETOS ANTES DEL FOR
-        String[] boletosGenerados = new String[cantidadPasajes];
-
+        // Eliminamos el arreglo temporal y procesamos la venta directamente
         for (int i = 0; i < cantidadPasajes; i++) {
             int numAsiento = Integer.parseInt(asientosSeleccionados[i].trim());
             System.out.println("\n:::: Datos Pasajero " + (i + 1));
@@ -351,52 +350,52 @@ public class Main {
             sc.nextLine();
 
             IdPersona idPas = null;
-            String idParaBoleto = ""; // Guardaremos el rut o pasaporte para imprimirlo luego
-
             if (tIdP == 1) {
                 System.out.print("R.U.T : ");
-                idParaBoleto = sc.nextLine();
-                idPas = Rut.of(idParaBoleto);
+                idPas = Rut.of(sc.nextLine());
             } else {
                 System.out.print("Pasaporte : ");
-                idParaBoleto = sc.nextLine();
+                String pas = sc.nextLine();
                 System.out.print("Nacionalidad : ");
-                idPas = Pasaporte.of(idParaBoleto, sc.nextLine());
+                idPas = Pasaporte.of(pas, sc.nextLine());
             }
 
-            // Recuperar o pedir el nombre del pasajero (necesario para el boleto)
-            String nomSistema = sistema.getNombrePasajero(idPas);
-            String nombreParaBoleto = nomSistema;
-
-            if (nomSistema == null || nomSistema.isEmpty()) {
+            // Si el pasajero no existe, lo creamos
+            if (sistema.getNombrePasajero(idPas) == null) {
                 System.out.println("Pasajero no registrado. Ingrese sus datos:");
-
                 Nombre nomP = new Nombre();
-                System.out.print("Nombre Pasajero: ");
-                nombreParaBoleto = sc.nextLine(); // Lo guardamos para el boleto
-                nomP.setNombres(nombreParaBoleto);
-
+                System.out.print("Nombre Pasajero: "); nomP.setNombres(sc.nextLine());
                 System.out.print("Teléfono: "); String fonP = sc.nextLine();
-
                 Nombre nomC = new Nombre();
                 System.out.print("Nombre de Contacto: "); nomC.setNombres(sc.nextLine());
-
                 System.out.print("Teléfono de Contacto: "); String fonC = sc.nextLine();
 
                 sistema.createPasajero(idPas, nomP, fonP, nomC, fonC);
             }
 
+            // Registramos el pasaje en el sistema
             sistema.vendePasaje(idDoc, fechaViaje, horaViaje, patenteBus, numAsiento, idPas);
             System.out.println(":::: pasaje agregado exitosamente");
-
-            boletosGenerados[i] = imprimirBoleto(fechaViajeStr, horaViajeStr, patenteBus, numAsiento, idParaBoleto, nombreParaBoleto);
         }
 
         System.out.println("\n:::: Monto total de la venta: $" + sistema.getMontoVenta(idDoc, tipoDoc));
 
+        // IMPRESIÓN FINAL: Recuperamos los datos reales desde la Venta
         System.out.println("\n::: imprimiendo los pasajes ");
-        for (int i = 0; i < boletosGenerados.length; i++) {
-            System.out.println(boletosGenerados[i]);
+        Venta ventaActual = sistema.findVenta(idDoc, tipoDoc);
+
+        if (ventaActual != null) {
+            for (Pasaje p : ventaActual.getPasajes()) {
+                System.out.println(imprimirBoleto(
+                        p.getNumero(),
+                        fechaViajeStr,
+                        horaViajeStr,
+                        patenteBus,
+                        p.getAsiento(),
+                        p.getPasajero().getIdPersona().toString(),
+                        p.getPasajero().getNombreCompleto().toString()
+                ));
+            }
         }
     }
 
@@ -540,13 +539,7 @@ public class Main {
         System.out.println("*----------*--------*---------*-------------*");
     }
 
-    // Metodo privado extra para mayor conveniencia lo implementamos.
-    private String imprimirBoleto(String fecha, String hora, String patente, int asiento, String idPasajero, String nombrePasajero) {
-        // Generamos un número de pasaje único basado en el milisegundo actual
-        // obtenido de: https://es.sourcetrail.com/Java/java-obtiene-milisegundos-actuales/
-
-        long numPasaje = System.currentTimeMillis() + (int)(Math.random() * 100);
-
+    private String imprimirBoleto(int numPasaje, String fecha, String hora, String patente, int asiento, String idPasajero, String nombrePasajero) {
         return "---------------- PASAJE ----------------\n" +
                 "NUMERO DE PASAJE : " + numPasaje + "\n" +
                 "FECHA DE VIAJE   : " + fecha + "\n" +

@@ -1,8 +1,9 @@
 /**
  * Clase encargada de facilitar la creacion del pasaje del cliente
- * @author Benjamin Carrasco+
+ * @author Benjamin Carrasco
  */
 public class Pasaje {
+    private long numero;
     private int asiento;
     private Viaje viaje;
     private Pasajero pasajero;
@@ -14,9 +15,16 @@ public class Pasaje {
         this.pasajero = pasajero;
         this.venta = venta;
 
+        // Generación de número aleatorio usando Math.random()
+        this.numero = System.currentTimeMillis() + (int)(Math.random() * 100000);
+
         if (this.viaje != null) {
             this.viaje.addPasaje(this);
         }
+    }
+
+    public int getNumero() {
+        return (int) Math.abs(this.numero % Integer.MAX_VALUE);
     }
 
     public int getAsiento() {
