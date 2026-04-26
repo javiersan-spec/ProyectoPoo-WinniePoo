@@ -18,9 +18,14 @@ public class SistemaVentaPasajes {
     private List<Venta> ventas = new ArrayList<>();
 
     public boolean createCliente(IdPersona id, Nombre nom, String fono, String email) {
+        if (findCliente(id) != null) {
+            return false;
+        }
+        Cliente nuevoCliente = new Cliente(id, nom, email);
+        nuevoCliente.setTelefono(fono);
+        this.clientes.add(nuevoCliente);
         return true;
     }
-
     public boolean createPasajero(IdPersona id, Nombre nom, String fono, Nombre nomContacto, String fonoContacto) {
         return true;
     }
@@ -38,7 +43,7 @@ public class SistemaVentaPasajes {
         return true;
     }
 
-    public boolean createViaje(LocalDate fecha, LocalTime hora,int precio, String patBus) {
+    public boolean createViaje(LocalDate fecha, LocalTime hora, int precio, String patBus) {
         return true;
     }
 
@@ -50,8 +55,8 @@ public class SistemaVentaPasajes {
         return new String[0][0];
     }
 
-    public String[][] listAsientosDeViaje(LocalDate fecha, LocalTime hora, String patBus) {
-        return new String[0][0];
+    public String[] listAsientosDeViaje(LocalDate fecha, LocalTime hora, String patBus) {
+        return new String[0];
     }
 
     public int getMontoVenta(String idDocumento, TipoDocumento tipo) {
@@ -66,8 +71,8 @@ public class SistemaVentaPasajes {
         return true;
     }
 
-    public String[][] listVentas(){
-            return new String[0][0];
+    public String[][] listVentas() {
+        return new String[0][0];
     }
 
     public String[][] listViajes() {
@@ -79,22 +84,42 @@ public class SistemaVentaPasajes {
     }
 
     public Cliente findCliente(IdPersona idPersona) {
+        for (Cliente c : clientes) {
+            if (c.getIdPersona().equals(idPersona)) {
+                return c;
+            }
+        }
         return null;
     }
 
     public Venta findVenta(String idDocumento, TipoDocumento tipoDocumento) {
+        for (Venta v : ventas) {
+            if (v.getIdDocumento().equals(idDocumento) && v.getTipo() == tipoDocumento) {
+                return v;
+            }
+        }
         return null;
     }
 
     public Bus findBus(String patente) {
+        for (Bus b : buses) {
+            if (b.getPatente().equalsIgnoreCase(patente)) {
+                return b;
+            }
+        }
         return null;
     }
 
-    public Viaje findViaje(LocalDate fecha, LocalTime hora, String patenteBus) {
+    public Viaje findViaje(String fecha, String hora, String patenteBus) {
         return null;
     }
 
     public Pasajero findPasajero(IdPersona idPasajero) {
+        for (Pasajero p : pasajeros) {
+            if (p.getIdPersona().equals(idPasajero)) {
+                return p;
+            }
+        }
         return null;
     }
 }
