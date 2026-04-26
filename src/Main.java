@@ -322,7 +322,7 @@ public class Main {
 
         // seleccion de asientos
         System.out.println("\n:::: Asientos disponibles para el viaje seleccionado ");
-        String[][] matrizAsientos = sistema.listAsientosDeViaje(fechaViaje, horaViaje, patenteBus);
+        String[][] matrizAsientos = new String[][]{sistema.listAsientosDeViaje(fechaViaje, horaViaje, patenteBus)};
 
         // Dibujamos una matriz (4 por fila + pasillo)
         System.out.println("*---*---*---*---*---*");
