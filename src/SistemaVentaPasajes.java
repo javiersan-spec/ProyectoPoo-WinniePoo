@@ -26,6 +26,15 @@ public class SistemaVentaPasajes {
     }
 
     public boolean createBus(String patente, String marca, String modelo, int nroAsientos) {
+        if (findBus(patente) != null) {
+            return false;
+        }
+
+        Bus nuevoBus = new Bus(patente, nroAsientos);
+        nuevoBus.setMarca(marca);
+        nuevoBus.setModelo(modelo);
+        this.buses.add(nuevoBus);
+
         return true;
     }
 

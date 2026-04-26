@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Bus {
     private String patente;
+    private String marca;
     private String modelo;
     private int nroAsientos;
     private List<Viaje> viajes;
 
-    public Bus(String patente, String modelo, int nroAsientos) {
+    public Bus(String patente, int nroAsientos) {
         this.patente = patente;
-        this.modelo = modelo;
         this.nroAsientos = nroAsientos;
         this.viajes = new ArrayList<>();
     }
@@ -21,10 +21,10 @@ public class Bus {
         return patente;
     }
     public String getMarca() {
-        return modelo;
+        return marca;
     }
     public void setMarca(String marca) {
-        this.modelo = marca;
+        this.marca = marca;
     }
     public String getModelo() {
         return modelo;
@@ -35,9 +35,7 @@ public class Bus {
     public int getNroAsientos() {
         return nroAsientos;
     }
-    public void addViaje(Viaje viajes){
-        this.viajes.add(viajes);
+    public void addViaje(Viaje viaje){
+        this.viajes.add(viaje);
     }
 }
-
-
