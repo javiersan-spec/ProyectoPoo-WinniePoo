@@ -44,6 +44,19 @@ public class SistemaVentaPasajes {
     }
 
     public boolean createViaje(LocalDate fecha, LocalTime hora, int precio, String patBus) {
+        Bus busEncontrado = findBus(patBus);
+        if (busEncontrado == null) {
+            return false;
+        }
+
+        for (Viaje v : viajes) {
+            if (v.getFecha().equals(fecha) && v.getHora().equals(hora) && v.getBus().getPatente().equalsIgnoreCase(patBus)) {
+                return false;
+            }
+        }
+
+        Viaje nuevoViaje = new Viaje(fecha, hora, precio, busEncontrado);
+        this.viajes.add(nuevoViaje);
         return true;
     }
 
@@ -52,7 +65,41 @@ public class SistemaVentaPasajes {
     }
 
     public String[][] getHorariosDisponibles(LocalDate fechaViaje) {
-        return new String[0][0];
+
+        int contador = 0;
+        for (Viaje v : viajes) {
+            if (v.getFecha().equals(fechaViaje)) {
+                contador++;
+            }
+        }
+
+        if (contador == 0) {
+            return new String[0][0];
+        }
+
+        String[][] horarios = new String[contador][4];
+        int index = 0;
+        java.time.format.DateTimeFormatter timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm");
+
+        for (Viaje v : viajes) {
+            if (v.getFecha().equals(fechaViaje)) {
+                horarios[index][0] = v.getBus().getPatente();
+                horarios[index][1] = v.getHora().format(timeFormatter);
+                horarios[index][2] = String.valueOf(v.getPrecio());
+
+                // Contar asientos libres
+                int libres = 0;
+                String[][] asientos = v.getAsientos();
+                for (int j = 0; j < asientos.length; j++) {
+                    if (asientos[j][1].equalsIgnoreCase("Libre")) {
+                        libres++;
+                    }
+                }
+                horarios[index][3] = String.valueOf(libres);
+                index++;
+            }
+        }
+        return horarios;
     }
 
     public String[] listAsientosDeViaje(LocalDate fecha, LocalTime hora, String patBus) {
@@ -76,7 +123,33 @@ public class SistemaVentaPasajes {
     }
 
     public String[][] listViajes() {
-        return new String[0][0];
+        if (viajes.isEmpty()) {
+            return new String[0][0];
+        }
+
+        String[][] lista = new String[viajes.size()][5];
+        java.time.format.DateTimeFormatter dateFormatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        java.time.format.DateTimeFormatter timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm");
+
+        for (int i = 0; i < viajes.size(); i++) {
+            Viaje v = viajes.get(i);
+            lista[i][0] = v.getFecha().format(dateFormatter);
+            lista[i][1] = v.getHora().format(timeFormatter);
+            lista[i][2] = String.valueOf(v.getPrecio());
+
+            // Contamos los asientos disponibles
+            int libres = 0;
+            String[][] asientos = v.getAsientos();
+            for (int j = 0; j < asientos.length; j++) {
+                if (asientos[j][1].equalsIgnoreCase("Libre")) {
+                    libres++;
+                }
+            }
+
+            lista[i][3] = String.valueOf(libres);
+            lista[i][4] = v.getBus().getPatente();
+        }
+        return lista;
     }
 
     public String[][] listPasajeros(LocalDate fecha, LocalTime hora, String patBus) {
@@ -111,6 +184,17 @@ public class SistemaVentaPasajes {
     }
 
     public Viaje findViaje(String fecha, String hora, String patenteBus) {
+        java.time.format.DateTimeFormatter dateFormatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        java.time.format.DateTimeFormatter timeFormatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm");
+
+        LocalDate f = LocalDate.parse(fecha, dateFormatter);
+        LocalTime h = LocalTime.parse(hora, timeFormatter);
+
+        for (Viaje v : viajes) {
+            if (v.getFecha().equals(f) && v.getHora().equals(h) && v.getBus().getPatente().equalsIgnoreCase(patenteBus)) {
+                return v;
+            }
+        }
         return null;
     }
 
