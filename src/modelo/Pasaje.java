@@ -1,3 +1,5 @@
+package modelo;
+
 /**
  * Clase encargada de facilitar la creacion del pasaje del cliente
  * @author Benjamin Carrasco

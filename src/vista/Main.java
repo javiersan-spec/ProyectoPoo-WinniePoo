@@ -1,4 +1,4 @@
-/**
+package vista; /**
  * Clase principal que gestiona el menú y la interacción con el usuario.
  * @author Javier San Martin
  * @author Benjamin Carrasco
@@ -7,6 +7,8 @@
  * @author Benjamin Jara
  * @version 1.0
  */
+import utilidades.Nombre;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -34,9 +36,9 @@ public class Main {
             System.out.println("===========================================");
             System.out.println("\n   ...::: Menú principal :::...");
             System.out.println("1) Crear cliente");
-            System.out.println("2) Crear Bus");
-            System.out.println("3) Crear Viaje");
-            System.out.println("4) Vender Pasaje");
+            System.out.println("2) Crear modelo.Bus");
+            System.out.println("3) Crear modelo.Viaje");
+            System.out.println("4) Vender modelo.Pasaje");
             System.out.println("5) Lista de pasajeros");
             System.out.println("6) Lista de ventas");
             System.out.println("7) Lista de viajes");
@@ -91,7 +93,7 @@ public class Main {
     private void createCliente() {
         System.out.println("\n ...::: Crear un nuevo cliente :::...");
 
-        System.out.print("rut[1] o Pasaporte[2] : ");
+        System.out.print("rut[1] o utilidades.Pasaporte[2] : ");
         int tipoId = 1; // Por defecto
         if (sc.hasNextInt()) {
             tipoId = sc.nextInt();
@@ -107,7 +109,7 @@ public class Main {
             String rutStr = sc.nextLine();
             idCli = Rut.of(rutStr);
         } else if (tipoId == 2) {
-            System.out.print("Pasaporte : ");
+            System.out.print("utilidades.Pasaporte : ");
             String pasStr = sc.nextLine();
             System.out.print("Nacionalidad : ");
             String nacStr = sc.nextLine();
@@ -135,7 +137,7 @@ public class Main {
         // Asignamos el enum
         Tratamiento tratamiento = (tipoTratamiento == 2) ? Tratamiento.SRA : Tratamiento.SR;
 
-        System.out.print("Nombre: ");
+        System.out.print("utilidades.Nombre: ");
         String nombres = sc.nextLine();
 
         System.out.print("Apellido Paterno: ");
@@ -157,7 +159,7 @@ public class Main {
         String email = sc.nextLine();
 
         if (sistema.createCliente(idCli, nom, fono, email)) {
-            System.out.println("...::: Cliente guardado exitosamente :::...");
+            System.out.println("...::: modelo.Cliente guardado exitosamente :::...");
         } else {
             System.out.println("Error al crear el cliente.");
         }
@@ -217,7 +219,7 @@ public class Main {
             return;
         }
 
-        System.out.print("Patente Bus : ");
+        System.out.print("Patente modelo.Bus : ");
         String patente = sc.nextLine();
 
         Bus bus = sistema.findBus(patente);
@@ -235,8 +237,8 @@ public class Main {
 
     // Opción 4
     private void vendePasajes() {
-        System.out.println("\n....:::: Venta de pasajes :::....");
-        System.out.println(" ::::: Datos de la Venta ");
+        System.out.println("\n....:::: modelo.Venta de pasajes :::....");
+        System.out.println(" ::::: Datos de la modelo.Venta ");
 
         System.out.print("ID Documento : ");
         String idDoc = sc.nextLine();
@@ -252,7 +254,7 @@ public class Main {
         LocalDate fechaVenta = LocalDate.parse(fechaVentaStr, dateFormatter);
 
         System.out.println(" :::: Datos del cliente ");
-        System.out.print("Rut [1] o Pasaporte [2] : ");
+        System.out.print("utilidades.Rut [1] o utilidades.Pasaporte [2] : ");
         int tipoId = sc.nextInt();
         sc.nextLine();
 
@@ -261,13 +263,13 @@ public class Main {
             System.out.print("R.U.T : ");
             idCli = Rut.of(sc.nextLine());
         } else {
-            System.out.print("Pasaporte : ");
+            System.out.print("utilidades.Pasaporte : ");
             String pas = sc.nextLine();
             System.out.print("Nacionalidad : ");
             idCli = Pasaporte.of(pas, sc.nextLine());
         }
 
-        System.out.print("Nombre Cliente : ");
+        System.out.print("utilidades.Nombre modelo.Cliente : ");
         String nombreClienteInput = sc.nextLine();
 
         Cliente cliente = sistema.findCliente(idCli);
@@ -344,8 +346,8 @@ public class Main {
         // Eliminamos el arreglo temporal y procesamos la venta directamente
         for (int i = 0; i < cantidadPasajes; i++) {
             int numAsiento = Integer.parseInt(asientosSeleccionados[i].trim());
-            System.out.println("\n:::: Datos Pasajero " + (i + 1));
-            System.out.print("Rut[1] o Pasaporte[2] : ");
+            System.out.println("\n:::: Datos modelo.Pasajero " + (i + 1));
+            System.out.print("utilidades.Rut[1] o utilidades.Pasaporte[2] : ");
             int tIdP = sc.nextInt();
             sc.nextLine();
 
@@ -354,7 +356,7 @@ public class Main {
                 System.out.print("R.U.T : ");
                 idPas = Rut.of(sc.nextLine());
             } else {
-                System.out.print("Pasaporte : ");
+                System.out.print("utilidades.Pasaporte : ");
                 String pas = sc.nextLine();
                 System.out.print("Nacionalidad : ");
                 idPas = Pasaporte.of(pas, sc.nextLine());
@@ -362,12 +364,12 @@ public class Main {
 
             // Si el pasajero no existe, lo creamos
             if (sistema.getNombrePasajero(idPas) == null) {
-                System.out.println("Pasajero no registrado. Ingrese sus datos:");
+                System.out.println("modelo.Pasajero no registrado. Ingrese sus datos:");
                 Nombre nomP = new Nombre();
-                System.out.print("Nombre Pasajero: "); nomP.setNombres(sc.nextLine());
+                System.out.print("utilidades.Nombre modelo.Pasajero: "); nomP.setNombres(sc.nextLine());
                 System.out.print("Teléfono: "); String fonP = sc.nextLine();
                 Nombre nomC = new Nombre();
-                System.out.print("Nombre de Contacto: "); nomC.setNombres(sc.nextLine());
+                System.out.print("utilidades.Nombre de Contacto: "); nomC.setNombres(sc.nextLine());
                 System.out.print("Teléfono de Contacto: "); String fonC = sc.nextLine();
 
                 sistema.createPasajero(idPas, nomP, fonP, nomC, fonC);
@@ -380,7 +382,7 @@ public class Main {
 
         System.out.println("\n:::: Monto total de la venta: $" + sistema.getMontoVenta(idDoc, tipoDoc));
 
-        // IMPRESIÓN FINAL: Recuperamos los datos reales desde la Venta
+        // IMPRESIÓN FINAL: Recuperamos los datos reales desde la modelo.Venta
         System.out.println("\n::: imprimiendo los pasajes ");
         Venta ventaActual = sistema.findVenta(idDoc, tipoDoc);
 

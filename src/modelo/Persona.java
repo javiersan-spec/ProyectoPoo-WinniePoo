@@ -1,3 +1,8 @@
+package modelo;
+
+import utilidades.IdPersona;
+import utilidades.Nombre;
+
 /**
  * Clase encargada de definir a la persona y sus datos
  *  @author Javier San Martin
@@ -34,7 +39,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Pasajero:(" + "id= " + idPersona + ", nombre= " + nombre + ", telefono= " + telefono + ")";
+        return "modelo.Pasajero:(" + "id= " + idPersona + ", nombre= " + nombre + ", telefono= " + telefono + ")";
     }
 
     public boolean equals(Object o) {

@@ -1,3 +1,5 @@
+package utilidades;
+
 /**
  * Clase encargada de construir el rut recibido
  * @author Beatriz Aguilera

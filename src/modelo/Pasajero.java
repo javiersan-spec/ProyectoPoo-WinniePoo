@@ -1,3 +1,8 @@
+package modelo;
+
+import utilidades.IdPersona;
+import utilidades.Nombre;
+
 /**
  * Clase encargada de definir al pasajero
  * @author Javier San Martin

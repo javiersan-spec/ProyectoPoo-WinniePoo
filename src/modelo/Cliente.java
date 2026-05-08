@@ -1,3 +1,7 @@
+package modelo;
+
+import utilidades.Nombre;
+
 import java.util.ArrayList;
 import java.util.List;
 /**

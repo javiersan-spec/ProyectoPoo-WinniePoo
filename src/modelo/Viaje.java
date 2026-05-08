@@ -1,4 +1,4 @@
-/**
+package modelo; /**
  * Clase encargada del crear un viaje para el usuario
  * @author Genesis Castro
  */

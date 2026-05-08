@@ -1,3 +1,5 @@
+package utilidades;
+
 /**
  * Clase encargada de recibir los datos del cliente
  * @author  Beatriz Aguilera

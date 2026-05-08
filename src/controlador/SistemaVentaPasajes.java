@@ -1,8 +1,14 @@
-/**
+package controlador; /**
  * Clase encargada de trabajar con los metodos del menu
  * @author Genesis Castro
  * @author Benjamin Carrasco
  */
+
+import modelo.Bus;
+import modelo.Cliente;
+import modelo.Pasajero;
+import utilidades.IdPersona;
+import utilidades.Nombre;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

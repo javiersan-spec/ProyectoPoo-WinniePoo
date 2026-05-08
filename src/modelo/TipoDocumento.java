@@ -1,3 +1,5 @@
+package modelo;
+
 //Autor Benjamin Carrasco
 public enum TipoDocumento {
     BOLETA,
