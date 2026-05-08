@@ -1,9 +1,12 @@
 package utilidades;
-
 /**
- * @author Benjamin Jara
+ * @author Javier San Martin
  */
+
 public interface IdPersona {
+    @Override
     String toString();
+
+    @Override
     boolean equals(Object otro);
 }
