@@ -33,7 +33,7 @@ public class Main {
     private void menu() {
         int opcion = -1;
         while (opcion != 0) {
-            System.out.println("===========================================");
+            System.out.println("=============================================");
             System.out.println("\n   ...::: Menú principal :::...");
             System.out.println("1) Crear cliente");
             System.out.println("2) Crear modelo.Bus");
