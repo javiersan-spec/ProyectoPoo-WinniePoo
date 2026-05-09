@@ -1,15 +1,14 @@
 package utilidades;
 /**
- * Clase encargada de construir el rut recibido
- * @author Javier San Martín
+ * @author Javier San Martin
  * @version Avance 2
  */
 public class Rut implements IdPersona {
     private int numero;
     private char dv;
 
-    private Rut(int numero, char dv) {
-        this.numero = numero;
+    private Rut(int num, char dv) { //ahora el constructor es privado
+        this.numero = num;
         this.dv = dv;
     }
 
@@ -22,14 +21,12 @@ public class Rut implements IdPersona {
     }
 
     public static Rut of(String rutConDv) {
+        if (rutConDv == null || !rutConDv.contains("-")) return null;
+
+        String[] partes = rutConDv.split("-");
+        if (partes.length != 2 || partes[1].length() != 1) return null;
+
         try {
-
-            if (rutConDv == null || !rutConDv.contains("-")) return null;
-
-            String[] partes = rutConDv.split("-");
-            if (partes.length != 2 || partes[1].length() != 1) return null;
-
-            // Eliminar puntos y convertir el numero
             String numeroStr = partes[0].replace(".", "");
             int numero = Integer.parseInt(numeroStr);
             char dv = Character.toUpperCase(partes[1].charAt(0));
@@ -51,11 +48,6 @@ public class Rut implements IdPersona {
             sb.append(numeroStr, i, i + 3);
         }
         return sb.toString() + "-" + dv;
-    }
-
-    @Override
-    public String toString() {
-        return numero + "-" + dv;
     }
 
     @Override
