@@ -1,8 +1,8 @@
 package utilidades;
-
 /**
  * Clase encargada de construir el rut recibido
- * @author Beatriz Aguilera
+ * @author Javier San Martín
+ * @version Avance 2
  */
 public class Rut implements IdPersona {
     private int numero;
@@ -54,10 +54,15 @@ public class Rut implements IdPersona {
     }
 
     @Override
+    public String toString() {
+        return numero + "-" + dv;
+    }
+
+    @Override
     public boolean equals(Object otro) {
-        if (!(otro instanceof Rut))
-            return false;
-        Rut r = (Rut) otro;
-        return this.numero == r.numero && this.dv == r.dv;
+        if (this == otro) return true;
+        if (otro == null || getClass() != otro.getClass()) return false;
+        Rut rut = (Rut) otro;
+        return numero == rut.numero && dv == rut.dv;
     }
 }
