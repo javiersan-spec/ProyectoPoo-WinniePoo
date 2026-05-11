@@ -1,11 +1,8 @@
 package utilidades;
-
 /**
  * Clase encargada de recibir los datos del cliente
  * @author  Beatriz Aguilera
  */
-
-
 public class Nombre {
     private Tratamiento tratamiento;
     private String nombres;
