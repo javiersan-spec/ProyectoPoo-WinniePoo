@@ -1,12 +1,21 @@
 package modelo;
+import modelo.Persona;
+import modelo.Viaje;
+import utilidades.Direccion;
+import utilidades.IdPersona;
+import utilidades.Nombre;
 
-public class Tripulante extends Persona {
+import java.util.ArrayList;
+
+public abstract class Tripulante extends Persona {
 
     private Direccion direccion;
+    private ArrayList<Viaje> viajes;
 
     public Tripulante(IdPersona id, Nombre nom, Direccion dir) {
         super(id, nom);
         this.direccion = dir;
+        viajes = new ArrayList<>();
     }
 
     public Direccion getDireccion() {
@@ -18,10 +27,12 @@ public class Tripulante extends Persona {
     }
 
     public void addViaje(Viaje viaje) {
-
+        if (!viajes.contains(viaje)) {
+            viajes.add(viaje);
+        }
     }
 
     public int getNroViajes() {
-        return 0;
+        return viajes.size();
     }
 }
