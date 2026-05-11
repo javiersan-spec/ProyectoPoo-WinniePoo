@@ -2,6 +2,24 @@ package modelo;
 /**
  * @author Benjamin Jara
  */
+public class Conductor extends Tripulante {
 
-public class Conductor {
+    private int nroViajes;
+
+    public Conductor(IdPersona id, Nombre nom, Direccion dir) {
+        super(id, nom, dir);
+        this.nroViajes = 0;
+    }
+
+    @Override
+    public void addViaje(Viaje viaje) {
+        if (viaje != null) {
+            this.nroViajes++;
+        }
+    }
+
+    @Override
+    public int getNroViajes() {
+        return this.nroViajes;
+    }
 }
