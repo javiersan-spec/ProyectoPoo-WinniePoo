@@ -1,5 +1,9 @@
 package modelo;
 
+import utilidades.Direccion;
+import utilidades.IdPersona;
+import utilidades.Nombre;
+
 public class Tripulante extends Persona {
 
     private Direccion direccion;

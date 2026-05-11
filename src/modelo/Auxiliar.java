@@ -1,4 +1,8 @@
 package modelo;
+
+import utilidades.IdPersona;
+import utilidades.Nombre;
+import utilidades.Direccion;
 /**
  * @author Benjamin Jara
  */
