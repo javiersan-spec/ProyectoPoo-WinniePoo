@@ -4,9 +4,9 @@ import utilidades.IdPersona;
 import utilidades.Nombre;
 
 /**
- * Clase encargada de generar a un cliente dentro del sistema de venta de pasajes.
+ * Clase encargada de generar un cliente dentro del sistema de venta de pasajes.
  * Hereda los datos basicos de persona y agrega el email y el historial de ventas
- * realizadas por el cliente
+ * realizadas por el Cliente.
  * @author Genesis Castro
  */
 public class Cliente extends Persona {
