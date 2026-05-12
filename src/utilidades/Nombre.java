@@ -1,5 +1,4 @@
 package utilidades;
-
 /**
  * Clase que representa el nombre completo de una persona,
  * compuesto por el nombre, apellido paterno y apellido materno.

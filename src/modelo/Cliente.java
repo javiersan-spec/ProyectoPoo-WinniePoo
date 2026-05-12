@@ -1,5 +1,6 @@
 package modelo;
 
+import utilidades.IdPersona;
 import utilidades.Nombre;
 
 import java.util.ArrayList;
