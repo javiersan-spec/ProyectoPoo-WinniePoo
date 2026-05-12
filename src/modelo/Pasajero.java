@@ -17,7 +17,7 @@ public class Pasajero extends Persona {
         this.nomContacto = nomContacto;
         this.fonoContacto = fonoContacto;
     }
-    //getters & setters
+    //getters y setters
     public Nombre getNomContacto() {
         return nomContacto;
     }

@@ -1,10 +1,12 @@
-package vista; /**
+package vista;
+/**
  * Clase principal que gestiona el menú y la interacción con el usuario.
  * @author Javier San Martin
  * @author Benjamin Carrasco
  * @author Genesis Castro
  * @author Beatriz Aguilera
  * @author Benjamin Jara
+ * todo: dejaremos el main para el final primero solucionaremos otras clases
  * @version 1.0
  */
 import utilidades.Nombre;

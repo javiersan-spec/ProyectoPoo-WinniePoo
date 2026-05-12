@@ -1,19 +1,20 @@
 package utilidades;
-
 /**
- * @author Benjamin Jara
+ * @author Javier San Martín
+ * @version Avance 2
  */
 public class Pasaporte implements IdPersona {
     private String numero;
     private String nacionalidad;
 
-    public Pasaporte(String num, String nacionalidad) {
+    private Pasaporte(String num, String nacionalidad) {
         this.numero = num;
         this.nacionalidad = nacionalidad;
     }
 
     public String getNumero() {
         return numero; }
+
     public String getNacionalidad() {
         return nacionalidad; }
 
@@ -28,8 +29,9 @@ public class Pasaporte implements IdPersona {
 
     @Override
     public boolean equals(Object otro) {
-        if (!(otro instanceof Pasaporte)) return false;
-        Pasaporte p = (Pasaporte) otro;
-        return this.numero.equals(p.numero) && this.nacionalidad.equals(p.nacionalidad);
+        if (this == otro) return true;
+        if (otro == null || getClass() != otro.getClass()) return false;
+        Pasaporte pasaporte = (Pasaporte) otro;
+        return numero.equals(pasaporte.numero) && nacionalidad.equals(pasaporte.nacionalidad);
     }
 }
