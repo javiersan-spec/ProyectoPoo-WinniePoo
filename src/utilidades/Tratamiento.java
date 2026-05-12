@@ -1,9 +1,7 @@
 package utilidades;
-
 /**
- * @author Benjamin Carrasco
+ * @author Genesis Castro
  */
-
 public enum Tratamiento {
     SRA,
     SR
