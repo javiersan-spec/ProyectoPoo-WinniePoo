@@ -8,6 +8,7 @@ import utilidades.Nombre;
  * Hereda los datos basicos de persona y agrega el email y el historial de ventas
  * realizadas por el Cliente.
  * @author Genesis Castro
+ * Avance 2
  */
 public class Cliente extends Persona {
 
