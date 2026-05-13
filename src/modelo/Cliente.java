@@ -31,6 +31,6 @@ public class Cliente extends Persona {
             nuevasVentas[i] = ventas[i];
         }
         nuevasVentas[ventas.length] = venta;
-        ventas = nuevas
+        ventas = nuevasVentas;
     }
 }
