@@ -9,6 +9,7 @@ package vista;
  * todo: dejaremos el main para el final primero solucionaremos otras clases
  * @version 1.0
  */
+import modelo.Pasaje;
 import utilidades.Nombre;
 
 import java.time.LocalDate;
