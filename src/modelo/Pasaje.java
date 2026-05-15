@@ -1,36 +1,24 @@
 package modelo;
-/**
- * Clase encargada de facilitar la creacion del pasaje del cliente
- * @author Benjamin Carrasco
- */
+
 public class Pasaje {
-    private long numero;
-    private int asiento;
-    private Viaje viaje;
+    private int Asiento;
+    private long Numero;
     private Pasajero pasajero;
     private Venta venta;
-    public Pasaje(int asiento, Viaje viaje, Pasajero pasajero, Venta venta) {
-        this.asiento = asiento;
-        this.viaje = viaje;
+    private Viaje viaje;
+
+    public Pasaje(int Asiento, Pasajero pasajero, Venta venta, Viaje viaje) {
+        this.Asiento=Asiento;
+        this.Numero = Numero;
         this.pasajero = pasajero;
         this.venta = venta;
-        this.numero = System.currentTimeMillis() + (int)(Math.random() * 100000);
+        this.viaje = viaje;
 
-        if (this.viaje != null) {
-            this.viaje.addPasaje(this);
-        }
+        viaje.addPasaje(this);
     }
 
     public int getNumero() {
-        return (int) Math.abs(this.numero % Integer.MAX_VALUE);
-    }
-
-    public int getAsiento() {
-        return asiento;
-    }
-
-    public Viaje getViaje() {
-        return viaje;
+        return Math.toIntExact(Numero);
     }
 
     public Pasajero getPasajero() {
@@ -39,5 +27,13 @@ public class Pasaje {
 
     public Venta getVenta() {
         return venta;
+    }
+
+    public Viaje getViaje() {
+        return viaje;
+    }
+
+    public int getAsiento() {
+        return Asiento;
     }
 }
