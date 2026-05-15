@@ -88,7 +88,7 @@ public class Viaje {
 
         return asientos;
     }
-
+// revisar desde aca para ver si esta correcto o se pierde informacion aca
     public String[][] getListaPasajeros() {
         String[][] lista = new String[pasajes.size()][4];
 
