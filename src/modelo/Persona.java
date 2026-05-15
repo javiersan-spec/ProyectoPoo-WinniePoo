@@ -4,48 +4,41 @@ import utilidades.IdPersona;
 import utilidades.Nombre;
 
 /**
- * Clase encargada de definir a la persona y sus datos
- *  @author Javier San Martin
+ * Clase abstracta que representa a una persona dentro del sistema de venta de pasajes.
+ * Contiene los datos basicos comunes de todo tipo de persona:
+ * Indentificador, nombre completo y telefono.
+ *  @author Beatriz Aguilera
  */
-public class Persona {
-    private IdPersona idPersona;
-    private Nombre nombre;
-    private String telefono;
+   public abstract class Persona {
 
-    public Persona(IdPersona id, Nombre nombre) {
-        this.idPersona = id;
-        this.nombre = nombre;
-    }
+        private IdPersona idPersona;
+        private Nombre nombreCompleto;
+        private String telefono;
 
-    public IdPersona getIdPersona() {
-        return idPersona;
-    }
-
-    public Nombre getNombreCompleto() {
-        return nombre;
-    }
-
-    public void setNombreCompleto(Nombre nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Pasajero:(" + "id= " + idPersona + ", nombre= " + nombre + ", telefono= " + telefono + ")";
-    }
-
-    public boolean equals(Object o) {
-        if (o instanceof Persona) {
-            Persona p = (Persona) o;
+        public Persona(IdPersona id, Nombre nombre) {
+            this.idPersona = id;
+            this.nombreCompleto = nombre;
         }
-        return false;
+
+        public IdPersona getIdPersona() { return idPersona; }
+        public Nombre getNombreCompleto() { return nombreCompleto; }
+        public String getTelefono() { return telefono; }
+
+        public void setNombreCompleto(Nombre nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+        public void setTelefono(String telefono) { this.telefono = telefono; }
+
+        @Override
+        public String toString() {
+            return "[" + idPersona.toString() + "] "
+                    + nombreCompleto.toString()
+                    + " - Tel: " + (telefono != null ? telefono : "sin registrar");
+        }
+
+        @Override
+        public boolean equals(Object otro) {
+            if (this == otro) return true;
+            if (otro == null || getClass() != otro.getClass()) return false;
+            Persona p = (Persona) otro;
+            return idPersona.equals(p.idPersona);
+        }
     }
-}
