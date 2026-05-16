@@ -1,6 +1,7 @@
 package modelo;
-
-//Autor Benjamin Carrasco
+/**
+ * Autor Benjamin Carrasco
+ */
 public enum TipoDocumento {
     BOLETA,
     FACTURA
