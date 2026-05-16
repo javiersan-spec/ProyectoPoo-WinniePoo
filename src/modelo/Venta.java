@@ -1,4 +1,5 @@
-package modelo; /**
+package modelo;
+/**
  * @author Benjamin Jara
  */
 
