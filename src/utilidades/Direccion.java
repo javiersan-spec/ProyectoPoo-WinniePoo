@@ -2,7 +2,7 @@ package utilidades;
 
 /**
  * Clase que representa la direccion fisica de una persona,
- * compuestapor calle, numero y comuna.
+ * compuesta por calle, numero y comuna.
  *  @author Beatriz Aguilera
  */
 public class Direccion {
