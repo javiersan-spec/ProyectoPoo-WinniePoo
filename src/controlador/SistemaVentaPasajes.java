@@ -1,4 +1,5 @@
-package controlador; /**
+package controlador;
+/**
  * Clase encargada de trabajar con los metodos del menu
  * @author Genesis Castro
  * @author Benjamin Carrasco
