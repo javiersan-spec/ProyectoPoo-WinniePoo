@@ -6,17 +6,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Venta {
+    private  int Precio;
     private String idDocumento;
     private TipoDocumento tipo;
     private LocalDate fecha;
     private Cliente cliente;
     private ArrayList<Pasaje> pasajes;
 
-    public Venta(String id, TipoDocumento tipo, LocalDate fec, Cliente cliente) {
+    public Venta(String id, TipoDocumento tipo, LocalDate fec, Cliente cliente, int Precio ) {
         this.idDocumento = id;
         this.tipo = tipo;
         this.fecha = fec;
         this.cliente = cliente;
+        this.Precio= Precio;
         this.pasajes = new ArrayList<>();
         this.cliente.addVenta(this);
     }

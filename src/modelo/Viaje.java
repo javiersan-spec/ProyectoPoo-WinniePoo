@@ -1,74 +1,91 @@
-package modelo; /**
- * Clase encargada del crear un viaje para el usuario
- * @author Genesis Castro
- */
+package modelo;
+import modelo.Bus;
+import modelo.Terminal;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Viaje {
-    private LocalDate fecha;
-    private LocalTime hora;
-    private int precio;
+    private LocalDateTime fechaHoraSalida;
+    private int duracionMinutos;
+    private int valorPasaje;
     private Bus bus;
-    private List<Pasaje> pasajes;
+    private Terminal terminalSalida;
+    private Terminal terminalLlegada;
+    private Auxiliar auxiliar;
+    private ArrayList<Conductor> conductores;
+    private ArrayList<Pasaje> pasajes;
 
-    public Viaje(LocalDate fecha, LocalTime hora, int precio, Bus bus) {
-        this.fecha = fecha;
-        this.hora = hora;
-        this.precio = precio;
+    public Viaje(LocalDateTime fechaHoraSalida, int duracionMinutos, int valorPasaje,
+                 Bus bus, Terminal terminalSalida, Terminal terminalLlegada,
+                 Auxiliar auxiliar, ArrayList<Conductor> conductores) {
+        this.fechaHoraSalida = fechaHoraSalida;
+        this.duracionMinutos = duracionMinutos;
+        this.valorPasaje = valorPasaje;
         this.bus = bus;
+        this.terminalSalida = terminalSalida;
+        this.terminalLlegada = terminalLlegada;
+        this.auxiliar = auxiliar;
+        this.conductores = conductores;
         this.pasajes = new ArrayList<>();
 
-        if (this.bus != null) {
-            this.bus.addViaje(this);
+        bus.addViaje(this);
+        terminalSalida.addSalida(this);
+        terminalLlegada.addLlegada(this);
+        auxiliar.addViaje(this);
+
+        for (Conductor conductor : conductores) {
+            conductor.addViaje(this);
         }
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalDateTime getFechaHoraSalida() {
+        return fechaHoraSalida;
     }
 
-    public LocalTime getHora() {
-        return hora;
+    public int getDuracionMinutos() {
+        return duracionMinutos;
     }
 
-    public int getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public int getValorPasaje() {
+        return valorPasaje;
     }
 
     public Bus getBus() {
         return bus;
     }
 
-    public void addPasaje(Pasaje pasaje) {
-        if (pasaje != null) {
-            this.pasajes.add(pasaje);
-        }
+    public Terminal getTerminalSalida() {
+        return terminalSalida;
     }
 
-    public String[][] getAsientos() {
-        int total = bus.getNroAsientos();
-        String[][] asientos = new String[total][2];
+    public Terminal getTerminalLlegada() {
+        return terminalLlegada;
+    }
 
-        for (int i = 0; i < total; i++) {
-            int numAsiento = i + 1;
-            asientos[i][0] = String.valueOf(numAsiento);
-            asientos[i][1] = "Libre";
+    public Auxiliar getAuxiliar() {
+        return auxiliar;
+    }
 
-            for (Pasaje p : pasajes) {
-                if (p.getAsiento() == numAsiento) {
-                    asientos[i][1] = "Ocupado";
-                    break;
-                }
-            }
+    public ArrayList<Conductor> getConductores() {
+        return conductores;
+    }
+
+    public LocalDateTime getFechaHoraTermino() {
+        return fechaHoraSalida.plusMinutes(duracionMinutos);
+    }
+
+    public String[] getAsientos() {
+        String[] asientos = new String[bus.getCapacidad()];
+
+        for (int i = 0; i < asientos.length; i++) {
+            asientos[i] = String.valueOf(i + 1);
         }
+
+        for (Pasaje pasaje : pasajes) {
+            asientos[pasaje.getAsiento() - 1] = "*";
+        }
+
         return asientos;
     }
 // revisar desde aca para ver si esta correcto o se pierde informacion aca
@@ -76,22 +93,40 @@ public class Viaje {
         String[][] lista = new String[pasajes.size()][4];
 
         for (int i = 0; i < pasajes.size(); i++) {
-            Pasaje p = pasajes.get(i);
-            Pasajero pas = p.getPasajero();
+            Pasaje pasaje = pasajes.get(i);
+            Pasajero pasajero = pasaje.getPasajero();
 
-            lista[i][0] = pas.getIdPersona().toString();
-            lista[i][1] = pas.getNombreCompleto().toString();
-            lista[i][2] = "-";
-            lista[i][3] = "-";
+            lista[i][0] = String.valueOf(pasajero.getIdPersona());
+            lista[i][1] = String.valueOf(pasajero.getNombreCompleto());
+            lista[i][2] = String.valueOf(pasajero.getNomContacto());
+            lista[i][3] = pasajero.getFonoContacto();
         }
+
         return lista;
     }
 
-    public boolean existeDisponibilidad() {
-        return pasajes.size() < bus.getNroAsientos();
+    public boolean existeDisponibilidad(int cantidadAsientos) {
+        return bus.getCapacidad() - pasajes.size() >= cantidadAsientos;
     }
 
-    public int getNroAsientosDisponibles() {
-        return bus.getNroAsientos() - pasajes.size();
+    public Venta[] getVentas() {
+        ArrayList<Venta> ventas = new ArrayList<>();
+
+        for (Pasaje pasaje : pasajes) {
+            if (!ventas.contains(pasaje.getVenta())) {
+                ventas.add(pasaje.getVenta());
+            }
+        }
+
+        return ventas.toArray(new Venta[0]);
+    }
+
+    public void addPasaje(Pasaje pasaje) {
+        pasajes.add(pasaje);
+    }
+
+    public int getPrecio() {
+        return Precio;
     }
 }
+
