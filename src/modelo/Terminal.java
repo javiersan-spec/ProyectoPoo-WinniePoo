@@ -3,6 +3,7 @@ package modelo;
  * @author Benjamin Jara
  */
 
+import utilidades.Direccion;
 import java.util.ArrayList;
 import java.util.List;
 
