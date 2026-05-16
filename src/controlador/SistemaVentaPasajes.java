@@ -4,9 +4,7 @@ package controlador; /**
  * @author Benjamin Carrasco
  */
 
-import modelo.Bus;
-import modelo.Cliente;
-import modelo.Pasajero;
+import modelo.*;
 import utilidades.IdPersona;
 import utilidades.Nombre;
 
