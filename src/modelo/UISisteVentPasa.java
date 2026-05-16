@@ -1,6 +1,10 @@
 /** @author Genesis Castro
  * Avance 2
  */
+import controlador.SistemaVentaPasajes;
+import modelo.Empresa;
+import utilidades.Nombre;
+import utilidades.Rut;
 
 import java.util.Scanner;
 
@@ -8,11 +12,11 @@ public class UISisteVentPasa {
 
     private static UISisteVentPasa instancia;
     private Scanner sc;
-    private SistemaVentaPasaje sistema;
+    private SistemaVentaPasajes sistema;
 
     private UISisteVentPasa() {
         sc = new Scanner(System.in);
-        sistema = SistemaVentaPasaje.getInstancia();
+        sistema = SistemaVentaPasajes.getInstancia();
     }
 
     public static UISisteVentPasa getInstancia() {
