@@ -1,4 +1,5 @@
-package modelo; /**
+package modelo;
+/**
  * Clase que se encarga de los datos del bus
  * @author Benjamin Jara
  */
@@ -11,11 +12,13 @@ public class Bus {
     private String marca;
     private String modelo;
     private int nroAsientos;
+    private Empresa empresa;
     private List<Viaje> viajes;
 
-    public Bus(String patente, int nroAsientos) {
+    public Bus(String patente, int nroAsientos, Empresa empresa) {
         this.patente = patente;
         this.nroAsientos = nroAsientos;
+        this.empresa = empresa;
         this.viajes = new ArrayList<>();
     }
     public String getPatente() {
@@ -36,7 +39,15 @@ public class Bus {
     public int getNroAsientos() {
         return nroAsientos;
     }
-    public void addViaje(Viaje viaje){
-        this.viajes.add(viaje);
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+    public void addViaje(Viaje viaje) {
+        if (viaje != null) {
+            this.viajes.add(viaje);
+        }
+    }
+    public Viaje[] getViajes() {
+        return viajes.toArray(new Viaje[0]);
     }
 }

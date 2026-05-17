@@ -1,4 +1,6 @@
-/** @author Genesis Castro
+package modelo;
+/**
+ * @author Genesis Castro
  * Avance 2
  */
 import controlador.SistemaVentaPasajes;
