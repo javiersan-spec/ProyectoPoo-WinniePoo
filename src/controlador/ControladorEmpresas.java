@@ -1,6 +1,8 @@
-package modelo;
- * Avance 2
+package controlador;
+/**
+ * @author Genesis Castro
  */
+import modelo.Empresa;
 import utilidades.Nombre;
 import utilidades.Rut;
 import java.util.ArrayList;
