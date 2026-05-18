@@ -1,12 +1,8 @@
 package modelo;
-
-/** @author Genesis Castro
  * Avance 2
  */
-
 import utilidades.Nombre;
 import utilidades.Rut;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
