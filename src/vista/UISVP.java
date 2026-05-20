@@ -2,6 +2,8 @@ package vista;
 
 import controlador.SistemaVentaPasajes;
 import java.util.Scanner;
+import controlador.ControladorEmpresas;
+import utilidades.Rut;
 
 public class UISVP {
 
@@ -119,7 +121,33 @@ public class UISVP {
     }
 
     private void createEmpresa() {
+        System.out.println("\n...:::: Creando una nueva Empresa ::::...");
 
+        System.out.print("R.U.T (Ej: 12345678-9) : ");
+        String rutStr = sc.nextLine();
+        utilidades.Rut rut = utilidades.Rut.of(rutStr);
+
+        if (rut == null) {
+            System.out.println("Error: Formato de RUT inválido.");
+            return;
+        }
+
+        System.out.print("Nombre : ");
+        String nombreEmpresa = sc.nextLine();
+
+        utilidades.Nombre nom = new utilidades.Nombre(null, nombreEmpresa, "", "");
+
+        System.out.print("url : ");
+        String url = sc.nextLine();
+
+        controlador.ControladorEmpresas controladorEmp = controlador.ControladorEmpresas.getInstancia();
+        boolean exito = controladorEmp.createEmpresa(rut, nom, url);
+
+        if (exito) {
+            System.out.println("...:::: Empresa guardada exitosamente ::::...");
+        } else {
+            System.out.println("Error: Ya existe una empresa registrada con ese RUT.");
+        }
     }
 
     private void contrataTripulante() {
