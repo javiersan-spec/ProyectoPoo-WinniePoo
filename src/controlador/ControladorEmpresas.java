@@ -26,7 +26,7 @@ public class ControladorEmpresas {
         return instancia;
     }
 
-    public boolean createEmpresa(Rut rut, Nombre nom, String url) {
+    public boolean createEmpresa(Rut rut, String nombre, String url) {
 
         Optional<Empresa> empresaEncontrada = findEmpresa(rut);
 
@@ -34,7 +34,7 @@ public class ControladorEmpresas {
             return false;
         }
 
-        Empresa empresa = new Empresa(rut, nom, url);
+        Empresa empresa = new Empresa(rut, nombre, url);
         empresas.add(empresa);
 
         return true;

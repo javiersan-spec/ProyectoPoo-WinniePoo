@@ -12,10 +12,8 @@ package vista;
 public class Main {
 
     public static void main(String[] args) {
-        // Obtenemos la instancia única de la interfaz de usuario (Singleton)
-        UISVP interfaz = UISVP.getInstancia();
 
-        // Arrancamos el menú principal
+        UISVP interfaz = UISVP.getInstancia();
         interfaz.menu();
     }
 }
