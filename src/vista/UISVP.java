@@ -3,21 +3,21 @@ package vista;
 import controlador.SistemaVentaPasajes;
 import java.util.Scanner;
 
-public class UISisteVentPasa {
+public class UISVP {
 
-    private static UISisteVentPasa instancia;
+    private static UISVP instancia;
     private Scanner sc;
     private SistemaVentaPasajes sistema;
 
-    private UISisteVentPasa() {
+    private UISVP() {
         sc = new Scanner(System.in);
         sistema = SistemaVentaPasajes.getInstancia();
     }
 
-    public static UISisteVentPasa getInstancia() {
+    public static UISVP getInstancia() {
 
         if (instancia == null) {
-            instancia = new UISisteVentPasa();
+            instancia = new UISVP();
         }
 
         return instancia;
