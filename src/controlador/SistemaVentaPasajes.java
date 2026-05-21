@@ -16,12 +16,28 @@ import java.util.List;
 
 public class SistemaVentaPasajes {
 
+    private static SistemaVentaPasajes instancia;
     private List<Cliente> clientes = new ArrayList<>();
     private List<Pasajero> pasajeros = new ArrayList<>();
     private List<Bus> buses = new ArrayList<>();
     private List<Viaje> viajes = new ArrayList<>();
     private List<Venta> ventas = new ArrayList<>();
+    private List<Terminal> terminales = new ArrayList<>();
 
+    private SistemaVentaPasajes() {
+        this.clientes = new ArrayList<>();
+        this.pasajeros = new ArrayList<>();
+        this.buses = new ArrayList<>();
+        this.viajes = new ArrayList<>();
+        this.ventas = new ArrayList<>();
+        this.terminales = new ArrayList<>();
+    }
+    public static SistemaVentaPasajes getInstancia() {
+        if (instancia == null) {
+            instancia = new SistemaVentaPasajes();
+        }
+        return instancia;
+    }
     public boolean createCliente(IdPersona id, Nombre nom, String fono, String email) {
         if (findCliente(id) != null) {
             return false;
@@ -210,5 +226,16 @@ public class SistemaVentaPasajes {
             }
         }
         return null;
+    }
+
+    public boolean createTerminal(String nombre, utilidades.Direccion dir) {
+        for (Terminal t : terminales) {
+            if (t.getNombre().equalsIgnoreCase(nombre)) {
+                return false;
+            }
+        }
+        Terminal nuevoTerminal = new Terminal(nombre, dir);
+        this.terminales.add(nuevoTerminal);
+        return true;
     }
 }

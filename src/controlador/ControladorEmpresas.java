@@ -55,4 +55,22 @@ public class ControladorEmpresas {
 
         return Optional.empty();
     }
+
+    public boolean createBus(Rut rutEmpresa, String patente, String marca, String modelo, int nroAsientos) {
+        Optional<Empresa> empresaOpt = findEmpresa(rutEmpresa);
+
+        if (!empresaOpt.isPresent()) {
+            return false;
+        }
+
+        Empresa empresa = empresaOpt.get();
+
+        modelo.Bus nuevoBus = new modelo.Bus(patente, nroAsientos, empresa);
+
+        nuevoBus.setMarca(marca);
+        nuevoBus.setModelo(modelo);
+        empresa.addBus(nuevoBus);
+
+        return true;
+    }
 }
