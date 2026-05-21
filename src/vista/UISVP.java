@@ -5,6 +5,16 @@ import java.util.Scanner;
 import controlador.ControladorEmpresas;
 import utilidades.Rut;
 
+/**
+ * Clase principal que gestiona el arranque de la aplicación.
+ * @author Javier San Martin
+ * @author Benjamin Carrasco
+ * @author Genesis Castro
+ * @author Beatriz Aguilera
+ * @author Benjamin Jara
+ * @version 2.0
+ */
+
 public class UISVP {
 
     private static UISVP instancia;

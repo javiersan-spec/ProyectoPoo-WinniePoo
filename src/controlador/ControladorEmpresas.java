@@ -2,8 +2,8 @@ package controlador;
 /**
  * @author Genesis Castro
  */
+import modelo.Bus;
 import modelo.Empresa;
-import utilidades.Nombre;
 import utilidades.Rut;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -64,13 +64,25 @@ public class ControladorEmpresas {
         }
 
         Empresa empresa = empresaOpt.get();
-
-        modelo.Bus nuevoBus = new modelo.Bus(patente, nroAsientos, empresa);
-
+        Bus nuevoBus = new Bus(patente, nroAsientos, empresa);
         nuevoBus.setMarca(marca);
         nuevoBus.setModelo(modelo);
-        empresa.addBus(nuevoBus);
 
+        empresa.addBus(nuevoBus);
         return true;
+    }
+    public boolean hireConductorForEmpresa(Rut rutEmpresa, utilidades.IdPersona id, utilidades.Nombre nom, utilidades.Direccion dir, boolean tieneLicencia) {
+        Optional<Empresa> empresaOpt = findEmpresa(rutEmpresa);
+        if (empresaOpt.isPresent()) {
+            return empresaOpt.get().addConductor(id, nom, dir, tieneLicencia);
+        }
+        return false;
+    }
+    public boolean hireAuxiliarForEmpresa(Rut rutEmpresa, utilidades.IdPersona id, utilidades.Nombre nom, utilidades.Direccion dir) {
+        Optional<Empresa> empresaOpt = findEmpresa(rutEmpresa);
+        if (empresaOpt.isPresent()) {
+            return empresaOpt.get().addAuxiliar(id, nom, dir);
+        }
+        return false;
     }
 }

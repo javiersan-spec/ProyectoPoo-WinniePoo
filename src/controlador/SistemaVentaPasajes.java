@@ -245,8 +245,20 @@ public class SistemaVentaPasajes {
                 return false;
             }
         }
-        Terminal nuevoTerminal = new Terminal(nombre, dir);
-        this.terminales.add(nuevoTerminal);
+        terminales.add(new Terminal(nombre, dir));
         return true;
+    }
+
+    public Terminal findTerminal(String nombre) {
+        for (Terminal t : terminales) {
+            if (t.getNombre().equalsIgnoreCase(nombre)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public Terminal[] getTerminales() {
+        return terminales.toArray(new Terminal[0]);
     }
 }

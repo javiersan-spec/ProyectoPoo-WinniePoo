@@ -76,7 +76,7 @@ public class Viaje {
     }
 
     public String[] getAsientos() {
-        String[] asientos = new String[bus.getCapacidad()];
+        String[] asientos = new String[bus.getNroAsientos()];
 
         for (int i = 0; i < asientos.length; i++) {
             asientos[i] = String.valueOf(i + 1);
@@ -106,7 +106,7 @@ public class Viaje {
     }
 
     public boolean existeDisponibilidad(int cantidadAsientos) {
-        return bus.getCapacidad() - pasajes.size() >= cantidadAsientos;
+        return bus.getNroAsientos() - pasajes.size() >= cantidadAsientos;
     }
 
     public Venta[] getVentas() {
