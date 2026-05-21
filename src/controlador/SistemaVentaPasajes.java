@@ -48,19 +48,30 @@ public class SistemaVentaPasajes {
         return true;
     }
     public boolean createPasajero(IdPersona id, Nombre nom, String fono, Nombre nomContacto, String fonoContacto) {
+        if (findPasajero(id) != null) {
+            return false;
+        }
+        Pasajero nuevoPasajero = new Pasajero(id, nom, nomContacto, fonoContacto);
+        nuevoPasajero.setTelefono(fono);
+        this.pasajeros.add(nuevoPasajero);
         return true;
     }
 
-    public boolean createBus(String patente, String marca, String modelo, int nroAsientos) {
+    public boolean createBus(String patente, int nroAsientos, utilidades.Rut rutEmpresa) {
         if (findBus(patente) != null) {
             return false;
         }
 
-        Bus nuevoBus = new Bus(patente, nroAsientos);
-        nuevoBus.setMarca(marca);
-        nuevoBus.setModelo(modelo);
-        this.buses.add(nuevoBus);
+        java.util.Optional<Empresa> empOpt = controlador.ControladorEmpresas.getInstancia().findEmpresa(rutEmpresa);
+        if (!empOpt.isPresent()) {
+            return false; // La empresa no existe, no se puede crear el bus
+        }
 
+        Empresa empresa = empOpt.get();
+        Bus nuevoBus = new Bus(patente, nroAsientos, empresa);
+
+        this.buses.add(nuevoBus);
+        empresa.addBus(nuevoBus);
         return true;
     }
 
@@ -219,9 +230,9 @@ public class SistemaVentaPasajes {
         return null;
     }
 
-    public Pasajero findPasajero(IdPersona idPasajero) {
+    public Pasajero findPasajero(IdPersona idPersona) {
         for (Pasajero p : pasajeros) {
-            if (p.getIdPersona().equals(idPasajero)) {
+            if (p.getIdPersona().equals(idPersona)) {
                 return p;
             }
         }
