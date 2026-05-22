@@ -83,7 +83,7 @@ public class ControladorEmpresas {
         }
 
         if (!empresaOpt.get().addConductor(id, nombre, direccion)) {
-            throw new SistemaVentaPasajesException("Ya esta contratado conductor/auxiliar con el id dado en la empresa senalada.");
+            throw new SistemaVentaPasajesException("Ya esta contratado conductor/auxiliar con el id dado en la empresa señalada.");
         }
     }
 
@@ -94,7 +94,7 @@ public class ControladorEmpresas {
         }
 
         if (!empresaOpt.get().addAuxiliar(id, nombre, direccion)) {
-            throw new SistemaVentaPasajesException("Ya esta contratado auxiliar/conductor con el id dado en la empresa senalada.");
+            throw new SistemaVentaPasajesException("Ya esta contratado auxiliar/conductor con el id dado en la empresa señalada.");
         }
     }
 
@@ -171,7 +171,7 @@ public class ControladorEmpresas {
         return lista;
     }
 
-    public Optional<Empresa> findEmpresa(Rut rut) {
+    protected Optional<Empresa> findEmpresa(Rut rut) {
         for (Empresa empresa : empresas) {
             if (empresa.getRut().equals(rut)) {
                 return Optional.of(empresa);
@@ -181,7 +181,7 @@ public class ControladorEmpresas {
         return Optional.empty();
     }
 
-    public Optional<Terminal> findTerminal(String nombre) {
+    protected Optional<Terminal> findTerminal(String nombre) {
         for (Terminal terminal : terminales) {
             if (terminal.getNombre().equalsIgnoreCase(nombre)) {
                 return Optional.of(terminal);
@@ -191,7 +191,7 @@ public class ControladorEmpresas {
         return Optional.empty();
     }
 
-    Optional<Terminal> findTerminalPorComuna(String comuna) {
+    protected Optional<Terminal> findTerminalPorComuna(String comuna) {
         for (Terminal terminal : terminales) {
             if (terminal.getDireccion().getComuna().equalsIgnoreCase(comuna)) {
                 return Optional.of(terminal);
@@ -201,7 +201,7 @@ public class ControladorEmpresas {
         return Optional.empty();
     }
 
-    public Optional<Bus> findBus(String patente) {
+    protected Optional<Bus> findBus(String patente) {
         for (Empresa empresa : empresas) {
             for (Bus bus : empresa.getBuses()) {
                 if (bus.getPatente().equalsIgnoreCase(patente)) {
@@ -213,7 +213,7 @@ public class ControladorEmpresas {
         return Optional.empty();
     }
 
-    public Optional<Conductor> findConductor(IdPersona id, Rut rutEmpresa) {
+    protected Optional<Conductor> findConductor(IdPersona id, Rut rutEmpresa) {
         Optional<Empresa> empresaOpt = findEmpresa(rutEmpresa);
         if (!empresaOpt.isPresent()) {
             return Optional.empty();
@@ -223,7 +223,7 @@ public class ControladorEmpresas {
         return conductor == null ? Optional.empty() : Optional.of(conductor);
     }
 
-    public Optional<Auxiliar> findAuxiliar(IdPersona id, Rut rutEmpresa) {
+    protected Optional<Auxiliar> findAuxiliar(IdPersona id, Rut rutEmpresa) {
         Optional<Empresa> empresaOpt = findEmpresa(rutEmpresa);
         if (!empresaOpt.isPresent()) {
             return Optional.empty();

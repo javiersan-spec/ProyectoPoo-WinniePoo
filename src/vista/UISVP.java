@@ -107,7 +107,7 @@ public class UISVP {
                     System.out.println("Saliendo...");
                     break;
                 default:
-                    System.out.println("Opcion invalida");
+                    System.out.println("Opción invalida");
             }
 
         } while (opcion != 14);
@@ -245,7 +245,7 @@ public class UISVP {
         LocalTime hora = leerHora("Hora (HH:mm): ");
         System.out.print("Precio pasaje: ");
         int precio = leerEntero();
-        System.out.print("Duracion en minutos: ");
+        System.out.print("Duración en minutos: ");
         int duracionMinutos = leerEntero();
         System.out.print("Patente bus: ");
         String patente = sc.nextLine();

@@ -275,7 +275,7 @@ public class SistemaVentaPasajes {
         return viajeOpt.get().getListaPasajeros();
     }
 
-    public Optional<Cliente> findCliente(IdPersona idPersona) {
+    private Optional<Cliente> findCliente(IdPersona idPersona) {
         for (Cliente cliente : clientes) {
             if (cliente.getIdPersona().equals(idPersona)) {
                 return Optional.of(cliente);
@@ -284,7 +284,7 @@ public class SistemaVentaPasajes {
         return Optional.empty();
     }
 
-    public Optional<Venta> findVenta(String idDocumento, TipoDocumento tipoDocumento) {
+    private Optional<Venta> findVenta(String idDocumento, TipoDocumento tipoDocumento) {
         for (Venta venta : ventas) {
             if (venta.getIdDocumento().equals(idDocumento) && venta.getTipo() == tipoDocumento) {
                 return Optional.of(venta);
@@ -293,7 +293,7 @@ public class SistemaVentaPasajes {
         return Optional.empty();
     }
 
-    public Optional<Viaje> findViaje(LocalDate fecha, LocalTime hora, String patenteBus) {
+    private Optional<Viaje> findViaje(LocalDate fecha, LocalTime hora, String patenteBus) {
         for (Viaje viaje : viajes) {
             if (viaje.getFecha().equals(fecha)
                     && viaje.getHora().equals(hora)
@@ -304,7 +304,7 @@ public class SistemaVentaPasajes {
         return Optional.empty();
     }
 
-    public Optional<Pasajero> findPasajero(IdPersona idPersona) {
+    private Optional<Pasajero> findPasajero(IdPersona idPersona) {
         for (Pasajero pasajero : pasajeros) {
             if (pasajero.getIdPersona().equals(idPersona)) {
                 return Optional.of(pasajero);

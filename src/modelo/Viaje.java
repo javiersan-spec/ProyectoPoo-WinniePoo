@@ -1,29 +1,28 @@
 package modelo;
-import modelo.Bus;
-import modelo.Terminal;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Viaje {
     private LocalDateTime fechaHoraSalida;
     private int duracionMinutos;
-    private int valorPasaje;
+    private int precio;
     private Bus bus;
     private Terminal terminalSalida;
     private Terminal terminalLlegada;
     private Auxiliar auxiliar;
-    private ArrayList<Conductor> conductores;
+    private List<Conductor> conductores;
     private ArrayList<Pasaje> pasajes;
 
-    public Viaje(LocalDateTime fechaHoraSalida, int duracionMinutos, int valorPasaje,
+    public Viaje(LocalDateTime fechaHoraSalida, int duracionMinutos, int precio,
                  Bus bus, Terminal terminalSalida, Terminal terminalLlegada,
-                 Auxiliar auxiliar, ArrayList<Conductor> conductores) {
+                 Auxiliar auxiliar, List<Conductor> conductores) {
         this.fechaHoraSalida = fechaHoraSalida;
         this.duracionMinutos = duracionMinutos;
-        this.valorPasaje = valorPasaje;
+        this.precio = precio;
         this.bus = bus;
         this.terminalSalida = terminalSalida;
         this.terminalLlegada = terminalLlegada;
@@ -49,22 +48,22 @@ public class Viaje {
         }
     }
 
-    public Viaje(LocalDate fecha, LocalTime hora, int valorPasaje, Bus bus) {
-        this(fecha.atTime(hora), 0, valorPasaje, bus, null, null, null, new ArrayList<>());
+    public Viaje(LocalDate fecha, LocalTime hora, int precio, Bus bus) {
+        this(fecha.atTime(hora), 0, precio, bus, null, null, null, new ArrayList<>());
     }
 
-    public Viaje(LocalDate fecha, LocalTime hora, int valorPasaje, int duracionMinutos,
+    public Viaje(LocalDate fecha, LocalTime hora, int precio, int duracionMinutos,
                  Bus bus, Auxiliar auxiliar, Conductor conductor,
                  Terminal terminalSalida, Terminal terminalLlegada) {
-        this(fecha.atTime(hora), duracionMinutos, valorPasaje, bus, terminalSalida,
+        this(fecha.atTime(hora), duracionMinutos, precio, bus, terminalSalida,
                 terminalLlegada, auxiliar, new ArrayList<>());
         addConductor(conductor);
     }
 
-    public Viaje(LocalDate fecha, LocalTime hora, int valorPasaje, int duracionMinutos,
+    public Viaje(LocalDate fecha, LocalTime hora, int precio, int duracionMinutos,
                  Bus bus, Auxiliar auxiliar, ArrayList<Conductor> conductores,
                  Terminal terminalSalida, Terminal terminalLlegada) {
-        this(fecha.atTime(hora), duracionMinutos, valorPasaje, bus, terminalSalida,
+        this(fecha.atTime(hora), duracionMinutos, precio, bus, terminalSalida,
                 terminalLlegada, auxiliar, conductores);
     }
 
@@ -84,12 +83,8 @@ public class Viaje {
         return duracionMinutos;
     }
 
-    public int getValorPasaje() {
-        return valorPasaje;
-    }
-
     public void setPrecio(int precio) {
-        this.valorPasaje = precio;
+        this.precio = precio;
     }
 
     public void setDuracion(int duracionMinutos) {
@@ -112,7 +107,7 @@ public class Viaje {
         return auxiliar;
     }
 
-    public ArrayList<Conductor> getConductores() {
+    public List<Conductor> getConductores() {
         return conductores;
     }
 
@@ -142,7 +137,7 @@ public class Viaje {
 
         return asientos;
     }
-    // revisar desde aca para ver si esta correcto o se pierde informacion aca
+
     public String[][] getListaPasajeros() {
         String[][] lista = new String[pasajes.size()][4];
 
@@ -191,7 +186,7 @@ public class Viaje {
     }
 
     public int getPrecio() {
-        return valorPasaje;
+        return precio;
     }
 }
 
