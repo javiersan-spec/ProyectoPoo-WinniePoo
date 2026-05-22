@@ -1,11 +1,11 @@
 package modelo;
-/**
- * @author Benjamin Jara
- */
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * @author Benjamin Jara
+ */
 public class Venta {
     private String idDocumento;
     private TipoDocumento tipo;
@@ -20,20 +20,30 @@ public class Venta {
         this.fecha = fec;
         this.cliente = cliente;
         this.pasajes = new ArrayList<>();
-        this.cliente.addVenta(this);
+
+        if (this.cliente != null) {
+            this.cliente.addVenta(this);
+        }
     }
 
     public String getIdDocumento() {
-        return idDocumento; }
+        return idDocumento;
+    }
+
     public TipoDocumento getTipo() {
-        return tipo; }
+        return tipo;
+    }
+
     public LocalDate getFecha() {
-        return fecha; }
+        return fecha;
+    }
+
     public Cliente getCliente() {
-        return cliente; }
+        return cliente;
+    }
 
     public void createPasaje(int asiento, Viaje viaje, Pasajero pasajero) {
-        Pasaje nuevoPasaje = new Pasaje(asiento, pasajero, this, viaje);
+        Pasaje nuevoPasaje = new Pasaje(asiento, viaje, pasajero, this);
         this.pasajes.add(nuevoPasaje);
     }
 
@@ -44,7 +54,9 @@ public class Venta {
     public int getMonto() {
         int total = 0;
         for (Pasaje p : pasajes) {
-            total += p.getViaje().getPrecio();
+            if (p.getViaje() != null) {
+                total += p.getViaje().getPrecio();
+            }
         }
         return total;
     }
@@ -79,19 +91,9 @@ public class Venta {
         if (pago == null) {
             return null;
         }
-
         if (pago instanceof PagoTarjeta) {
             return "Pago Tarjeta";
         }
-
-        if (pago instanceof PagoEfectivo) {
-            return "Pago Efectivo";
-        }
-
-        return "Pago";
-    }
-
-    public Pago getPago() {
-        return pago;
+        return "Pago Efectivo";
     }
 }

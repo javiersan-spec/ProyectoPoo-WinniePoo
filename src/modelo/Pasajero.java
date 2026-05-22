@@ -26,11 +26,4 @@ public class Pasajero extends Persona {
 
     public void setNomContacto(Nombre nomContacto) { this.nomContacto = nomContacto; }
     public void setFonoContacto(String fonoContacto) { this.fonoContacto = fonoContacto; }
-
-    @Override
-    public String toString() {
-        return super.toString()
-                + " | Contacto: " + nomContacto.toString()
-                + " - Fono: " + fonoContacto;
-    }
 }

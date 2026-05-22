@@ -1,12 +1,12 @@
 package modelo;
-/**
- * Clase que se encarga de los datos del bus
- * @author Benjamin Jara
- */
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que representa un Bus dentro del sistema.
+ * @author Benjamin Jara
+ */
 public class Bus {
     private String patente;
     private String marca;

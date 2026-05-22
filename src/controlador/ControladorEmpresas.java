@@ -10,6 +10,7 @@ import modelo.Bus;
 import modelo.Conductor;
 import modelo.Empresa;
 import modelo.Terminal;
+import modelo.Tripulante;
 import modelo.Venta;
 import modelo.Viaje;
 import utilidades.Direccion;
@@ -18,7 +19,6 @@ import utilidades.Nombre;
 import utilidades.Rut;
 
 /**
- * Controlador de empresas, buses, terminales y tripulantes.
  * @author Genesis Castro
  */
 public class ControladorEmpresas {
@@ -36,7 +36,6 @@ public class ControladorEmpresas {
         if (instancia == null) {
             instancia = new ControladorEmpresas();
         }
-
         return instancia;
     }
 
@@ -44,12 +43,12 @@ public class ControladorEmpresas {
         if (findEmpresa(rut).isPresent()) {
             throw new SistemaVentaPasajesException("Ya existe empresa con el rut indicado.");
         }
-
         empresas.add(new Empresa(rut, nombre, url));
     }
 
     public void createBus(String marca, String modelo, String patente, int nroAsientos, Rut rutEmpresa) {
-        if (!findEmpresa(rutEmpresa).isPresent()) {
+        Optional<Empresa> empresaOpt = findEmpresa(rutEmpresa);
+        if (!empresaOpt.isPresent()) {
             throw new SistemaVentaPasajesException("No existe empresa con el rut indicado.");
         }
 
@@ -57,7 +56,7 @@ public class ControladorEmpresas {
             throw new SistemaVentaPasajesException("Ya existe bus con la patente indicada.");
         }
 
-        Empresa empresa = findEmpresa(rutEmpresa).get();
+        Empresa empresa = empresaOpt.get();
         Bus bus = new Bus(patente, nroAsientos, empresa);
         bus.setMarca(marca);
         bus.setModelo(modelo);
@@ -177,7 +176,6 @@ public class ControladorEmpresas {
                 return Optional.of(empresa);
             }
         }
-
         return Optional.empty();
     }
 
@@ -187,17 +185,15 @@ public class ControladorEmpresas {
                 return Optional.of(terminal);
             }
         }
-
         return Optional.empty();
     }
 
-    Optional<Terminal> findTerminalPorComuna(String comuna) {
+    public Optional<Terminal> findTerminalPorComuna(String comuna) {
         for (Terminal terminal : terminales) {
             if (terminal.getDireccion().getComuna().equalsIgnoreCase(comuna)) {
                 return Optional.of(terminal);
             }
         }
-
         return Optional.empty();
     }
 
@@ -209,7 +205,6 @@ public class ControladorEmpresas {
                 }
             }
         }
-
         return Optional.empty();
     }
 
@@ -219,8 +214,12 @@ public class ControladorEmpresas {
             return Optional.empty();
         }
 
-        Conductor conductor = empresaOpt.get().findConductor(id);
-        return conductor == null ? Optional.empty() : Optional.of(conductor);
+        for (Tripulante t : empresaOpt.get().getTripulantes()) {
+            if (t instanceof Conductor && t.getIdPersona().equals(id)) {
+                return Optional.of((Conductor) t);
+            }
+        }
+        return Optional.empty();
     }
 
     public Optional<Auxiliar> findAuxiliar(IdPersona id, Rut rutEmpresa) {
@@ -229,7 +228,11 @@ public class ControladorEmpresas {
             return Optional.empty();
         }
 
-        Auxiliar auxiliar = empresaOpt.get().findAuxiliar(id);
-        return auxiliar == null ? Optional.empty() : Optional.of(auxiliar);
+        for (Tripulante t : empresaOpt.get().getTripulantes()) {
+            if (t instanceof Auxiliar && t.getIdPersona().equals(id)) {
+                return Optional.of((Auxiliar) t);
+            }
+        }
+        return Optional.empty();
     }
 }

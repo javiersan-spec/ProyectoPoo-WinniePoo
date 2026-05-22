@@ -7,8 +7,8 @@ public class Pasaje {
     private Venta venta;
     private Viaje viaje;
 
-    public Pasaje(int Asiento, Pasajero pasajero, Venta venta, Viaje viaje) {
-        this.asiento=Asiento;
+    public Pasaje(int asiento, Viaje viaje, Pasajero pasajero, Venta venta) {
+        this.asiento = asiento;
         this.numero = System.currentTimeMillis() + (int)(Math.random() * 1000);
         this.pasajero = pasajero;
         this.venta = venta;
@@ -17,10 +17,6 @@ public class Pasaje {
         if (viaje != null) {
             viaje.addPasaje(this);
         }
-    }
-
-    public Pasaje(int asiento, Viaje viaje, Pasajero pasajero, Venta venta) {
-        this(asiento, pasajero, venta, viaje);
     }
 
     public int getNumero() {

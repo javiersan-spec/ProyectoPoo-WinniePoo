@@ -116,7 +116,7 @@ public class SistemaVentaPasajes {
         }
 
         Viaje nuevoViaje = new Viaje(fecha, hora, precio, duracionMinutos, bus,
-                auxiliarOpt.get(), conductores, terminalSalidaOpt.get(), terminalLlegadaOpt.get());
+                auxiliarOpt.get(), conductores.toArray(new Conductor[0]), terminalSalidaOpt.get(), terminalLlegadaOpt.get());
         viajes.add(nuevoViaje);
     }
 

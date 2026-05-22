@@ -1,5 +1,7 @@
 package modelo;
-
+/**
+ * @author Benjamin Jara
+ */
 import utilidades.Direccion;
 import utilidades.IdPersona;
 import utilidades.Nombre;
@@ -7,10 +9,6 @@ import utilidades.Rut;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * * @author Benjamin Jara
- */
 
 public class Empresa {
     private Rut rut;
@@ -25,6 +23,10 @@ public class Empresa {
         this.url = url;
         this.buses = new ArrayList<>();
         this.tripulantes = new ArrayList<>();
+    }
+
+    public Empresa(Rut rut, String nombre) {
+        this(rut, nombre, "");
     }
 
     public Rut getRut() {
@@ -49,8 +51,8 @@ public class Empresa {
         }
     }
 
-    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir) {
-    for (Tripulante t : tripulantes) {
+    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir, boolean lic) {
+        for (Tripulante t : tripulantes) {
             if (t.getIdPersona().equals(id)) {
                 return false;
             }
@@ -58,6 +60,10 @@ public class Empresa {
         Conductor nuevoConductor = new Conductor(id, nom, dir);
         this.tripulantes.add(nuevoConductor);
         return true;
+    }
+
+    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir) {
+        return addConductor(id, nom, dir, true);
     }
 
     public boolean addAuxiliar(IdPersona id, Nombre nom, Direccion dir) {
@@ -75,8 +81,24 @@ public class Empresa {
         return tripulantes.toArray(new Tripulante[0]);
     }
 
-    public Bus[] getBuses() {
-        return buses.toArray(new Bus[0]);
+    public Conductor findConductor(IdPersona id) {
+        for (Tripulante tripulante : tripulantes) {
+            if (tripulante instanceof Conductor && tripulante.getIdPersona().equals(id)) {
+                return (Conductor) tripulante;
+            }
+        }
+
+        return null;
+    }
+
+    public Auxiliar findAuxiliar(IdPersona id) {
+        for (Tripulante tripulante : tripulantes) {
+            if (tripulante instanceof Auxiliar && tripulante.getIdPersona().equals(id)) {
+                return (Auxiliar) tripulante;
+            }
+        }
+
+        return null;
     }
 
     public Venta[] getVentas() {
@@ -84,15 +106,17 @@ public class Empresa {
         for (Bus b : buses) {
             for (Viaje v : b.getViajes()) {
                 Venta[] ventasViaje = v.getVentas();
-                if (ventasViaje != null) {
-                    for (Venta ven : ventasViaje) {
-                        if (!ventasEmpresa.contains(ven)) {
-                            ventasEmpresa.add(ven);
-                        }
+                for (Venta ven : ventasViaje) {
+                    if (!ventasEmpresa.contains(ven)) {
+                        ventasEmpresa.add(ven);
                     }
                 }
             }
         }
         return ventasEmpresa.toArray(new Venta[0]);
+    }
+
+    public Bus[] getBuses() {
+        return buses.toArray(new Bus[0]);
     }
 }
