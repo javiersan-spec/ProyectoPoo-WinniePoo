@@ -50,8 +50,7 @@ public class Empresa {
     }
 
     public boolean addConductor(IdPersona id, Nombre nom, Direccion dir) {
-        // Valida que no exista ningún tripulante (conductor o auxiliar) con el mismo ID
-        for (Tripulante t : tripulantes) {
+    for (Tripulante t : tripulantes) {
             if (t.getIdPersona().equals(id)) {
                 return false;
             }
