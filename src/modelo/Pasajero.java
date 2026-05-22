@@ -27,3 +27,5 @@ public class Pasajero extends Persona {
     public void setNomContacto(Nombre nomContacto) { this.nomContacto = nomContacto; }
     public void setFonoContacto(String fonoContacto) { this.fonoContacto = fonoContacto; }
 }
+
+

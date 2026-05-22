@@ -4,7 +4,7 @@ import utilidades.Direccion;
 import utilidades.IdPersona;
 import utilidades.Nombre;
 
-public abstract class Tripulante extends Persona {
+public class Tripulante extends Persona {
 
     private Direccion direccion;
 
@@ -21,7 +21,11 @@ public abstract class Tripulante extends Persona {
         this.direccion = direccion;
     }
 
-    public abstract void addViaje(Viaje viaje);
+    public void addViaje(Viaje viaje) {
 
-    public abstract int getNroViajes();
+    }
+
+    public int getNroViajes() {
+        return 0;
+    }
 }

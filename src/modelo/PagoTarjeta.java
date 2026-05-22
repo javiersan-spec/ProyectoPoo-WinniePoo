@@ -18,3 +18,5 @@ public class PagoTarjeta extends Pago {
     public long getNroTarjeta() { return nroTarjeta; }
 }
 
+
+

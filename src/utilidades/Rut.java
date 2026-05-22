@@ -58,3 +58,4 @@ public class Rut implements IdPersona {
         return numero == rut.numero && dv == rut.dv;
     }
 }
+
