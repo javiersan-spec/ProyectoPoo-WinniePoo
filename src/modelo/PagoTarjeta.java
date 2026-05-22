@@ -16,11 +16,5 @@ public class PagoTarjeta extends Pago {
     }
 
     public long getNroTarjeta() { return nroTarjeta; }
-
-    @Override
-    public String toString() {
-        return "Pago Tarjeta | Monto: $" + getMonto()
-                + " | Nro. Tarjeta: "   + nroTarjeta;
-    }
 }
 

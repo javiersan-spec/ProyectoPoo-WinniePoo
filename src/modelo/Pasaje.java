@@ -7,7 +7,7 @@ public class Pasaje {
     private Venta venta;
     private Viaje viaje;
 
-    public Pasaje(int asiento, Pasajero pasajero, Venta venta, Viaje viaje) {
+    public Pasaje(int asiento, Viaje viaje, Pasajero pasajero, Venta venta) {
         this.asiento = asiento;
         this.numero = System.currentTimeMillis() + (int)(Math.random() * 1000);
         this.pasajero = pasajero;

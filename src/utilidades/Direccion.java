@@ -1,9 +1,8 @@
 package utilidades;
 
 /**
- * Clase que representa la direccion fisica de una persona,
- * compuesta por la calle, el numero y la comuna.
- *  @author Beatriz Aguilera
+ * Clase que representa la direccion fisica de una persona.
+ * @author Beatriz Aguilera
  */
 public class Direccion {
 
@@ -20,10 +19,6 @@ public class Direccion {
     public String getCalle() { return calle; }
     public int getNumero() { return numero; }
     public String getComuna() { return comuna; }
-
-    public void setCalle(String calle) { this.calle  = calle; }
-    public void setNumero(int numero) { this.numero = numero; }
-    public void setComuna(String comuna) { this.comuna = comuna; }
 
     @Override
     public String toString() {
