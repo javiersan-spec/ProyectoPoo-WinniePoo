@@ -7,19 +7,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Venta {
-    private  int Precio;
     private String idDocumento;
     private TipoDocumento tipo;
     private LocalDate fecha;
     private Cliente cliente;
     private ArrayList<Pasaje> pasajes;
+    private Pago pago;
 
-    public Venta(String id, TipoDocumento tipo, LocalDate fec, Cliente cliente, int Precio ) {
+    public Venta(String id, TipoDocumento tipo, LocalDate fec, Cliente cliente) {
         this.idDocumento = id;
         this.tipo = tipo;
         this.fecha = fec;
         this.cliente = cliente;
-        this.Precio= Precio;
         this.pasajes = new ArrayList<>();
         this.cliente.addVenta(this);
     }
@@ -34,7 +33,7 @@ public class Venta {
         return cliente; }
 
     public void createPasaje(int asiento, Viaje viaje, Pasajero pasajero) {
-        Pasaje nuevoPasaje = new Pasaje(asiento, viaje, pasajero, this);
+        Pasaje nuevoPasaje = new Pasaje(asiento, pasajero, this, viaje);
         this.pasajes.add(nuevoPasaje);
     }
 
@@ -48,5 +47,51 @@ public class Venta {
             total += p.getViaje().getPrecio();
         }
         return total;
+    }
+
+    public boolean pagaMonto() {
+        if (pago != null) {
+            return false;
+        }
+
+        this.pago = new PagoEfectivo(getMonto());
+        return true;
+    }
+
+    public boolean pagaMonto(long nroTarjeta) {
+        if (pago != null) {
+            return false;
+        }
+
+        this.pago = new PagoTarjeta(getMonto(), nroTarjeta);
+        return true;
+    }
+
+    public int getMontoPagado() {
+        if (pago == null) {
+            return 0;
+        }
+
+        return pago.getMonto();
+    }
+
+    public String getTipoPago() {
+        if (pago == null) {
+            return null;
+        }
+
+        if (pago instanceof PagoTarjeta) {
+            return "Pago Tarjeta";
+        }
+
+        if (pago instanceof PagoEfectivo) {
+            return "Pago Efectivo";
+        }
+
+        return "Pago";
+    }
+
+    public Pago getPago() {
+        return pago;
     }
 }

@@ -2,7 +2,9 @@ package modelo;
 import modelo.Bus;
 import modelo.Terminal;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Viaje {
@@ -29,18 +31,53 @@ public class Viaje {
         this.conductores = conductores;
         this.pasajes = new ArrayList<>();
 
-        bus.addViaje(this);
-        terminalSalida.addSalida(this);
-        terminalLlegada.addLlegada(this);
-        auxiliar.addViaje(this);
+        if (bus != null) {
+            bus.addViaje(this);
+        }
+        if (terminalSalida != null) {
+            terminalSalida.addSalida(this);
+        }
+        if (terminalLlegada != null) {
+            terminalLlegada.addLlegada(this);
+        }
+        if (auxiliar != null) {
+            auxiliar.addViaje(this);
+        }
 
         for (Conductor conductor : conductores) {
             conductor.addViaje(this);
         }
     }
 
+    public Viaje(LocalDate fecha, LocalTime hora, int valorPasaje, Bus bus) {
+        this(fecha.atTime(hora), 0, valorPasaje, bus, null, null, null, new ArrayList<>());
+    }
+
+    public Viaje(LocalDate fecha, LocalTime hora, int valorPasaje, int duracionMinutos,
+                 Bus bus, Auxiliar auxiliar, Conductor conductor,
+                 Terminal terminalSalida, Terminal terminalLlegada) {
+        this(fecha.atTime(hora), duracionMinutos, valorPasaje, bus, terminalSalida,
+                terminalLlegada, auxiliar, new ArrayList<>());
+        addConductor(conductor);
+    }
+
+    public Viaje(LocalDate fecha, LocalTime hora, int valorPasaje, int duracionMinutos,
+                 Bus bus, Auxiliar auxiliar, ArrayList<Conductor> conductores,
+                 Terminal terminalSalida, Terminal terminalLlegada) {
+        this(fecha.atTime(hora), duracionMinutos, valorPasaje, bus, terminalSalida,
+                terminalLlegada, auxiliar, conductores);
+    }
+
     public LocalDateTime getFechaHoraSalida() {
         return fechaHoraSalida;
+    }
+
+    public LocalDate getFecha() {
+        return fechaHoraSalida.toLocalDate();
+    }
+
+    public LocalTime getHora() {
+        return fechaHoraSalida.toLocalTime();
     }
 
     public int getDuracionMinutos() {
@@ -49,6 +86,14 @@ public class Viaje {
 
     public int getValorPasaje() {
         return valorPasaje;
+    }
+
+    public void setPrecio(int precio) {
+        this.valorPasaje = precio;
+    }
+
+    public void setDuracion(int duracionMinutos) {
+        this.duracionMinutos = duracionMinutos;
     }
 
     public Bus getBus() {
@@ -71,6 +116,15 @@ public class Viaje {
         return conductores;
     }
 
+    public Tripulante[] getTripulantes() {
+        ArrayList<Tripulante> tripulantes = new ArrayList<>();
+        if (auxiliar != null) {
+            tripulantes.add(auxiliar);
+        }
+        tripulantes.addAll(conductores);
+        return tripulantes.toArray(new Tripulante[0]);
+    }
+
     public LocalDateTime getFechaHoraTermino() {
         return fechaHoraSalida.plusMinutes(duracionMinutos);
     }
@@ -88,7 +142,7 @@ public class Viaje {
 
         return asientos;
     }
-// revisar desde aca para ver si esta correcto o se pierde informacion aca
+    // revisar desde aca para ver si esta correcto o se pierde informacion aca
     public String[][] getListaPasajeros() {
         String[][] lista = new String[pasajes.size()][4];
 
@@ -109,6 +163,10 @@ public class Viaje {
         return bus.getNroAsientos() - pasajes.size() >= cantidadAsientos;
     }
 
+    public int getNroAsientosDisponibles() {
+        return bus.getNroAsientos() - pasajes.size();
+    }
+
     public Venta[] getVentas() {
         ArrayList<Venta> ventas = new ArrayList<>();
 
@@ -125,8 +183,15 @@ public class Viaje {
         pasajes.add(pasaje);
     }
 
+    public void addConductor(Conductor conductor) {
+        if (conductor != null && !conductores.contains(conductor)) {
+            conductores.add(conductor);
+            conductor.addViaje(this);
+        }
+    }
+
     public int getPrecio() {
-        return Precio;
+        return valorPasaje;
     }
 }
 

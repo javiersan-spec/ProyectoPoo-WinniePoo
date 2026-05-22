@@ -1,8 +1,8 @@
 package modelo;
 
 /**
-* @author Genesis Castro
-*/
+ * @author Genesis Castro
+ */
 
 public class Pago {
 

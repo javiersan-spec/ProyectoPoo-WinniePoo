@@ -19,6 +19,10 @@ public class Pasaje {
         }
     }
 
+    public Pasaje(int asiento, Viaje viaje, Pasajero pasajero, Venta venta) {
+        this(asiento, pasajero, venta, viaje);
+    }
+
     public int getNumero() {
         return Math.toIntExact(numero);
     }
