@@ -284,7 +284,7 @@ public class UISVP {
     }
 
     private void vendePasajes() {
-        System.out.println("\n...:::: Vendiendo Pasajes ::::...");
+        System.out.println("\n...:::: Venta de Pasajes ::::...");
 
         System.out.print("Documento de venta: ");
         String idDoc = sc.nextLine();
