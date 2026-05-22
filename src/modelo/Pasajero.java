@@ -7,7 +7,7 @@ import utilidades.Nombre;
  * Clase encargada de definir a un pasajero dentro del sistema de venta de pasajes.
  * Hereda los datos basicos de Persona y agrega la informacion del contacto de emergencia,
  * es decir el nombre y el telefono de contacto.
- * @author Beatriz Aguilera
+ * @author Benjamin Carrasco
  */
 public class Pasajero extends Persona {
 
