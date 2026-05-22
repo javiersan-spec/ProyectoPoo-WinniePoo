@@ -1,7 +1,6 @@
 package utilidades;
 
 /**
- * Clase que representa la direccion fisica de una persona.
  * @author Beatriz Aguilera
  */
 public class Direccion {
@@ -35,3 +34,4 @@ public class Direccion {
                 && comuna.equals(d.comuna);
     }
 }
+

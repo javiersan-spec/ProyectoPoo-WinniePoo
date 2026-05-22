@@ -6,3 +6,4 @@ public class PagoEfectivo extends Pago {
         super(monto);
     }
 }
+

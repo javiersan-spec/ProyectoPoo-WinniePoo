@@ -28,3 +28,4 @@ public class Auxiliar extends Tripulante {
         return this.nroViajes;
     }
 }
+

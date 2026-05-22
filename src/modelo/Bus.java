@@ -51,3 +51,4 @@ public class Bus {
         return viajes.toArray(new Viaje[0]);
     }
 }
+

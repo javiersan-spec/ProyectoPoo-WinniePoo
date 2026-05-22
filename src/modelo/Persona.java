@@ -42,3 +42,5 @@ public abstract class Persona {
         return idPersona.equals(p.idPersona);
     }
 }
+
+

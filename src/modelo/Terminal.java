@@ -52,3 +52,4 @@ public class Terminal {
         return salidas.toArray(new Viaje[0]);
     }
 }
+
