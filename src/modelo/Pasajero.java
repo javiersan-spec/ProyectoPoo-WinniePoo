@@ -2,7 +2,6 @@ package modelo;
 
 import utilidades.IdPersona;
 import utilidades.Nombre;
-
 /**
  * Clase encargada de definir a un pasajero dentro del sistema de venta de pasajes.
  * Hereda los datos basicos de Persona y agrega la informacion del contacto de emergencia,

@@ -2,7 +2,6 @@ package modelo;
 
 import utilidades.IdPersona;
 import utilidades.Nombre;
-
 /**
  * Clase abstracta que representa a una persona dentro del sistema de venta de pasajes.
  * Contiene los datos basicos comunes de todo tipo de persona:

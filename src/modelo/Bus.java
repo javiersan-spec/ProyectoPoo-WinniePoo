@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Clase que representa un Bus dentro del sistema.
  * @author Benjamin Jara

@@ -1,5 +1,4 @@
 package modelo;
-
 /**
  * Clase que representa un pago realizado con targeta dentro del
  * Sistema de venta de pasajes. Hereda el monto de la clase pago

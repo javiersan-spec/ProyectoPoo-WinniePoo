@@ -19,7 +19,6 @@ import modelo.Viaje;
 import utilidades.IdPersona;
 import utilidades.Nombre;
 import utilidades.Rut;
-
 /**
  * Controlador principal del sistema de venta de pasajes.
  * @author Genesis Castro

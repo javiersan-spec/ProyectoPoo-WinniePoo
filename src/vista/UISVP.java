@@ -93,9 +93,9 @@ public class UISVP {
             return;
         }
 
-        System.out.print("Nombre: ");
+        System.out.print("Nombre : ");
         String nombreEmpresa = sc.nextLine();
-        System.out.print("URL: ");
+        System.out.print("url : ");
         String url = sc.nextLine();
 
         try {
@@ -107,23 +107,22 @@ public class UISVP {
     }
 
     private void contrataTripulante() {
-        System.out.println("\n...:::: Contratando un nuevo tripulante ::::...");
-        System.out.print("R.U.T empresa (12345678-9): ");
+        System.out.println("\n...:::: Contratando un nuevo Tripulante ::::....");
+
+        System.out.println(":::: Dato de la Empresa");
+        System.out.printf("%25s : ", "R.U.T");
         Rut rutEmp = Rut.of(sc.nextLine());
         if (rutEmp == null) {
             System.out.println("Error: RUT de empresa invalido.");
             return;
         }
 
-        System.out.print("Auxiliar[1] o Conductor[2]: ");
+        System.out.println("\n:::: Datos tripulante");
+        System.out.print("Auxiliar[1] o Conductor[2] : ");
         int tipo = leerEntero();
 
-        System.out.print("R.U.T tripulante (12345678-9): ");
-        Rut idTrip = Rut.of(sc.nextLine());
-        if (idTrip == null) {
-            System.out.println("Error: RUT de tripulante invalido.");
-            return;
-        }
+        IdPersona idTrip = leerIdPersona();
+        if (idTrip == null) return;
 
         Nombre nombre = leerNombre();
         Direccion dir = leerDireccion();
@@ -131,20 +130,20 @@ public class UISVP {
         try {
             if (tipo == 1) {
                 ControladorEmpresas.getInstancia().hireAuxiliarForEmpresa(rutEmp, idTrip, nombre, dir);
+                System.out.println("...::::: Auxiliar contratado exitosamente ::::....");
             } else if (tipo == 2) {
                 ControladorEmpresas.getInstancia().hireConductorForEmpresa(rutEmp, idTrip, nombre, dir);
+                System.out.println("...::::: Conductor contratado exitosamente ::::....");
             } else {
                 System.out.println("Error: Tipo de tripulante invalido.");
-                return;
             }
-            System.out.println("...:::: Tripulante contratado exitosamente ::::...");
         } catch (SistemaVentaPasajesException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private void createTerminal() {
-        System.out.println("\n...:::: Creando un nuevo Terminal ::::...");
+        System.out.println("\n...:::: Creando un nuevo Terminal ::::...\n");
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
         Direccion dir = leerDireccion();
@@ -263,13 +262,9 @@ public class UISVP {
         IdPersona idCliente = leerIdPersona();
         if (idCliente == null) return;
 
-        if (!sistema.findCliente(idCliente).isPresent()) {
-            System.out.println("Error: El cliente debe estar registrado antes de iniciar la venta.");
-            return;
-        }
-
         try {
-            sistema.iniciaVenta(idDoc, tipo, LocalDate.now(), fechaViaje, comunaSalida, comunaLlegada, idCliente, nroPasajes);
+            sistema.iniciaVenta(idDoc, tipo, LocalDate.now(), fechaViaje,
+                    comunaSalida, comunaLlegada, idCliente, nroPasajes);
         } catch (SistemaVentaPasajesException e) {
             System.out.println("Error: " + e.getMessage());
             return;
@@ -293,22 +288,22 @@ public class UISVP {
             IdPersona idPasajero = leerIdPersona();
             if (idPasajero == null) return;
 
-            if (!sistema.findPasajero(idPasajero).isPresent()) {
-                System.out.println("Pasajero no encontrado. Ingrese sus datos para registrarlo.");
-                Nombre nombrePasajero = leerNombre();
-                System.out.print("Telefono: ");
-                String telefonoPasajero = sc.nextLine();
-                System.out.println(":::: Contacto de emergencia");
-                Nombre nombreContacto = leerNombre();
-                System.out.print("Telefono contacto: ");
-                String telefonoContacto = sc.nextLine();
-                try {
-                    sistema.createPasajero(idPasajero, nombrePasajero, telefonoPasajero, nombreContacto, telefonoContacto);
-                } catch (SistemaVentaPasajesException e) {
-                    System.out.println("Error: " + e.getMessage());
-                    return;
-                }
-            }
+            // ✅ FIX 2: Se eliminó sistema.findPasajero().
+            // Se solicitan los datos siempre. Si el pasajero ya existe,
+            // createPasajero lanza excepción que se captura y se ignora.
+            System.out.println("Ingrese datos del pasajero (si ya existe, seran ignorados):");
+            Nombre nombrePasajero = leerNombre();
+            System.out.print("Telefono: ");
+            String telefonoPasajero = sc.nextLine();
+            System.out.println(":::: Contacto de emergencia");
+            Nombre nombreContacto = leerNombre();
+            System.out.print("Telefono contacto: ");
+            String telefonoContacto = sc.nextLine();
+
+            try {
+                sistema.createPasajero(idPasajero, nombrePasajero, telefonoPasajero,
+                        nombreContacto, telefonoContacto);
+            } catch (SistemaVentaPasajesException e) {}
 
             try {
                 sistema.vendePasaje(idDoc, tipo, fechaViaje, hora, patente, asiento, idPasajero);
@@ -400,20 +395,20 @@ public class UISVP {
     }
 
     private IdPersona leerIdPersona() {
-        System.out.print("Rut[1] o Pasaporte[2]: ");
+        System.out.printf("%25s : ", "Rut[1] o Pasaporte[2]");
         int tipo = leerEntero();
 
         if (tipo == 1) {
-            System.out.print("R.U.T (12345678-9): ");
+            System.out.printf("%25s : ", "R.U.T");
             Rut rut = Rut.of(sc.nextLine());
             if (rut == null) System.out.println("Error: RUT invalido.");
             return rut;
         }
 
         if (tipo == 2) {
-            System.out.print("Numero de pasaporte: ");
+            System.out.printf("%25s : ", "Numero de pasaporte");
             String numero = sc.nextLine();
-            System.out.print("Nacionalidad: ");
+            System.out.printf("%25s : ", "Nacionalidad");
             String nacionalidad = sc.nextLine();
             return Pasaporte.of(numero, nacionalidad);
         }
@@ -423,21 +418,25 @@ public class UISVP {
     }
 
     private Nombre leerNombre() {
-        System.out.print("Nombres: ");
+        System.out.printf("%25s : ", "Sr.[1] o Sra.[2]");
+        int trat = leerEntero();
+        Tratamiento tratamiento = (trat == 2) ? Tratamiento.SRA : Tratamiento.SR;
+
+        System.out.printf("%25s : ", "Nombres");
         String nombres = sc.nextLine();
-        System.out.print("Apellido Paterno: ");
+        System.out.printf("%25s : ", "Apellido Paterno");
         String apPaterno = sc.nextLine();
-        System.out.print("Apellido Materno: ");
+        System.out.printf("%25s : ", "Apellido Materno");
         String apMaterno = sc.nextLine();
-        return new Nombre(Tratamiento.SR, nombres, apPaterno, apMaterno);
+        return new Nombre(tratamiento, nombres, apPaterno, apMaterno);
     }
 
     private Direccion leerDireccion() {
-        System.out.print("Calle: ");
+        System.out.printf("%25s : ", "Calle");
         String calle = sc.nextLine();
-        System.out.print("Numero: ");
+        System.out.printf("%25s : ", "Numero");
         int numero = leerEntero();
-        System.out.print("Comuna: ");
+        System.out.printf("%25s : ", "Comuna");
         String comuna = sc.nextLine();
         return new Direccion(calle, numero, comuna);
     }

@@ -17,7 +17,6 @@ import utilidades.Direccion;
 import utilidades.IdPersona;
 import utilidades.Nombre;
 import utilidades.Rut;
-
 /**
  * @author Genesis Castro
  */

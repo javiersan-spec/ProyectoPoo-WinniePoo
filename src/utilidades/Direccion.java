@@ -1,5 +1,4 @@
 package utilidades;
-
 /**
  * @author Beatriz Aguilera
  */
