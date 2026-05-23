@@ -1,5 +1,4 @@
 package vista;
-
 /**
  * Clase principal que gestiona el arranque de la aplicación.
  * @author Javier San Martin
