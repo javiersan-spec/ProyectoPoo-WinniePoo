@@ -19,15 +19,7 @@ import utilidades.Nombre;
 import utilidades.Pasaporte;
 import utilidades.Rut;
 import utilidades.Tratamiento;
-/**
- * Clase principal que gestiona el Menu y sus metodos de la aplicación.
- * @author Javier San Martin
- * @author Benjamin Carrasco
- * @author Genesis Castro
- * @author Beatriz Aguilera
- * @author Benjamin Jara
- * @version 2.0
- */
+
 public class UISVP {
 
     private static UISVP instancia;
@@ -67,7 +59,7 @@ public class UISVP {
             System.out.println("13) Listar ventas de empresa");
             System.out.println("14) Salir");
             System.out.println("---------------------------------------");
-            System.out.print("..:: Ingrese numero de opción: ");
+            System.out.print("..:: Ingrese numero de opcion: ");
 
             opcion = leerEntero();
 
@@ -115,7 +107,7 @@ public class UISVP {
     }
 
     private void contrataTripulante() {
-        System.out.println("\n...:::: Contratando un nuevo Tripulante ::::....\n");
+        System.out.println("\n...:::: Contatando un nuevo Tripulante ::::....\n");
 
         System.out.println(":::: Dato de la Empresa");
         System.out.printf("%25s : ", "R.U.T");
@@ -143,7 +135,7 @@ public class UISVP {
                 ControladorEmpresas.getInstancia().hireConductorForEmpresa(rutEmp, idTrip, nombre, dir);
                 System.out.println("\n...::::: Conductor contratado exitosamente ::::....");
             } else {
-                System.out.println("Error: Tipo de tripulante inválido.");
+                System.out.println("Error: Tipo de tripulante invalido.");
             }
         } catch (SistemaVentaPasajesException e) {
             System.out.println("Error: " + e.getMessage());
@@ -204,7 +196,7 @@ public class UISVP {
         System.out.printf("%25s : ", "R.U.T");
         Rut rutEmpresa = Rut.of(sc.nextLine());
         if (rutEmpresa == null) {
-            System.out.println("RUT invalido. Operación cancelada.");
+            System.out.println("RUT invalido. Operacion cancelada.");
             return;
         }
 
@@ -224,7 +216,7 @@ public class UISVP {
         LocalTime hora = LocalTime.parse(sc.nextLine(), DateTimeFormatter.ofPattern("HH:mm"));
         System.out.printf("%25s : ", "Precio");
         int precio = leerEntero();
-        System.out.printf("%25s : ", "Duración (minutos)");
+        System.out.printf("%25s : ", "Duracion (minutos)");
         int duracionMinutos = leerEntero();
         System.out.printf("%25s : ", "Patente Bus");
         String patente = sc.nextLine();
@@ -295,11 +287,13 @@ public class UISVP {
 
         System.out.println("\n:::: Listado de horarios disponibles");
         String[][] horarios = sistema.getHorariosDisponibles(fechaViaje, comunaSalida, comunaLlegada, nroPasajes);
-        imprimirTabla(horarios);
+        imprimirTabla(
+                new String[]{"PATENTE", "HORA", "PRECIO", "ASIENTOS DISP."},
+                horarios);
         System.out.printf("Seleccione viaje [1..%d] : ", horarios.length);
         int selViaje = leerEntero();
         if (selViaje < 1 || selViaje > horarios.length) {
-            System.out.println("Error: Selección de viaje invalida.");
+            System.out.println("Error: Seleccion de viaje invalida.");
             return;
         }
 
@@ -327,6 +321,8 @@ public class UISVP {
             IdPersona idPasajero = leerIdPersona();
             if (idPasajero == null) return;
 
+            // Se solicitan los datos siempre. Si el pasajero ya existe,
+            // createPasajero lanza excepcion que se captura y se ignora.
             Nombre nombrePasajero = leerNombre();
             System.out.print("Telefono: ");
             String telefonoPasajero = sc.nextLine();
@@ -374,12 +370,16 @@ public class UISVP {
 
     private void listVentas() {
         System.out.println("\n...:::: Listado de Ventas ::::...");
-        imprimirTabla(sistema.listVentas());
+        imprimirTabla(
+                new String[]{"ID DOC.", "TIPO", "FECHA", "CLIENTE", "MONTO", "TIPO PAGO"},
+                sistema.listVentas());
     }
 
     private void listViajes() {
         System.out.println("\n...::::: Listado de viajes ::::....\n");
-        imprimirTabla(sistema.listViajes());
+        imprimirTabla(
+                new String[]{"FECHA", "HORA SALIDA", "HORA LLEGADA", "PRECIO", "ASIENTOS DISP.", "PATENTE BUS", "TERMINAL SALIDA", "TERMINAL LLEGADA"},
+                sistema.listViajes());
     }
 
     private void listPasajerosViaje() {
@@ -390,7 +390,9 @@ public class UISVP {
         String patente = sc.nextLine();
 
         try {
-            imprimirTabla(sistema.listPasajerosViaje(fecha, hora, patente));
+            imprimirTabla(
+                    new String[]{"ID PASAJERO", "NOMBRE", "CONTACTO EMERGENCIA", "FONO CONTACTO"},
+                    sistema.listPasajerosViaje(fecha, hora, patente));
         } catch (SistemaVentaPasajesException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -398,7 +400,9 @@ public class UISVP {
 
     private void listEmpresas() {
         System.out.println("\n...::::: Listado de empresas ::::....\n");
-        imprimirTabla(ControladorEmpresas.getInstancia().listEmpresas());
+        imprimirTabla(
+                new String[]{"RUT", "NOMBRE", "URL", "NRO. TRIPULANTES", "NRO. BUSES", "NRO. VENTAS"},
+                ControladorEmpresas.getInstancia().listEmpresas());
     }
 
     private void listLlegadasSalidasTerminal() {
@@ -409,7 +413,9 @@ public class UISVP {
         LocalDate fecha = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         try {
-            imprimirTabla(ControladorEmpresas.getInstancia().listLlegadasSalidasTerminal(nombre, fecha));
+            imprimirTabla(
+                    new String[]{"LLEGADA/SALIDA", "HORA", "PATENTE BUS", "NOMBRE EMPRESA", "NRO. PASAJEROS"},
+                    ControladorEmpresas.getInstancia().listLlegadasSalidasTerminal(nombre, fecha));
         } catch (SistemaVentaPasajesException e) {
             System.out.println("*** Error: " + e.getMessage() + " ***");
         }
@@ -425,7 +431,9 @@ public class UISVP {
         }
 
         try {
-            imprimirTabla(ControladorEmpresas.getInstancia().listVentasEmpresa(rut));
+            imprimirTabla(
+                    new String[]{"FECHA", "TIPO", "MONTO", "TIPO PAGO"},
+                    ControladorEmpresas.getInstancia().listVentasEmpresa(rut));
         } catch (SistemaVentaPasajesException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -499,17 +507,92 @@ public class UISVP {
     }
 
     private void imprimirTabla(String[][] datos) {
-        if (datos.length == 0) {
+        imprimirTabla(null, datos);
+    }
+
+    private void imprimirTabla(String[] encabezados, String[][] datos) {
+        if ((datos == null || datos.length == 0) && encabezados == null) {
             System.out.println("No hay datos para mostrar.");
             return;
         }
 
-        for (String[] fila : datos) {
-            for (int i = 0; i < fila.length; i++) {
-                if (i > 0) System.out.print(" | ");
-                System.out.print(fila[i]);
+        int nroCols = encabezados != null ? encabezados.length
+                : (datos.length > 0 ? datos[0].length : 0);
+        if (nroCols == 0) {
+            System.out.println("No hay datos para mostrar.");
+            return;
+        }
+
+        int[] anchos = new int[nroCols];
+
+        if (encabezados != null) {
+            for (int j = 0; j < nroCols; j++) {
+                anchos[j] = encabezados[j].length();
             }
-            System.out.println();
+        }
+
+        if (datos != null) {
+            for (String[] fila : datos) {
+                for (int j = 0; j < Math.min(fila.length, nroCols); j++) {
+                    if (fila[j] != null && fila[j].length() > anchos[j]) {
+                        anchos[j] = fila[j].length();
+                    }
+                }
+            }
+        }
+        StringBuilder bordeExt = new StringBuilder("*");
+        for (int j = 0; j < nroCols; j++) {
+            for (int k = 0; k < anchos[j] + 2; k++) bordeExt.append('-');
+            bordeExt.append('*');
+        }
+
+        StringBuilder bordeInt = new StringBuilder("|");
+        for (int j = 0; j < nroCols; j++) {
+            for (int k = 0; k < anchos[j] + 2; k++) bordeInt.append('-');
+            bordeInt.append(j < nroCols - 1 ? '+' : '|');
+        }
+
+        System.out.println(bordeExt);
+
+        if (encabezados != null) {
+            StringBuilder filaEnc = new StringBuilder("|");
+            for (int j = 0; j < nroCols; j++) {
+                filaEnc.append(String.format(" %-" + anchos[j] + "s ", encabezados[j]));
+                filaEnc.append('|');
+            }
+            System.out.println(filaEnc);
+            System.out.println(bordeInt);
+        }
+
+        if (datos != null) {
+            for (int i = 0; i < datos.length; i++) {
+                StringBuilder filaDato = new StringBuilder("|");
+                for (int j = 0; j < nroCols; j++) {
+                    String val = (j < datos[i].length && datos[i][j] != null) ? datos[i][j] : "";
+                    if (esNumerico(val)) {
+                        filaDato.append(String.format(" %" + anchos[j] + "s ", val));
+                    } else {
+                        filaDato.append(String.format(" %-" + anchos[j] + "s ", val));
+                    }
+                    filaDato.append('|');
+                }
+                System.out.println(filaDato);
+                if (i < datos.length - 1) {
+                    System.out.println(bordeInt);
+                }
+            }
+        }
+
+        System.out.println(bordeExt);
+    }
+
+    private boolean esNumerico(String str) {
+        if (str == null || str.isEmpty()) return false;
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
