@@ -1,9 +1,7 @@
 package modelo;
-
 /**
-* @author Genesis Castro
-*/
-
+ * @author Genesis Castro
+ */
 public class Pago {
 
     private int monto;
@@ -16,3 +14,5 @@ public class Pago {
         return monto;
     }
 }
+
+

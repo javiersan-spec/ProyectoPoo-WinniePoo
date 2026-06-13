@@ -10,3 +10,4 @@ public interface IdPersona {
     @Override
     boolean equals(Object otro);
 }
+

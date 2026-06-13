@@ -3,7 +3,6 @@ package modelo;
 import utilidades.Direccion;
 import utilidades.IdPersona;
 import utilidades.Nombre;
-
 /**
  * @author Benjamin Jara
  */
@@ -28,3 +27,5 @@ public class Conductor extends Tripulante {
         return this.nroViajes;
     }
 }
+
+

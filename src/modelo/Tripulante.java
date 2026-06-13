@@ -3,14 +3,21 @@ package modelo;
 import utilidades.Direccion;
 import utilidades.IdPersona;
 import utilidades.Nombre;
+import java.util.ArrayList;
 
-public class Tripulante extends Persona {
+/**
+ * Clase abstracta que representa a un tripulante del bus.
+ * @author Benjamin Carrasco
+ */
+public abstract class Tripulante extends Persona {
 
     private Direccion direccion;
+    protected ArrayList<Viaje> viajes;
 
     public Tripulante(IdPersona id, Nombre nom, Direccion dir) {
         super(id, nom);
         this.direccion = dir;
+        this.viajes = new ArrayList<>();
     }
 
     public Direccion getDireccion() {
@@ -21,11 +28,7 @@ public class Tripulante extends Persona {
         this.direccion = direccion;
     }
 
-    public void addViaje(Viaje viaje) {
-
-    }
-
-    public int getNroViajes() {
-        return 0;
-    }
+    // estos metodos los tienen que implementar Conductor y Auxiliar
+    public abstract void addViaje(Viaje viaje);
+    public abstract int getNroViajes();
 }

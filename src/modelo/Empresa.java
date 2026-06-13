@@ -2,6 +2,11 @@ package modelo;
 /**
  * @author Benjamin Jara
  */
+import utilidades.Direccion;
+import utilidades.IdPersona;
+import utilidades.Nombre;
+import utilidades.Rut;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +25,10 @@ public class Empresa {
         this.tripulantes = new ArrayList<>();
     }
 
+    public Empresa(Rut rut, String nombre) {
+        this(rut, nombre, "");
+    }
+
     public Rut getRut() {
         return rut;
     }
@@ -30,6 +39,10 @@ public class Empresa {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void addBus(Bus bus) {
@@ -49,6 +62,10 @@ public class Empresa {
         return true;
     }
 
+    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir) {
+        return addConductor(id, nom, dir, true);
+    }
+
     public boolean addAuxiliar(IdPersona id, Nombre nom, Direccion dir) {
         for (Tripulante t : tripulantes) {
             if (t.getIdPersona().equals(id)) {
@@ -62,6 +79,26 @@ public class Empresa {
 
     public Tripulante[] getTripulantes() {
         return tripulantes.toArray(new Tripulante[0]);
+    }
+
+    public Conductor findConductor(IdPersona id) {
+        for (Tripulante tripulante : tripulantes) {
+            if (tripulante instanceof Conductor && tripulante.getIdPersona().equals(id)) {
+                return (Conductor) tripulante;
+            }
+        }
+
+        return null;
+    }
+
+    public Auxiliar findAuxiliar(IdPersona id) {
+        for (Tripulante tripulante : tripulantes) {
+            if (tripulante instanceof Auxiliar && tripulante.getIdPersona().equals(id)) {
+                return (Auxiliar) tripulante;
+            }
+        }
+
+        return null;
     }
 
     public Venta[] getVentas() {
@@ -83,3 +120,4 @@ public class Empresa {
         return buses.toArray(new Bus[0]);
     }
 }
+

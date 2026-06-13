@@ -2,6 +2,8 @@ package modelo;
 
 import utilidades.IdPersona;
 import utilidades.Nombre;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase encargada de generar un cliente dentro del sistema de venta de pasajes.
@@ -13,25 +15,28 @@ import utilidades.Nombre;
 public class Cliente extends Persona {
 
     private String email;
-    private Venta[] ventas;
+    private List<Venta> ventas;
 
     public Cliente(IdPersona id, Nombre nom, String email) {
         super(id, nom);
-        this.email  = email;
-        this.ventas = new Venta[0];
+        this.email = email;
+        this.ventas = new ArrayList<>();
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getEmail() { return email; }
-    public Venta[] getVentas() { return ventas; }
-
-    public void setEmail(String email) { this.email = email; }
+    public Venta[] getVentas() {
+        return ventas.toArray(new Venta[0]);
+    }
 
     public void addVenta(Venta venta) {
-        Venta[] nuevasVentas = new Venta[ventas.length + 1];
-        for (int i = 0; i < ventas.length; i++) {
-            nuevasVentas[i] = ventas[i];
+        if (venta != null && !ventas.contains(venta)) {
+            ventas.add(venta);
         }
-        nuevasVentas[ventas.length] = venta;
-        ventas = nuevasVentas;
     }
 }
+

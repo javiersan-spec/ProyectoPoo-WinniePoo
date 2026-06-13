@@ -35,3 +35,4 @@ public class Pasaporte implements IdPersona {
         return numero.equals(pasaporte.numero) && nacionalidad.equals(pasaporte.nacionalidad);
     }
 }
+
