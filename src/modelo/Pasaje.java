@@ -1,5 +1,10 @@
 package modelo;
 
+/**
+ * Pasaje que se vende a un pasajero para un viaje.
+ * Tiene asiento, numero, y se asocia al pasajero, viaje y venta.
+ * @author Benjamin Carrasco
+ */
 public class Pasaje {
     private int asiento;
     private long numero;
@@ -14,8 +19,13 @@ public class Pasaje {
         this.venta = venta;
         this.viaje = viaje;
 
+        // registro el pasaje en el viaje
         if (viaje != null) {
             viaje.addPasaje(this);
+        }
+        // registro el pasaje en el pasajero tambien
+        if (pasajero != null) {
+            pasajero.addPasaje(this);
         }
     }
 
@@ -39,4 +49,3 @@ public class Pasaje {
         return asiento;
     }
 }
-
