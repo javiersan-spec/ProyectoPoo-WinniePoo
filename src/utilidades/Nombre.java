@@ -1,8 +1,7 @@
 package utilidades;
 /**
- * Clase representante el nombre completo de una persona,
- * es decir que va compuesto por el nombre, apellido paterno y apellido materno.
  * @author Beatriz Aguilera
+ * @version Avance 3
  */
 public class Nombre {
     private Tratamiento tratamiento;

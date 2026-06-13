@@ -1,6 +1,7 @@
 package utilidades;
 /**
  * @author Beatriz Aguilera
+ * @version Avance 3
  */
 public class Direccion {
 
