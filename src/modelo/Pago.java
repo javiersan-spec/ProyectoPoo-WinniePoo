@@ -1,8 +1,11 @@
 package modelo;
+
+import java.io.Serializable;
+
 /**
- * @author Genesis Castro
+ * @author Genesis Castro pd: soy pesada
  */
-public class Pago {
+public class Pago implements Serializable {
 
     private int monto;
 

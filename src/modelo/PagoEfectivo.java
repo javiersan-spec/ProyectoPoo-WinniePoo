@@ -1,6 +1,7 @@
 package modelo;
 /**
- * @author Benjamin Carrasco
+ * @author Javier San Martin
+ * @version avance 3
  */
 
 public class PagoEfectivo extends Pago {

@@ -1,6 +1,8 @@
 package controlador;
 
 import excepciones.SVPException;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import utilidades.Rut;
 /**
  * @author Genesis Castro
  */
-public class ControladorEmpresas {
+public class ControladorEmpresas implements Serializable {
 
     private static ControladorEmpresas instancia;
     private ArrayList<Empresa> empresas;

@@ -1,10 +1,8 @@
 package modelo;
 
-/**
- * Pasaje que se vende a un pasajero para un viaje.
- * @author Benjamin Carrasco
- */
-public class Pasaje {
+import java.io.Serializable;
+
+public class Pasaje implements Serializable {
     private int asiento;
     private long numero;
     private Pasajero pasajero;
@@ -20,9 +18,6 @@ public class Pasaje {
 
         if (viaje != null) {
             viaje.addPasaje(this);
-        }
-        if (pasajero != null) {
-            pasajero.addPasaje(this);
         }
     }
 
@@ -46,3 +41,4 @@ public class Pasaje {
         return asiento;
     }
 }
+

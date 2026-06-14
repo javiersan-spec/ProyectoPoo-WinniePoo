@@ -1,6 +1,8 @@
 package controlador;
 
 import excepciones.SVPException;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -21,10 +23,9 @@ import utilidades.Nombre;
 import utilidades.Rut;
 /**
  * Controlador principal del sistema de venta de pasajes.
- * @author Genesis Castro
  * @author Benjamin Carrasco
  */
-public class SistemaVentaPasajes {
+public class SistemaVentaPasajes implements Serializable {
 
     private static SistemaVentaPasajes instancia;
     private List<Cliente> clientes;

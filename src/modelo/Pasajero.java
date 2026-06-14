@@ -2,25 +2,20 @@ package modelo;
 
 import utilidades.IdPersona;
 import utilidades.Nombre;
-import java.util.ArrayList;
-
 /**
- * Pasajero del sistema, tiene contacto de emergencia
- * y una lista de los pasajes que ha comprado.
+ * Clase encargada de definir a un pasajero dentro del sistema de venta de pasajes.
  * @author Benjamin Carrasco
  */
 public class Pasajero extends Persona {
 
     private Nombre nomContacto;
     private String fonoContacto;
-    private ArrayList<Pasaje> pasajes;
 
     public Pasajero(IdPersona id, Nombre nom,
                     Nombre nomContacto, String fonoContacto) {
         super(id, nom);
         this.nomContacto = nomContacto;
         this.fonoContacto = fonoContacto;
-        this.pasajes = new ArrayList<>();
     }
 
     public Nombre getNomContacto() { return nomContacto; }
@@ -28,14 +23,6 @@ public class Pasajero extends Persona {
 
     public void setNomContacto(Nombre nomContacto) { this.nomContacto = nomContacto; }
     public void setFonoContacto(String fonoContacto) { this.fonoContacto = fonoContacto; }
-
-    public void addPasaje(Pasaje pasaje) {
-        if (pasaje != null) {
-            this.pasajes.add(pasaje);
-        }
-    }
-
-    public Pasaje[] getPasajes() {
-        return pasajes.toArray(new Pasaje[0]);
-    }
 }
+
+
