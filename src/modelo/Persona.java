@@ -2,13 +2,15 @@ package modelo;
 
 import utilidades.IdPersona;
 import utilidades.Nombre;
+
+import java.io.Serializable;
+
 /**
  * Clase abstracta que representa a una persona dentro del sistema de venta de pasajes.
- * Contiene los datos basicos comunes de todo tipo de persona:
- * Indentificador, nombre completo y telefono.
+ * Contiene los datos basicos comunes de todo tipo de persona
  *  @author Beatriz Aguilera
  */
-public abstract class Persona {
+public abstract class Persona implements Serializable {
 
     private IdPersona idPersona;
     private Nombre nombreCompleto;

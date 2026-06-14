@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase encargada de generar un cliente dentro del sistema de venta de pasajes.
- * Hereda los datos basicos de persona y agrega el email y el historial de ventas
- * realizadas por el Cliente.
+ * Clase encargada de generar un cliente dentro del sistema de venta de pasajes..
  * @author Genesis Castro
- * Avance 2
+ * Avance 3
  */
 public class Cliente extends Persona {
 

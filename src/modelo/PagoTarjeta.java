@@ -1,8 +1,6 @@
 package modelo;
 /**
- * Clase que representa un pago realizado con targeta dentro del
- * Sistema de venta de pasajes. Hereda el monto de la clase pago
- * y agrega el numero de tarjeta utilizado en la trasaccion.
+ * Clase que representa un pago realizado con targeta dentro del sistema de venta de pasajes.
  * @author Beatriz Aguilera
  */
 public class PagoTarjeta extends Pago {

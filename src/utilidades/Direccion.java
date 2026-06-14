@@ -1,8 +1,9 @@
 package utilidades;
+import java.io.Serializable;
 /**
  * @author Beatriz Aguilera
  */
-public class Direccion {
+public class Direccion implements Serializable {
 
     private String calle;
     private int numero;

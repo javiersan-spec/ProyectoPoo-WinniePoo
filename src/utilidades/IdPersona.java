@@ -1,7 +1,7 @@
 package utilidades;
 /**
  * @author Javier San Martin
- * @version Avance 2
+ * @version Avance 3
  */
 public interface IdPersona {
     @Override

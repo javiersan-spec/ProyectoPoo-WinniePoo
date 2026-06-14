@@ -1,12 +1,13 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * Clase que representa un Bus dentro del sistema.
  * @author Benjamin Jara
  */
-public class Bus {
+public class Bus implements Serializable {
     private String patente;
     private String marca;
     private String modelo;
