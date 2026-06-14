@@ -6,7 +6,7 @@ package vista;
  * @author Genesis Castro
  * @author Beatriz Aguilera
  * @author Benjamin Jara
- * @version 2.0
+ * @version 3.0
  */
 public class Main {
 
