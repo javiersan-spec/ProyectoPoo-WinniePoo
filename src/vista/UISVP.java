@@ -2,24 +2,24 @@ package vista;
 
 import controlador.ControladorEmpresas;
 import controlador.SistemaVentaPasajes;
-import excepciones.SistemaVentaPasajesException;
+import excepciones.SVPException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.Scanner;
-import modelo.Empresa;
-import modelo.Terminal;
 import modelo.TipoDocumento;
-import modelo.Venta;
-import modelo.Viaje;
 import utilidades.Direccion;
 import utilidades.IdPersona;
 import utilidades.Nombre;
 import utilidades.Pasaporte;
 import utilidades.Rut;
 import utilidades.Tratamiento;
-
+/**
+ * Interfaz de usuario del sistema de venta de pasajes.
+ * Muestra el menu y llama a los controladores segun la opcion.
+ * @author Javier San Martin
+ * @version 3.0 por nosotros mismos
+ */
 public class UISVP {
 
     private static UISVP instancia;
@@ -57,7 +57,11 @@ public class UISVP {
             System.out.println("11) Listar empresas");
             System.out.println("12) Listar llegadas/salidas de terminal");
             System.out.println("13) Listar ventas de empresa");
-            System.out.println("14) Salir");
+            System.out.println("14) Generar pasajes venta");
+            System.out.println("15) Leer datos iniciales");
+            System.out.println("16) Guardar datos del sistema");
+            System.out.println("17) Leer datos del sistema");
+            System.out.println("18) Salir");
             System.out.println("---------------------------------------");
             System.out.print("..:: Ingrese numero de opcion: ");
 
@@ -77,11 +81,15 @@ public class UISVP {
                 case 11: listEmpresas(); break;
                 case 12: listLlegadasSalidasTerminal(); break;
                 case 13: listVentasEmpresa(); break;
-                case 14: System.out.println("Saliendo..."); break;
+                case 14: generatePasajesVenta(); break;
+                case 15: readDatosIniciales(); break;
+                case 16: saveDatosSistema(); break;
+                case 17: readDatosSistema(); break;
+                case 18: System.out.println("Saliendo..."); break;
                 default: System.out.println("Opcion invalida");
             }
 
-        } while (opcion != 14);
+        } while (opcion != 18);
     }
 
     private void createEmpresa() {
@@ -101,7 +109,7 @@ public class UISVP {
         try {
             ControladorEmpresas.getInstancia().createEmpresa(rut, nombreEmpresa, url);
             System.out.println("\n...::::: Empresa guardada exitosamente ::::....");
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -137,7 +145,7 @@ public class UISVP {
             } else {
                 System.out.println("Error: Tipo de tripulante invalido.");
             }
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -157,7 +165,7 @@ public class UISVP {
         try {
             ControladorEmpresas.getInstancia().createTerminal(nombre, dir);
             System.out.println("\n...::::: Terminal guardado exitosamente ::::....");
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -176,7 +184,7 @@ public class UISVP {
         try {
             sistema.createCliente(id, nombre, telefono, email);
             System.out.println("...:::: Cliente guardado exitosamente ::::...");
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -203,7 +211,7 @@ public class UISVP {
         try {
             ControladorEmpresas.getInstancia().createBus(marca, modelo, patente, nroAsientos, rutEmpresa);
             System.out.println("\n...::::: Bus guardado exitosamente ::::....");
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -248,7 +256,7 @@ public class UISVP {
             sistema.createViaje(fecha, hora, precio, duracionMinutos, patente,
                     idsTripulantes, new String[] { comunaSalida, comunaLlegada });
             System.out.println("\n...::::: Viaje guardado exitosamente ::::....");
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -280,7 +288,7 @@ public class UISVP {
         try {
             sistema.iniciaVenta(idDoc, tipo, LocalDate.now(), fechaViaje,
                     comunaSalida, comunaLlegada, idCliente, nroPasajes);
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
             return;
         }
@@ -300,8 +308,10 @@ public class UISVP {
         String patente = horarios[selViaje - 1][0];
         LocalTime hora = LocalTime.parse(horarios[selViaje - 1][1], DateTimeFormatter.ofPattern("HH:mm"));
 
+        // muestro los asientos disponibles
         System.out.println("\n:::: Asientos disponibles para el viaje seleccionado");
-        imprimirArreglo(sistema.listAsientosDeViaje(fechaViaje, hora, patente));
+        String[] listaAsientos = sistema.listAsientosDeViaje(fechaViaje, hora, patente);
+        imprimirArreglo(listaAsientos);
         System.out.print("Seleccione sus asientos [separe por ,] : ");
         String asientosStr = sc.nextLine();
         String[] asientosParts = asientosStr.split(",");
@@ -316,13 +326,21 @@ public class UISVP {
             asientos[i] = Integer.parseInt(asientosParts[i].trim());
         }
 
+        // verifico desde aca (la vista) que los asientos esten disponibles
         for (int i = 0; i < nroPasajes; i++) {
-            System.out.println("\n:::: Datos pasajeros " + (i + 1));
+            if (asientos[i] < 1 || asientos[i] > listaAsientos.length
+                    || listaAsientos[asientos[i] - 1].equals("*")) {
+                System.out.println("Error: El asiento " + asientos[i] + " no esta disponible.");
+                return;
+            }
+        }
+
+        for (int i = 0; i < nroPasajes; i++) {
+            System.out.println("\n:::: Datos pasajero " + (i + 1));
             IdPersona idPasajero = leerIdPersona();
             if (idPasajero == null) return;
 
-            // Se solicitan los datos siempre. Si el pasajero ya existe,
-            // createPasajero lanza excepcion que se captura y se ignora.
+            // pido los datos del pasajero, si ya existe se ignora el error
             Nombre nombrePasajero = leerNombre();
             System.out.print("Telefono: ");
             String telefonoPasajero = sc.nextLine();
@@ -334,18 +352,20 @@ public class UISVP {
             try {
                 sistema.createPasajero(idPasajero, nombrePasajero, telefonoPasajero,
                         nombreContacto, telefonoContacto);
-            } catch (SistemaVentaPasajesException e) {}
+            } catch (SVPException e) {
+                // ya existe, no pasa nada
+            }
 
             try {
                 sistema.vendePasaje(idDoc, tipo, fechaViaje, hora, patente, asientos[i], idPasajero);
                 System.out.println("\n:::: Pasaje agregado exitosamente");
-            } catch (SistemaVentaPasajesException e) {
+            } catch (SVPException e) {
                 System.out.println("Error: " + e.getMessage());
                 return;
             }
         }
 
-        System.out.println("\n:::: Monto total de la venta: $" + sistema.getMontoVenta(idDoc, tipo).orElse(0));
+        System.out.println("\n:::: Monto total de la venta: $" + sistema.getMontoVenta(idDoc, tipo));
         pagarVenta(idDoc, tipo);
     }
 
@@ -363,7 +383,7 @@ public class UISVP {
                 sistema.pagaVenta(idDocumento, tipoDocumento);
             }
             System.out.println("\n...::::: Venta realizada exitosamente ::::....");
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -382,6 +402,7 @@ public class UISVP {
                 sistema.listViajes());
     }
 
+    // ahora muestra 5 columnas incluyendo el asiento
     private void listPasajerosViaje() {
         System.out.println("\n...:::: Pasajeros de Viaje ::::...");
         LocalDate fecha = leerFecha("Fecha viaje (dd/MM/yyyy): ");
@@ -391,9 +412,9 @@ public class UISVP {
 
         try {
             imprimirTabla(
-                    new String[]{"ID PASAJERO", "NOMBRE", "CONTACTO EMERGENCIA", "FONO CONTACTO"},
+                    new String[]{"ID PASAJERO", "NOMBRE", "CONTACTO EMERGENCIA", "FONO CONTACTO", "ASIENTO"},
                     sistema.listPasajerosViaje(fecha, hora, patente));
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -416,11 +437,12 @@ public class UISVP {
             imprimirTabla(
                     new String[]{"LLEGADA/SALIDA", "HORA", "PATENTE BUS", "NOMBRE EMPRESA", "NRO. PASAJEROS"},
                     ControladorEmpresas.getInstancia().listLlegadasSalidasTerminal(nombre, fecha));
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("*** Error: " + e.getMessage() + " ***");
         }
     }
 
+    // corregido: ahora tiene 6 columnas que coinciden con los datos del controlador
     private void listVentasEmpresa() {
         System.out.println("\n...::::: Listado de ventas de una empresa ::::....\n");
         System.out.printf("%25s : ", "R.U.T");
@@ -432,12 +454,34 @@ public class UISVP {
 
         try {
             imprimirTabla(
-                    new String[]{"FECHA", "TIPO", "MONTO", "TIPO PAGO"},
+                    new String[]{"ID DOC.", "TIPO", "FECHA", "CLIENTE", "MONTO", "TIPO PAGO"},
                     ControladorEmpresas.getInstancia().listVentasEmpresa(rut));
-        } catch (SistemaVentaPasajesException e) {
+        } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    private void generatePasajesVenta() {
+        System.out.println("\n...:::: Generar pasajes de venta ::::...");
+        System.out.println("Funcionalidad en desarrollo.");
+    }
+
+    private void readDatosIniciales() {
+        System.out.println("\n...:::: Leer datos iniciales ::::...");
+        System.out.println("Funcionalidad en desarrollo.");
+    }
+
+    private void saveDatosSistema() {
+        System.out.println("\n...:::: Guardar datos del sistema ::::...");
+        System.out.println("Funcionalidad en desarrollo.");
+    }
+
+    private void readDatosSistema() {
+        System.out.println("\n...:::: Leer datos del sistema ::::...");
+        System.out.println("Funcionalidad en desarrollo.");
+    }
+
+    // -- metodos auxiliares para leer datos del usuario --
 
     private IdPersona leerIdPersona() {
         System.out.printf("%25s : ", "Rut[1] o Pasaporte[2]");
@@ -506,146 +550,78 @@ public class UISVP {
         return Integer.parseInt(sc.nextLine());
     }
 
-    private void imprimirTabla(String[][] datos) {
-        imprimirTabla(null, datos);
-    }
+    // -- metodos para imprimir tablas y arreglos --
 
+    // version simplificada de imprimirTabla, mas directa con printf
     private void imprimirTabla(String[] encabezados, String[][] datos) {
-        if ((datos == null || datos.length == 0) && encabezados == null) {
+        if (datos == null || datos.length == 0) {
             System.out.println("No hay datos para mostrar.");
             return;
         }
 
-        int nroCols = encabezados != null ? encabezados.length
-                : (datos.length > 0 ? datos[0].length : 0);
-        if (nroCols == 0) {
-            System.out.println("No hay datos para mostrar.");
-            return;
-        }
+        int nroCols = encabezados.length;
 
+        // calculo el ancho de cada columna
         int[] anchos = new int[nroCols];
-
-        if (encabezados != null) {
-            for (int j = 0; j < nroCols; j++) {
-                anchos[j] = encabezados[j].length();
-            }
+        for (int j = 0; j < nroCols; j++) {
+            anchos[j] = encabezados[j].length();
         }
-
-        if (datos != null) {
-            for (String[] fila : datos) {
-                for (int j = 0; j < Math.min(fila.length, nroCols); j++) {
-                    if (fila[j] != null && fila[j].length() > anchos[j]) {
-                        anchos[j] = fila[j].length();
+        for (int i = 0; i < datos.length; i++) {
+            for (int j = 0; j < nroCols; j++) {
+                if (j < datos[i].length && datos[i][j] != null) {
+                    if (datos[i][j].length() > anchos[j]) {
+                        anchos[j] = datos[i][j].length();
                     }
                 }
             }
         }
-        StringBuilder bordeExt = new StringBuilder("*");
+
+        // imprimo la linea separadora
+        imprimirLinea(anchos);
+
+        // imprimo los encabezados
+        System.out.print("|");
         for (int j = 0; j < nroCols; j++) {
-            for (int k = 0; k < anchos[j] + 2; k++) bordeExt.append('-');
-            bordeExt.append('*');
+            System.out.printf(" %-" + anchos[j] + "s |", encabezados[j]);
         }
+        System.out.println();
+        imprimirLinea(anchos);
 
-        StringBuilder bordeInt = new StringBuilder("|");
-        for (int j = 0; j < nroCols; j++) {
-            for (int k = 0; k < anchos[j] + 2; k++) bordeInt.append('-');
-            bordeInt.append(j < nroCols - 1 ? '+' : '|');
-        }
-
-        System.out.println(bordeExt);
-
-        if (encabezados != null) {
-            StringBuilder filaEnc = new StringBuilder("|");
+        // imprimo cada fila de datos
+        for (int i = 0; i < datos.length; i++) {
+            System.out.print("|");
             for (int j = 0; j < nroCols; j++) {
-                filaEnc.append(String.format(" %-" + anchos[j] + "s ", encabezados[j]));
-                filaEnc.append('|');
-            }
-            System.out.println(filaEnc);
-            System.out.println(bordeInt);
-        }
-
-        if (datos != null) {
-            for (int i = 0; i < datos.length; i++) {
-                StringBuilder filaDato = new StringBuilder("|");
-                for (int j = 0; j < nroCols; j++) {
-                    String val = (j < datos[i].length && datos[i][j] != null) ? datos[i][j] : "";
-                    if (esNumerico(val)) {
-                        filaDato.append(String.format(" %" + anchos[j] + "s ", val));
-                    } else {
-                        filaDato.append(String.format(" %-" + anchos[j] + "s ", val));
-                    }
-                    filaDato.append('|');
+                String val = "";
+                if (j < datos[i].length && datos[i][j] != null) {
+                    val = datos[i][j];
                 }
-                System.out.println(filaDato);
-                if (i < datos.length - 1) {
-                    System.out.println(bordeInt);
-                }
+                System.out.printf(" %-" + anchos[j] + "s |", val);
             }
+            System.out.println();
         }
-
-        System.out.println(bordeExt);
+        imprimirLinea(anchos);
     }
 
-    private boolean esNumerico(String str) {
-        if (str == null || str.isEmpty()) return false;
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private void imprimirArreglo(String[] datos) {
-        if (datos.length == 0) {
-            System.out.println("No hay datos para mostrar.");
-            return;
-        }
-
-        for (String dato : datos) {
-            System.out.print(dato + " ");
+    // imprime una linea de guiones para separar filas de la tabla
+    private void imprimirLinea(int[] anchos) {
+        System.out.print("+");
+        for (int j = 0; j < anchos.length; j++) {
+            for (int k = 0; k < anchos[j] + 2; k++) {
+                System.out.print("-");
+            }
+            System.out.print("+");
         }
         System.out.println();
     }
 
-    private void imprimirViajes(Viaje[] viajes) {
-        if (viajes.length == 0) {
-            System.out.println("No hay viajes registrados.");
+    private void imprimirArreglo(String[] datos) {
+        if (datos.length == 0) {
+            System.out.println("No hay datos.");
             return;
         }
-
-        DateTimeFormatter fechaFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter horaFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        for (Viaje viaje : viajes) {
-            System.out.println(
-                    viaje.getFecha().format(fechaFormatter) + " | "
-                            + viaje.getHora().format(horaFormatter) + " | "
-                            + viaje.getBus().getPatente() + " | $"
-                            + viaje.getPrecio()
-            );
+        for (int i = 0; i < datos.length; i++) {
+            System.out.print(datos[i] + " ");
         }
-    }
-
-    private void imprimirViajes(Viaje[] viajes, LocalDate fecha) {
-        int encontrados = 0;
-        DateTimeFormatter fechaFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter horaFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        for (Viaje viaje : viajes) {
-            if (viaje.getFecha().equals(fecha)) {
-                System.out.println(
-                        viaje.getFecha().format(fechaFormatter) + " | "
-                                + viaje.getHora().format(horaFormatter) + " | "
-                                + viaje.getBus().getPatente() + " | $"
-                                + viaje.getPrecio()
-                );
-                encontrados++;
-            }
-        }
-
-        if (encontrados == 0) {
-            System.out.println("No hay viajes registrados.");
-        }
+        System.out.println();
     }
 }

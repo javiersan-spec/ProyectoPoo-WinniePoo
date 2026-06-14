@@ -3,10 +3,12 @@ package modelo;
  * @author Benjamin Jara
  */
 import utilidades.Direccion;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Terminal {
+public class Terminal implements Serializable {
     private String nombre;
     private Direccion direccion;
     private List<Viaje> llegadas;
