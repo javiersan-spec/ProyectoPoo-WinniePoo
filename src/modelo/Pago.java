@@ -1,11 +1,8 @@
 package modelo;
-
-import java.io.Serializable;
-
 /**
  * @author Genesis Castro
  */
-public class Pago implements Serializable {
+public class Pago {
 
     private int monto;
 
@@ -17,5 +14,3 @@ public class Pago implements Serializable {
         return monto;
     }
 }
-
-
