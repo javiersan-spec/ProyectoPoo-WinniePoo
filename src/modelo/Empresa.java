@@ -1,5 +1,8 @@
 package modelo;
+
 /**
+ * Clase que representa una empresa de buses.
+ * Tiene rut, nombre, url, y listas de buses y tripulantes.
  * @author Benjamin Jara
  */
 import utilidades.Direccion;
@@ -7,16 +10,14 @@ import utilidades.IdPersona;
 import utilidades.Nombre;
 import utilidades.Rut;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Empresa implements Serializable {
+public class Empresa {
     private Rut rut;
     private String nombre;
     private String url;
-    private List<Bus> buses;
-    private List<Tripulante> tripulantes;
+    private ArrayList<Bus> buses;
+    private ArrayList<Tripulante> tripulantes;
 
     public Empresa(Rut rut, String nombre, String url) {
         this.rut = rut;
@@ -52,9 +53,10 @@ public class Empresa implements Serializable {
         }
     }
 
-    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir, boolean lic) {
-        for (Tripulante t : tripulantes) {
-            if (t.getIdPersona().equals(id)) {
+    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir) {
+        // reviso si ya esta contratado con ese id
+        for (int i = 0; i < tripulantes.size(); i++) {
+            if (tripulantes.get(i).getIdPersona().equals(id)) {
                 return false;
             }
         }
@@ -63,13 +65,9 @@ public class Empresa implements Serializable {
         return true;
     }
 
-    public boolean addConductor(IdPersona id, Nombre nom, Direccion dir) {
-        return addConductor(id, nom, dir, true);
-    }
-
     public boolean addAuxiliar(IdPersona id, Nombre nom, Direccion dir) {
-        for (Tripulante t : tripulantes) {
-            if (t.getIdPersona().equals(id)) {
+        for (int i = 0; i < tripulantes.size(); i++) {
+            if (tripulantes.get(i).getIdPersona().equals(id)) {
                 return false;
             }
         }
@@ -82,34 +80,34 @@ public class Empresa implements Serializable {
         return tripulantes.toArray(new Tripulante[0]);
     }
 
-    public Conductor findConductor(IdPersona id) {
-        for (Tripulante tripulante : tripulantes) {
-            if (tripulante instanceof Conductor && tripulante.getIdPersona().equals(id)) {
-                return (Conductor) tripulante;
+
+    private Conductor findConductor(IdPersona id) {
+        for (int i = 0; i < tripulantes.size(); i++) {
+            if (tripulantes.get(i) instanceof Conductor && tripulantes.get(i).getIdPersona().equals(id)) {
+                return (Conductor) tripulantes.get(i);
             }
         }
-
         return null;
     }
 
-    public Auxiliar findAuxiliar(IdPersona id) {
-        for (Tripulante tripulante : tripulantes) {
-            if (tripulante instanceof Auxiliar && tripulante.getIdPersona().equals(id)) {
-                return (Auxiliar) tripulante;
+    private Auxiliar findAuxiliar(IdPersona id) {
+        for (int i = 0; i < tripulantes.size(); i++) {
+            if (tripulantes.get(i) instanceof Auxiliar && tripulantes.get(i).getIdPersona().equals(id)) {
+                return (Auxiliar) tripulantes.get(i);
             }
         }
-
         return null;
     }
 
     public Venta[] getVentas() {
-        List<Venta> ventasEmpresa = new ArrayList<>();
-        for (Bus b : buses) {
-            for (Viaje v : b.getViajes()) {
-                Venta[] ventasViaje = v.getVentas();
-                for (Venta ven : ventasViaje) {
-                    if (!ventasEmpresa.contains(ven)) {
-                        ventasEmpresa.add(ven);
+        ArrayList<Venta> ventasEmpresa = new ArrayList<>();
+        for (int i = 0; i < buses.size(); i++) {
+            Viaje[] viajesBus = buses.get(i).getViajes();
+            for (int j = 0; j < viajesBus.length; j++) {
+                Venta[] ventasViaje = viajesBus[j].getVentas();
+                for (int k = 0; k < ventasViaje.length; k++) {
+                    if (!ventasEmpresa.contains(ventasViaje[k])) {
+                        ventasEmpresa.add(ventasViaje[k]);
                     }
                 }
             }
@@ -121,4 +119,3 @@ public class Empresa implements Serializable {
         return buses.toArray(new Bus[0]);
     }
 }
-
