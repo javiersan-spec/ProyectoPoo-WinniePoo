@@ -1,4 +1,4 @@
-package utilidades;
+package Persistencia;
 
 import excepciones.SVPException;
 import modelo.Pasaje;
@@ -9,8 +9,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 /**
  * Clase encargada de la entrada/salida de datos del sistema.
