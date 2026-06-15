@@ -23,7 +23,7 @@ import utilidades.Nombre;
 import utilidades.Rut;
 /**
  * Controlador principal del sistema de venta de pasajes.
- * @author Benjamin Carrasco
+ * @author Genesis Castro
  */
 public class SistemaVentaPasajes implements Serializable {
 
