@@ -1,12 +1,11 @@
 package modelo;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 /**
- * @author Benjamin Jara
+ * @author Genesis Castro
  */
-public class Venta implements Serializable {
+public class Venta {
     private String idDocumento;
     private TipoDocumento tipo;
     private LocalDate fecha;
@@ -60,40 +59,3 @@ public class Venta implements Serializable {
         }
         return total;
     }
-
-    public boolean pagaMonto() {
-        if (pago != null) {
-            return false;
-        }
-
-        this.pago = new PagoEfectivo(getMonto());
-        return true;
-    }
-
-    public boolean pagaMonto(long nroTarjeta) {
-        if (pago != null) {
-            return false;
-        }
-
-        this.pago = new PagoTarjeta(getMonto(), nroTarjeta);
-        return true;
-    }
-
-    public int getMontoPagado() {
-        if (pago == null) {
-            return 0;
-        }
-
-        return pago.getMonto();
-    }
-
-    public String getTipoPago() {
-        if (pago == null) {
-            return null;
-        }
-        if (pago instanceof PagoTarjeta) {
-            return "Pago Tarjeta";
-        }
-        return "Pago Efectivo";
-    }
-}
