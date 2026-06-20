@@ -24,6 +24,7 @@ import utilidades.Rut;
 /**
  * Controlador principal del sistema de venta de pasajes.
  * @author Genesis Castro
+ * Avance 3
  */
 public class SistemaVentaPasajes implements Serializable {
 
@@ -116,7 +117,7 @@ public class SistemaVentaPasajes implements Serializable {
         }
 
         Viaje nuevoViaje = new Viaje(fecha, hora, precio, duracionMinutos, bus,
-                auxiliarOpt.get(), conductores.toArray(new Conductor[0]), terminalSalidaOpt.get(), terminalLlegadaOpt.get());
+                auxiliarOpt.get(), conductores.toArray(), terminalSalidaOpt.get(), terminalLlegadaOpt.get());
         viajes.add(nuevoViaje);
     }
 

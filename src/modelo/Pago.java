@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * @author Genesis Castro
+ * Avance 3
  */
 public class Pago implements Serializable {
 
