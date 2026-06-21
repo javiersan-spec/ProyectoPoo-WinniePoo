@@ -21,6 +21,7 @@ import utilidades.Nombre;
 import utilidades.Rut;
 /**
  * @author Genesis Castro
+ * Avance 3
  */
 public class ControladorEmpresas implements Serializable {
 

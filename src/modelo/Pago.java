@@ -3,7 +3,8 @@ package modelo;
 import java.io.Serializable;
 
 /**
- * @author Genesis Castro pd: soy pesada
+ * @author Genesis Castro
+ * Avance 3
  */
 public class Pago implements Serializable {
 
