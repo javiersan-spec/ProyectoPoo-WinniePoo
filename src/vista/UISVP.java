@@ -463,22 +463,52 @@ public class UISVP {
 
     private void generatePasajesVenta() {
         System.out.println("\n...:::: Generar pasajes de venta ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        System.out.printf("%25s : ", "ID Documento");
+        String idDoc = sc.nextLine();
+        System.out.print("Tipo documento: [1] Boleta [2] Factura : ");
+        TipoDocumento tipo = leerTipoDocumento();
+
+        try {
+            sistema.generatePasajesVenta(idDoc, tipo);
+            String nombreArchivo = idDoc + "_" + tipo.toString() + ".txt";
+            System.out.println("\n...::::: Pasajes generados en archivo: " + nombreArchivo + " ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void readDatosIniciales() {
         System.out.println("\n...:::: Leer datos iniciales ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        try {
+            sistema.readDatosIniciales();
+            // actualizo la referencia del sistema por si cambio internamente
+            sistema = SistemaVentaPasajes.getInstancia();
+            System.out.println("\n...::::: Datos iniciales cargados exitosamente ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void saveDatosSistema() {
         System.out.println("\n...:::: Guardar datos del sistema ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        try {
+            sistema.saveDatosSistema();
+            System.out.println("\n...::::: Datos del sistema guardados exitosamente ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void readDatosSistema() {
         System.out.println("\n...:::: Leer datos del sistema ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        try {
+            sistema.readDatosSistema();
+            // actualizo la referencia al nuevo singleton cargado desde disco
+            sistema = SistemaVentaPasajes.getInstancia();
+            System.out.println("\n...::::: Datos del sistema cargados exitosamente ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     // -- metodos auxiliares para leer datos del usuario --

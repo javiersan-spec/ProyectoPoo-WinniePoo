@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
-
 /**
  * Clase encargada de la entrada/salida de datos del sistema.
  * Lee y escribe archivos de texto y archivos de objetos.
