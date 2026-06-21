@@ -580,9 +580,8 @@ public class UISVP {
         return Integer.parseInt(sc.nextLine());
     }
 
-    // -- metodos para imprimir tablas y arreglos --
+    // metodos para imprimir tablas y arreglos
 
-    // version simplificada de imprimirTabla, mas directa con printf
     private void imprimirTabla(String[] encabezados, String[][] datos) {
         if (datos == null || datos.length == 0) {
             System.out.println("No hay datos para mostrar.");
@@ -632,7 +631,7 @@ public class UISVP {
         imprimirLinea(anchos);
     }
 
-    // imprime una linea de guiones para separar filas de la tabla
+    // imprime una linea de guiones
     private void imprimirLinea(int[] anchos) {
         System.out.print("+");
         for (int j = 0; j < anchos.length; j++) {
