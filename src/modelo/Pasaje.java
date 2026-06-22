@@ -1,7 +1,11 @@
 package modelo;
 
 import java.io.Serializable;
-
+import java.time.format.DateTimeFormatter;
+/**
+ * Pasaje que se vende a un pasajero para un viaje.
+ * @author Benjamin Carrasco
+ */
 public class Pasaje implements Serializable {
     private int asiento;
     private long numero;
@@ -16,8 +20,13 @@ public class Pasaje implements Serializable {
         this.venta = venta;
         this.viaje = viaje;
 
+        // registro el pasaje en el viaje
         if (viaje != null) {
             viaje.addPasaje(this);
+        }
+        // registro el pasaje en el pasajero tambien
+        if (pasajero != null) {
+            pasajero.addPasaje(this);
         }
     }
 
@@ -40,5 +49,36 @@ public class Pasaje implements Serializable {
     public int getAsiento() {
         return asiento;
     }
-}
 
+    @Override
+    public String toString() {
+        DateTimeFormatter fechaFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter horaFmt = DateTimeFormatter.ofPattern("HH:mm");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("--------------------- PASAJE ELECTRONICO ---------------------\n");
+
+        String nombreEmpresa = viaje.getBus().getEmpresa().getNombre();
+        sb.append(String.format("%-20s %s\n", "Nombre Empresa", "Numero de pasaje"));
+        sb.append(String.format("%-20s %d\n", nombreEmpresa, numero));
+
+        String nombrePasajero = pasajero.getNombreCompleto().toString();
+        String idPasajero = pasajero.getIdPersona().toString();
+        sb.append(String.format("%-35s %s\n", "Nombre Pasajero", "RUT/Pasaporte"));
+        sb.append(String.format("%-35s %s\n", nombrePasajero, idPasajero));
+
+        sb.append(String.format("%-15s %-10s %s\n", "Patente bus", "Asiento", "Valor Pagado"));
+        sb.append(String.format("%-15s %-10d %d\n", viaje.getBus().getPatente(), asiento, viaje.getPrecio()));
+
+        String termOrigen = viaje.getTerminalSalida().getNombre();
+        String termDestino = viaje.getTerminalLlegada().getNombre();
+        String fecha = viaje.getFecha().format(fechaFmt);
+        String hora = viaje.getHora().format(horaFmt);
+
+        sb.append(String.format("%-18s %-18s %-14s %s\n", "Terminal origen", "Terminal destino", "Fecha", "Hora"));
+        sb.append(String.format("%-18s %-18s %-14s %s\n", termOrigen, termDestino, fecha, hora));
+
+        sb.append("--------------------------------------------------------------");
+        return sb.toString();
+    }
+}

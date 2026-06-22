@@ -326,7 +326,7 @@ public class UISVP {
             asientos[i] = Integer.parseInt(asientosParts[i].trim());
         }
 
-        // verifico desde aca (la vista) que los asientos esten disponibles
+        // verificamos que los asientos esten disponibles
         for (int i = 0; i < nroPasajes; i++) {
             if (asientos[i] < 1 || asientos[i] > listaAsientos.length
                     || listaAsientos[asientos[i] - 1].equals("*")) {
@@ -340,7 +340,6 @@ public class UISVP {
             IdPersona idPasajero = leerIdPersona();
             if (idPasajero == null) return;
 
-            // pido los datos del pasajero, si ya existe se ignora el error
             Nombre nombrePasajero = leerNombre();
             System.out.print("Telefono: ");
             String telefonoPasajero = sc.nextLine();
@@ -402,7 +401,6 @@ public class UISVP {
                 sistema.listViajes());
     }
 
-    // ahora muestra 5 columnas incluyendo el asiento
     private void listPasajerosViaje() {
         System.out.println("\n...:::: Pasajeros de Viaje ::::...");
         LocalDate fecha = leerFecha("Fecha viaje (dd/MM/yyyy): ");
@@ -442,7 +440,6 @@ public class UISVP {
         }
     }
 
-    // corregido: ahora tiene 6 columnas que coinciden con los datos del controlador
     private void listVentasEmpresa() {
         System.out.println("\n...::::: Listado de ventas de una empresa ::::....\n");
         System.out.printf("%25s : ", "R.U.T");
@@ -463,22 +460,52 @@ public class UISVP {
 
     private void generatePasajesVenta() {
         System.out.println("\n...:::: Generar pasajes de venta ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        System.out.printf("%25s : ", "ID Documento");
+        String idDoc = sc.nextLine();
+        System.out.print("Tipo documento: [1] Boleta [2] Factura : ");
+        TipoDocumento tipo = leerTipoDocumento();
+
+        try {
+            sistema.generatePasajesVenta(idDoc, tipo);
+            String nombreArchivo = idDoc + "_" + tipo.toString() + ".txt";
+            System.out.println("\n...::::: Pasajes generados en archivo: " + nombreArchivo + " ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void readDatosIniciales() {
         System.out.println("\n...:::: Leer datos iniciales ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        try {
+            sistema.readDatosIniciales();
+            // actualizo la referencia del sistema por si cambio internamente
+            sistema = SistemaVentaPasajes.getInstancia();
+            System.out.println("\n...::::: Datos iniciales cargados exitosamente ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void saveDatosSistema() {
         System.out.println("\n...:::: Guardar datos del sistema ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        try {
+            sistema.saveDatosSistema();
+            System.out.println("\n...::::: Datos del sistema guardados exitosamente ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void readDatosSistema() {
         System.out.println("\n...:::: Leer datos del sistema ::::...");
-        System.out.println("Funcionalidad en desarrollo.");
+        try {
+            sistema.readDatosSistema();
+            // actualizo la referencia al nuevo singleton cargado desde disco
+            sistema = SistemaVentaPasajes.getInstancia();
+            System.out.println("\n...::::: Datos del sistema cargados exitosamente ::::....");
+        } catch (SVPException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     // -- metodos auxiliares para leer datos del usuario --
@@ -550,9 +577,8 @@ public class UISVP {
         return Integer.parseInt(sc.nextLine());
     }
 
-    // -- metodos para imprimir tablas y arreglos --
+    // metodos para imprimir tablas y arreglos
 
-    // version simplificada de imprimirTabla, mas directa con printf
     private void imprimirTabla(String[] encabezados, String[][] datos) {
         if (datos == null || datos.length == 0) {
             System.out.println("No hay datos para mostrar.");
@@ -602,7 +628,7 @@ public class UISVP {
         imprimirLinea(anchos);
     }
 
-    // imprime una linea de guiones para separar filas de la tabla
+    // imprime una linea de guiones
     private void imprimirLinea(int[] anchos) {
         System.out.print("+");
         for (int j = 0; j < anchos.length; j++) {

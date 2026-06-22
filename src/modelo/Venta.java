@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 /**
- * @author Benjamin Jara
+ * @author Genesis Castro
+ * @version Avance 3
  */
 public class Venta implements Serializable {
     private String idDocumento;
@@ -97,3 +98,4 @@ public class Venta implements Serializable {
         return "Pago Efectivo";
     }
 }
+

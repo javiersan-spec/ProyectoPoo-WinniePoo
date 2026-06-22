@@ -2,7 +2,6 @@ package modelo;
 
 /**
  * Representa un viaje de bus entre dos terminales.
- * Tiene fecha, hora, precio, duracion, bus, auxiliar, conductores, pasajes.
  * @author Benjamin Carrasco
  */
 import java.time.LocalDate;
