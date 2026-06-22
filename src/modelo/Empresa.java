@@ -1,8 +1,6 @@
 package modelo;
 
 /**
- * Clase que representa una empresa de buses.
- * Tiene rut, nombre, url, y listas de buses y tripulantes.
  * @author Benjamin Jara
  */
 import utilidades.Direccion;

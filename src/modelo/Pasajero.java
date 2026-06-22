@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * Pasajero del sistema, tiene contacto de emergencia
- * y una lista de los pasajes que ha comprado.
  * @author Benjamin Carrasco
  */
 public class Pasajero extends Persona {

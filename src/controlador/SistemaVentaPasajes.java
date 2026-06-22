@@ -24,8 +24,6 @@ import utilidades.Nombre;
 import utilidades.Rut;
 
 /**
- * Controlador principal del sistema de venta de pasajes.
- * Maneja clientes, pasajeros, viajes y ventas.
  * @author Genesis Castro
  * @author Benjamin Carrasco
  */

@@ -22,7 +22,6 @@ import utilidades.Nombre;
 import utilidades.Rut;
 
 /**
- * Controlador que maneja las empresas, terminales y buses del sistema.
  * @author Genesis Castro
  */
 public class ControladorEmpresas implements Serializable {

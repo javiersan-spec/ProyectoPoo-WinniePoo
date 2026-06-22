@@ -17,7 +17,11 @@ import utilidades.Tratamiento;
 
 /**
  * Interfaz de usuario del sistema de venta de pasajes.
- * Muestra el menu y llama a los controladores segun la opcion.
+ * @author Javier San Martin
+ * @author Benjamin Carrasco
+ * @author Benjamin Jara
+ * @author Genesis Castro
+ * @author Beatriz Aguilera
  */
 public class UISVP {
 
@@ -306,7 +310,6 @@ public class UISVP {
         String patente = horarios[selViaje - 1][0];
         LocalTime hora = LocalTime.parse(horarios[selViaje - 1][1], DateTimeFormatter.ofPattern("HH:mm"));
 
-        // muestro los asientos disponibles
         System.out.println("\n:::: Asientos disponibles para el viaje seleccionado");
         String[] listaAsientos = sistema.listAsientosDeViaje(fechaViaje, hora, patente);
         imprimirArreglo(listaAsientos);
@@ -324,7 +327,6 @@ public class UISVP {
             asientos[i] = Integer.parseInt(asientosParts[i].trim());
         }
 
-        // verifico desde aca (la vista) que los asientos esten disponibles
         for (int i = 0; i < nroPasajes; i++) {
             if (asientos[i] < 1 || asientos[i] > listaAsientos.length
                     || listaAsientos[asientos[i] - 1].equals("*")) {
@@ -338,7 +340,6 @@ public class UISVP {
             IdPersona idPasajero = leerIdPersona();
             if (idPasajero == null) return;
 
-            // pido los datos del pasajero, si ya existe se ignora el error
             Nombre nombrePasajero = leerNombre();
             System.out.print("Telefono: ");
             String telefonoPasajero = sc.nextLine();
@@ -351,7 +352,6 @@ public class UISVP {
                 sistema.createPasajero(idPasajero, nombrePasajero, telefonoPasajero,
                         nombreContacto, telefonoContacto);
             } catch (SVPException e) {
-                // ya existe, no pasa nada
             }
 
             try {
@@ -400,7 +400,6 @@ public class UISVP {
                 sistema.listViajes());
     }
 
-    // ahora muestra 5 columnas incluyendo el asiento
     private void listPasajerosViaje() {
         System.out.println("\n...:::: Pasajeros de Viaje ::::...");
         LocalDate fecha = leerFecha("Fecha viaje (dd/MM/yyyy): ");

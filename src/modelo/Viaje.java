@@ -1,7 +1,6 @@
 package modelo;
 
 /**
- * Representa un viaje de bus entre dos terminales.
  * @author Benjamin Carrasco
  */
 import java.time.LocalDate;
@@ -21,7 +20,6 @@ public class Viaje implements Serializable {
     private ArrayList<Conductor> conductores;
     private ArrayList<Pasaje> pasajes;
 
-    // el constructor recibe un solo conductor, si se necesita otro se usa addConductor
     public Viaje(LocalDate fecha, LocalTime hora, int precio, int duracionMinutos,
                  Bus bus, Auxiliar auxiliar, Conductor conductor,
                  Terminal terminalSalida, Terminal terminalLlegada) {
@@ -36,13 +34,11 @@ public class Viaje implements Serializable {
         this.conductores = new ArrayList<>();
         this.pasajes = new ArrayList<>();
 
-        // agrego el conductor principal
         if (conductor != null) {
             this.conductores.add(conductor);
             conductor.addViaje(this);
         }
 
-        // registro el viaje en bus, terminales y auxiliar
         if (bus != null) bus.addViaje(this);
         if (terminalSalida != null) terminalSalida.addSalida(this);
         if (terminalLlegada != null) terminalLlegada.addLlegada(this);
@@ -85,7 +81,6 @@ public class Viaje implements Serializable {
         return auxiliar;
     }
 
-    // para agregar mas conductores al viaje
     public void addConductor(Conductor conductor) {
         if (conductor != null) {
             this.conductores.add(conductor);
@@ -93,14 +88,11 @@ public class Viaje implements Serializable {
         }
     }
 
-    // getTripulantes devuelve conductores + auxiliar juntos
     public Tripulante[] getTripulantes() {
         ArrayList<Tripulante> todos = new ArrayList<>();
-        // primero el auxiliar
         if (auxiliar != null) {
             todos.add(auxiliar);
         }
-        // luego los conductores
         for (int i = 0; i < conductores.size(); i++) {
             todos.add(conductores.get(i));
         }
@@ -111,7 +103,6 @@ public class Viaje implements Serializable {
         return fechaHoraSalida.plusMinutes(duracionMinutos);
     }
 
-    // devuelve los asientos, los ocupados se marcan con *
     public String[] getAsientos() {
         String[] asientos = new String[bus.getNroAsientos()];
         for (int i = 0; i < asientos.length; i++) {
@@ -123,7 +114,6 @@ public class Viaje implements Serializable {
         return asientos;
     }
 
-    // lista de pasajeros con 5 datos: id, nombre, contacto, fono, asiento
     public String[][] getListaPasajeros() {
         String[][] lista = new String[pasajes.size()][5];
         for (int i = 0; i < pasajes.size(); i++) {
@@ -146,7 +136,6 @@ public class Viaje implements Serializable {
         return bus.getNroAsientos() - pasajes.size();
     }
 
-    // junto todas las ventas de los pasajes sin repetir
     public Venta[] getVentas() {
         ArrayList<Venta> ventas = new ArrayList<>();
         for (int i = 0; i < pasajes.size(); i++) {

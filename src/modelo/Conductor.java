@@ -5,8 +5,6 @@ import utilidades.IdPersona;
 import utilidades.Nombre;
 
 /**
- * Conductor del bus, hereda de Tripulante.
- * Almacena los viajes que ha conducido.
  * @author Benjamin Jara
  */
 public class Conductor extends Tripulante {
