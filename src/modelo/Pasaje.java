@@ -22,13 +22,16 @@ public class Pasaje implements Serializable {
         this.venta = venta;
         this.viaje = viaje;
 
+        // registro el pasaje en el viaje
         if (viaje != null) {
             viaje.addPasaje(this);
         }
+        // registro el pasaje en el pasajero tambien
         if (pasajero != null) {
             pasajero.addPasaje(this);
         }
     }
+
     public int getNumero() {
         return Math.toIntExact(numero);
     }
@@ -49,6 +52,10 @@ public class Pasaje implements Serializable {
         return asiento;
     }
 
+    /**
+     * Retorna un String con datos formateados del pasaje,
+     * tal como se presenta en la Figura 3 del enunciado.
+     */
     @Override
     public String toString() {
         DateTimeFormatter fechaFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");

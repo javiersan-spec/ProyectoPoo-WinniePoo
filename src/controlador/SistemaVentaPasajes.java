@@ -51,21 +51,32 @@ public class SistemaVentaPasajes implements Serializable {
         return instancia;
     }
 
+    /**
+     * Asigna la instancia persistente leida desde disco.
+     */
     public static void setInstanciaPersistente(SistemaVentaPasajes persistente) {
         instancia = persistente;
     }
 
+    /**
+     * Invoca IOSVP.readDatosIniciales para recuperar un arreglo con los
+     * objetos creados. El metodo almacena los objetos que correspondan
+     * a sus colecciones, previamente vaciadas.
+     * Finalmente invoca setDatosIniciales de ControladorEmpresas.
+     */
     public void readDatosIniciales() {
         Object[] datos = IOSVP.readDatosIniciales();
 
-        // aqui vacio las colecciones antes de cargar los nuevos datos
+        // vacio las colecciones antes de cargar los nuevos datos
         clientes.clear();
         pasajeros.clear();
         viajes.clear();
         ventas.clear();
 
+        // paso todos los datos a ControladorEmpresas para que cargue empresas, terminales y buses PRIMERO
         ControladorEmpresas.getInstancia().setDatosIniciales(datos);
 
+        // proceso personas (clientes y pasajeros) y viajes del arreglo
         int i = 0;
         while (i < datos.length) {
             String tipo = (String) datos[i];
@@ -163,11 +174,18 @@ public class SistemaVentaPasajes implements Serializable {
         }
     }
 
+    /**
+     * Invoca IOSVP.saveControladores para guardar los dos controladores.
+     */
     public void saveDatosSistema() {
         Object[] controladores = new Object[] { this, ControladorEmpresas.getInstancia() };
         IOSVP.saveControladores(controladores);
     }
 
+    /**
+     * Invoca IOSVP.readControladores para recuperar los controladores desde disco.
+     * Realiza la asignacion de this e invoca setInstanciaPersistente de ControladorEmpresas.
+     */
     public void readDatosSistema() {
         Object[] controladores = IOSVP.readControladores();
         SistemaVentaPasajes svp = (SistemaVentaPasajes) controladores[0];
@@ -177,6 +195,11 @@ public class SistemaVentaPasajes implements Serializable {
         ControladorEmpresas.setInstanciaPersistente(ce);
     }
 
+    /**
+     * Invoca IOSVP.savePasajesDeVenta para generar un archivo de texto
+     * con todos los pasajes de la venta cuyo id y tipo de documento
+     * recibe como parametro.
+     */
     public void generatePasajesVenta(String idDoc, TipoDocumento tipo) {
         Venta venta = findVenta(idDoc, tipo);
         if (venta == null) {
@@ -210,6 +233,8 @@ public class SistemaVentaPasajes implements Serializable {
         pasajeros.add(nuevoPasajero);
     }
 
+    // createViaje usa la firma del constructor de Viaje (un solo conductor)
+    // y agrega los conductores extra con addConductor
     public void createViaje(LocalDate fecha, LocalTime hora, int precio, int duracionMinutos,
                             String patBus, IdPersona[] idsTripulantes, String[] comunas) {
 
@@ -291,7 +316,7 @@ public class SistemaVentaPasajes implements Serializable {
         ventas.add(new Venta(idDoc, tipo, fechaVenta, cliente));
     }
 
-    // usamos streams para filtrar viajes disponibles
+    // usa streams para filtrar viajes disponibles
     public String[][] getHorariosDisponibles(LocalDate fechaViaje, String comunaSalida,
                                              String comunaLlegada, int nroPasajes) {
 
@@ -335,6 +360,7 @@ public class SistemaVentaPasajes implements Serializable {
         return null;
     }
 
+    // la verificacion del asiento disponible se puede hacer desde la vista
     public void vendePasaje(String idDoc, TipoDocumento tipo, LocalDate fecha, LocalTime hora,
                             String patBus, int asiento, IdPersona idPasajero) {
         Venta venta = findVenta(idDoc, tipo);
@@ -375,7 +401,7 @@ public class SistemaVentaPasajes implements Serializable {
         }
     }
 
-    // genera la lista formateada
+    // usa streams para generar la lista formateada
     public String[][] listVentas() {
         DateTimeFormatter fechaFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -391,6 +417,7 @@ public class SistemaVentaPasajes implements Serializable {
                 .toArray(String[][]::new);
     }
 
+    // usa streams para generar la lista formateada
     public String[][] listViajes() {
         DateTimeFormatter fechaFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter horaFmt = DateTimeFormatter.ofPattern("HH:mm");
@@ -417,8 +444,9 @@ public class SistemaVentaPasajes implements Serializable {
         return viaje.getListaPasajeros();
     }
 
-    // metodos de busqueda usando streams y Optional
+    // -- metodos de busqueda usando streams y Optional --
 
+    // busca un cliente por su id usando streams
     private Cliente findCliente(IdPersona idPersona) {
         Optional<Cliente> resultado = clientes.stream()
                 .filter(c -> c.getIdPersona().equals(idPersona))
@@ -426,6 +454,7 @@ public class SistemaVentaPasajes implements Serializable {
         return resultado.orElse(null);
     }
 
+    // busca una venta por id de documento y tipo usando streams
     private Venta findVenta(String idDocumento, TipoDocumento tipoDocumento) {
         Optional<Venta> resultado = ventas.stream()
                 .filter(v -> v.getIdDocumento().equals(idDocumento))
@@ -434,6 +463,7 @@ public class SistemaVentaPasajes implements Serializable {
         return resultado.orElse(null);
     }
 
+    // busca un viaje por fecha, hora y patente del bus usando streams
     private Viaje findViaje(LocalDate fecha, LocalTime hora, String patenteBus) {
         Optional<Viaje> resultado = viajes.stream()
                 .filter(v -> v.getFecha().equals(fecha))
@@ -443,6 +473,7 @@ public class SistemaVentaPasajes implements Serializable {
         return resultado.orElse(null);
     }
 
+    // busca un pasajero por su id usando streams
     private Pasajero findPasajero(IdPersona idPersona) {
         Optional<Pasajero> resultado = pasajeros.stream()
                 .filter(p -> p.getIdPersona().equals(idPersona))

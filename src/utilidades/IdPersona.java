@@ -11,3 +11,4 @@ public interface IdPersona {
     boolean equals(Object otro);
 }
 
+

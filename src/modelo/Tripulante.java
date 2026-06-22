@@ -32,3 +32,4 @@ public abstract class Tripulante extends Persona {
     public abstract void addViaje(Viaje viaje);
     public abstract int getNroViajes();
 }
+

@@ -14,11 +14,10 @@ import utilidades.Nombre;
 import utilidades.Pasaporte;
 import utilidades.Rut;
 import utilidades.Tratamiento;
+
 /**
  * Interfaz de usuario del sistema de venta de pasajes.
  * Muestra el menu y llama a los controladores segun la opcion.
- * @author Javier San Martin
- * @version 3.0 por nosotros mismos
  */
 public class UISVP {
 
@@ -116,7 +115,6 @@ public class UISVP {
 
     private void contrataTripulante() {
         System.out.println("\n...:::: Contatando un nuevo Tripulante ::::....\n");
-
         System.out.println(":::: Dato de la Empresa");
         System.out.printf("%25s : ", "R.U.T");
         Rut rutEmp = Rut.of(sc.nextLine());
@@ -217,7 +215,7 @@ public class UISVP {
     }
 
     private void createViaje() {
-        System.out.println("\n...:::: Creando un nuevo modelo.Viaje.Viaje ::::...\n");
+        System.out.println("\n...:::: Creando un nuevo Viaje ::::...\n");
         System.out.printf("%25s : ", "Fecha[dd/mm/yyyy]");
         LocalDate fecha = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         System.out.printf("%25s : ", "Hora[hh:mm]");
@@ -255,7 +253,7 @@ public class UISVP {
         try {
             sistema.createViaje(fecha, hora, precio, duracionMinutos, patente,
                     idsTripulantes, new String[] { comunaSalida, comunaLlegada });
-            System.out.println("\n...::::: modelo.Viaje.Viaje guardado exitosamente ::::....");
+            System.out.println("\n...::::: Viaje guardado exitosamente ::::....");
         } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -326,7 +324,7 @@ public class UISVP {
             asientos[i] = Integer.parseInt(asientosParts[i].trim());
         }
 
-        // verificamos que los asientos esten disponibles
+        // verifico desde aca (la vista) que los asientos esten disponibles
         for (int i = 0; i < nroPasajes; i++) {
             if (asientos[i] < 1 || asientos[i] > listaAsientos.length
                     || listaAsientos[asientos[i] - 1].equals("*")) {
@@ -340,6 +338,7 @@ public class UISVP {
             IdPersona idPasajero = leerIdPersona();
             if (idPasajero == null) return;
 
+            // pido los datos del pasajero, si ya existe se ignora el error
             Nombre nombrePasajero = leerNombre();
             System.out.print("Telefono: ");
             String telefonoPasajero = sc.nextLine();
@@ -401,8 +400,9 @@ public class UISVP {
                 sistema.listViajes());
     }
 
+    // ahora muestra 5 columnas incluyendo el asiento
     private void listPasajerosViaje() {
-        System.out.println("\n...:::: Pasajeros de modelo.Viaje.Viaje ::::...");
+        System.out.println("\n...:::: Pasajeros de Viaje ::::...");
         LocalDate fecha = leerFecha("Fecha viaje (dd/MM/yyyy): ");
         LocalTime hora = leerHora("Hora viaje (HH:mm): ");
         System.out.print("Patente bus: ");
@@ -440,6 +440,7 @@ public class UISVP {
         }
     }
 
+    // corregido: ahora tiene 6 columnas que coinciden con los datos del controlador
     private void listVentasEmpresa() {
         System.out.println("\n...::::: Listado de ventas de una empresa ::::....\n");
         System.out.printf("%25s : ", "R.U.T");
@@ -577,8 +578,9 @@ public class UISVP {
         return Integer.parseInt(sc.nextLine());
     }
 
-    // metodos para imprimir tablas y arreglos
+    // -- metodos para imprimir tablas y arreglos --
 
+    // version simplificada de imprimirTabla, mas directa con printf
     private void imprimirTabla(String[] encabezados, String[][] datos) {
         if (datos == null || datos.length == 0) {
             System.out.println("No hay datos para mostrar.");
@@ -628,7 +630,7 @@ public class UISVP {
         imprimirLinea(anchos);
     }
 
-    // imprime una linea de guiones
+    // imprime una linea de guiones para separar filas de la tabla
     private void imprimirLinea(int[] anchos) {
         System.out.print("+");
         for (int j = 0; j < anchos.length; j++) {
