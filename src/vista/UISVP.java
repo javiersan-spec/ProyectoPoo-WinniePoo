@@ -439,7 +439,6 @@ public class UISVP {
         }
     }
 
-    // corregido: ahora tiene 6 columnas que coinciden con los datos del controlador
     private void listVentasEmpresa() {
         System.out.println("\n...::::: Listado de ventas de una empresa ::::....\n");
         System.out.printf("%25s : ", "R.U.T");
@@ -478,7 +477,6 @@ public class UISVP {
         System.out.println("\n...:::: Leer datos iniciales ::::...");
         try {
             sistema.readDatosIniciales();
-            // actualizo la referencia del sistema por si cambio internamente
             sistema = SistemaVentaPasajes.getInstancia();
             System.out.println("\n...::::: Datos iniciales cargados exitosamente ::::....");
         } catch (SVPException e) {
@@ -500,7 +498,6 @@ public class UISVP {
         System.out.println("\n...:::: Leer datos del sistema ::::...");
         try {
             sistema.readDatosSistema();
-            // actualizo la referencia al nuevo singleton cargado desde disco
             sistema = SistemaVentaPasajes.getInstancia();
             System.out.println("\n...::::: Datos del sistema cargados exitosamente ::::....");
         } catch (SVPException e) {
@@ -508,7 +505,6 @@ public class UISVP {
         }
     }
 
-    // -- metodos auxiliares para leer datos del usuario --
 
     private IdPersona leerIdPersona() {
         System.out.printf("%25s : ", "Rut[1] o Pasaporte[2]");
@@ -577,9 +573,6 @@ public class UISVP {
         return Integer.parseInt(sc.nextLine());
     }
 
-    // -- metodos para imprimir tablas y arreglos --
-
-    // version simplificada de imprimirTabla, mas directa con printf
     private void imprimirTabla(String[] encabezados, String[][] datos) {
         if (datos == null || datos.length == 0) {
             System.out.println("No hay datos para mostrar.");
@@ -587,8 +580,6 @@ public class UISVP {
         }
 
         int nroCols = encabezados.length;
-
-        // calculo el ancho de cada columna
         int[] anchos = new int[nroCols];
         for (int j = 0; j < nroCols; j++) {
             anchos[j] = encabezados[j].length();
@@ -603,10 +594,8 @@ public class UISVP {
             }
         }
 
-        // imprimo la linea separadora
         imprimirLinea(anchos);
 
-        // imprimo los encabezados
         System.out.print("|");
         for (int j = 0; j < nroCols; j++) {
             System.out.printf(" %-" + anchos[j] + "s |", encabezados[j]);
@@ -614,7 +603,6 @@ public class UISVP {
         System.out.println();
         imprimirLinea(anchos);
 
-        // imprimo cada fila de datos
         for (int i = 0; i < datos.length; i++) {
             System.out.print("|");
             for (int j = 0; j < nroCols; j++) {
@@ -629,7 +617,6 @@ public class UISVP {
         imprimirLinea(anchos);
     }
 
-    // imprime una linea de guiones para separar filas de la tabla
     private void imprimirLinea(int[] anchos) {
         System.out.print("+");
         for (int j = 0; j < anchos.length; j++) {
