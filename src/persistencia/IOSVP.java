@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 /**
  * Clase encargada de la entrada/salida de datos del sistema.
- * Lee y escribe archivos de texto y archivos de objetos.
  * @author Javier San Martin
  * @author Benjamin Carrasco
  * @version Avance 3
@@ -293,16 +292,14 @@ public class IOSVP {
         return Tratamiento.SR;
     }
 
-    // metodos find con Optional y programacion funcional
+    // metodos find con Optional
 
-    //Busca una empresa en la lista
     public static Optional<Empresa> findEmpresa(List<Empresa> empresas, Rut rut) {
         return empresas.stream()
                 .filter(e -> e.getRut().equals(rut))
                 .findFirst();
     }
 
-    // Busca un bus en la lista.
     public static Optional<Bus> findBus(List<Bus> buses, String patente) {
         return buses.stream()
                 .filter(b -> b.getPatente().equalsIgnoreCase(patente))
@@ -315,7 +312,6 @@ public class IOSVP {
                 .findFirst();
     }
 
-    // Busca un tripulante en la empresa
     public static Optional<Tripulante> findTripulante(Empresa empresa, IdPersona id, String rol) {
         Tripulante[] trips = empresa.getTripulantes();
         ArrayList<Tripulante> lista = new ArrayList<>();
