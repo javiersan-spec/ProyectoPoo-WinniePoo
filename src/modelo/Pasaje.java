@@ -2,8 +2,10 @@ package modelo;
 
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
+
 /**
  * Pasaje que se vende a un pasajero para un viaje.
+ * Tiene asiento, numero, y se asocia al pasajero, viaje y venta.
  * @author Benjamin Carrasco
  */
 public class Pasaje implements Serializable {
@@ -20,16 +22,13 @@ public class Pasaje implements Serializable {
         this.venta = venta;
         this.viaje = viaje;
 
-        // registro el pasaje en el viaje
         if (viaje != null) {
             viaje.addPasaje(this);
         }
-        // registro el pasaje en el pasajero tambien
         if (pasajero != null) {
             pasajero.addPasaje(this);
         }
     }
-
     public int getNumero() {
         return Math.toIntExact(numero);
     }

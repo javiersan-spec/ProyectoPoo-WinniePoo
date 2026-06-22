@@ -49,15 +49,41 @@ public class Viaje implements Serializable {
         if (auxiliar != null) auxiliar.addViaje(this);
     }
 
-    public LocalDateTime getFechaHoraSalida() { return fechaHoraSalida; }
-    public LocalDate getFecha() { return fechaHoraSalida.toLocalDate(); }
-    public LocalTime getHora() { return fechaHoraSalida.toLocalTime(); }
-    public int getPrecio() { return precio; }
-    public int getDuracionMinutos() { return duracionMinutos; }
-    public Bus getBus() { return bus; }
-    public Terminal getTerminalSalida() { return terminalSalida; }
-    public Terminal getTerminalLlegada() { return terminalLlegada; }
-    public Auxiliar getAuxiliar() { return auxiliar; }
+    public LocalDateTime getFechaHoraSalida() {
+        return fechaHoraSalida;
+    }
+
+    public LocalDate getFecha() {
+        return fechaHoraSalida.toLocalDate();
+    }
+
+    public LocalTime getHora() {
+        return fechaHoraSalida.toLocalTime();
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public int getDuracionMinutos() {
+        return duracionMinutos;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public Terminal getTerminalSalida() {
+        return terminalSalida;
+    }
+
+    public Terminal getTerminalLlegada() {
+        return terminalLlegada;
+    }
+
+    public Auxiliar getAuxiliar() {
+        return auxiliar;
+    }
 
     // para agregar mas conductores al viaje
     public void addConductor(Conductor conductor) {

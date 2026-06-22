@@ -217,7 +217,7 @@ public class UISVP {
     }
 
     private void createViaje() {
-        System.out.println("\n...:::: Creando un nuevo Viaje ::::...\n");
+        System.out.println("\n...:::: Creando un nuevo modelo.Viaje.Viaje ::::...\n");
         System.out.printf("%25s : ", "Fecha[dd/mm/yyyy]");
         LocalDate fecha = LocalDate.parse(sc.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         System.out.printf("%25s : ", "Hora[hh:mm]");
@@ -255,7 +255,7 @@ public class UISVP {
         try {
             sistema.createViaje(fecha, hora, precio, duracionMinutos, patente,
                     idsTripulantes, new String[] { comunaSalida, comunaLlegada });
-            System.out.println("\n...::::: Viaje guardado exitosamente ::::....");
+            System.out.println("\n...::::: modelo.Viaje.Viaje guardado exitosamente ::::....");
         } catch (SVPException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -402,7 +402,7 @@ public class UISVP {
     }
 
     private void listPasajerosViaje() {
-        System.out.println("\n...:::: Pasajeros de Viaje ::::...");
+        System.out.println("\n...:::: Pasajeros de modelo.Viaje.Viaje ::::...");
         LocalDate fecha = leerFecha("Fecha viaje (dd/MM/yyyy): ");
         LocalTime hora = leerHora("Hora viaje (HH:mm): ");
         System.out.print("Patente bus: ");
