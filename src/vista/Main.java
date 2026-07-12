@@ -6,14 +6,16 @@ package vista;
  * @author Genesis Castro
  * @author Beatriz Aguilera
  * @author Benjamin Jara
- * @version 3.0
+ * @version 4.0
  */
-public class  Main {
+import vista.GUI.VentanaPrincipal;
+import javax.swing.SwingUtilities;
 
+public class Main {
     public static void main(String[] args) {
-
-        UISVP interfaz = UISVP.getInstancia();
-        interfaz.menu();
-
+        SwingUtilities.invokeLater(() -> {
+            VentanaPrincipal ventana = new VentanaPrincipal();
+            ventana.setVisible(true);
+        });
     }
 }
