@@ -1,9 +1,11 @@
 package utilidades;
+
+import java.io.Serializable;
 /**
  * @author Javier San Martín
- * @version Avance 2
+ * @version Avance 3
  */
-public class Pasaporte implements IdPersona {
+public class Pasaporte implements IdPersona, Serializable {
     private String numero;
     private String nacionalidad;
 
@@ -35,3 +37,5 @@ public class Pasaporte implements IdPersona {
         return numero.equals(pasaporte.numero) && nacionalidad.equals(pasaporte.nacionalidad);
     }
 }
+
+

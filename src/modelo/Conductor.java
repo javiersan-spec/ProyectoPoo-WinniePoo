@@ -9,22 +9,20 @@ import utilidades.Nombre;
  */
 public class Conductor extends Tripulante {
 
-    private int nroViajes;
-
     public Conductor(IdPersona id, Nombre nom, Direccion dir) {
         super(id, nom, dir);
-        this.nroViajes = 0;
     }
 
     @Override
     public void addViaje(Viaje viaje) {
         if (viaje != null) {
-            this.nroViajes++;
+            this.viajes.add(viaje);
         }
     }
 
     @Override
     public int getNroViajes() {
-        return this.nroViajes;
+        return this.viajes.size();
     }
 }
+

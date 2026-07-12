@@ -2,36 +2,42 @@ package modelo;
 
 import utilidades.IdPersona;
 import utilidades.Nombre;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.Serializable;
 
 /**
  * Clase encargada de generar un cliente dentro del sistema de venta de pasajes.
- * Hereda los datos basicos de persona y agrega el email y el historial de ventas
- * realizadas por el Cliente.
  * @author Genesis Castro
- * Avance 2
  */
-public class Cliente extends Persona {
 
+public class Cliente extends Persona implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private String email;
-    private Venta[] ventas;
+    private List<Venta> ventas;
 
     public Cliente(IdPersona id, Nombre nom, String email) {
         super(id, nom);
-        this.email  = email;
-        this.ventas = new Venta[0];
+        this.email = email;
+        this.ventas = new ArrayList<>();
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getEmail() { return email; }
-    public Venta[] getVentas() { return ventas; }
-
-    public void setEmail(String email) { this.email = email; }
+    public Venta[] getVentas() {
+        return ventas.toArray(new Venta[0]);
+    }
 
     public void addVenta(Venta venta) {
-        Venta[] nuevasVentas = new Venta[ventas.length + 1];
-        for (int i = 0; i < ventas.length; i++) {
-            nuevasVentas[i] = ventas[i];
+        if (venta != null && !ventas.contains(venta)) {
+            ventas.add(venta);
         }
-        nuevasVentas[ventas.length] = venta;
-        ventas = nuevasVentas;
     }
 }
+
+

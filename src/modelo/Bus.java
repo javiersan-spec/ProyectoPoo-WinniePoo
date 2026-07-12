@@ -1,12 +1,13 @@
-package modelo; /**
- * Clase que se encarga de los datos del bus
- * @author Benjamin Jara
- */
+package modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-public class Bus {
+/**
+ * Clase que representa un Bus dentro del sistema.
+ * @author Benjamin Jara
+ */
+public class Bus implements Serializable {
     private String patente;
     private String marca;
     private String modelo;
@@ -50,3 +51,5 @@ public class Bus {
         return viajes.toArray(new Viaje[0]);
     }
 }
+
+

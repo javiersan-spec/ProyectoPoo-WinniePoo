@@ -1,10 +1,10 @@
 package utilidades;
+import java.io.Serializable;
 /**
- * Clase representante el nombre completo de una persona,
- * es decir que va compuesto por el nombre, apellido paterno y apellido materno.
  * @author Beatriz Aguilera
+ * @version Avance 3
  */
-public class Nombre {
+public class Nombre implements Serializable {
     private Tratamiento tratamiento;
     private String nombres;
     private String apellidoPaterno;
@@ -45,4 +45,6 @@ public class Nombre {
                 && apellidoMaterno.equals(n.apellidoMaterno);
     }
 }
+
+
 

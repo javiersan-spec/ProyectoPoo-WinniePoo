@@ -1,9 +1,11 @@
 package utilidades;
+
+import java.io.Serializable;
 /**
  * @author Javier San Martin
- * @version Avance 2
+ * @version Avance 3
  */
-public class Rut implements IdPersona {
+public class Rut implements IdPersona, Serializable {
     private int numero;
     private char dv;
 
@@ -58,3 +60,5 @@ public class Rut implements IdPersona {
         return numero == rut.numero && dv == rut.dv;
     }
 }
+
+

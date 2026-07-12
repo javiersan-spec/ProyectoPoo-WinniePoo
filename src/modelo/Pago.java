@@ -1,10 +1,12 @@
 package modelo;
 
-/**
-* @author Genesis Castro
-*/
+import java.io.Serializable;
 
-public class Pago {
+/**
+ * @author Genesis Castro
+ * Avance 3
+ */
+public class Pago implements Serializable {
 
     private int monto;
 
@@ -16,3 +18,7 @@ public class Pago {
         return monto;
     }
 }
+
+
+
+
