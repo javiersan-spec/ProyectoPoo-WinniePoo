@@ -4,14 +4,16 @@ import utilidades.IdPersona;
 import utilidades.Nombre;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 /**
- * Clase encargada de generar un cliente dentro del sistema de venta de pasajes..
+ * Clase encargada de generar un cliente dentro del sistema de venta de pasajes.
  * @author Genesis Castro
- * Avance 3
  */
-public class Cliente extends Persona {
 
+public class Cliente extends Persona implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private String email;
     private List<Venta> ventas;
 
